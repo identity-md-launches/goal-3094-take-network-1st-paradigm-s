@@ -1,0 +1,1747 @@
+{
+  "approach": "Discrete three-state band-edge policy. The first trade in a timestamp is classified against an inferred fair-price band; later trades are retail. Arb buying X produces low bid/high ask; arb selling X reverses them. Retail is symmetric. Fees decay linearly with steps since the state changed. Seven slots, no history loops or external calls.",
+  "selected_variant": "J",
+  "frozen_source": {
+    "selected": "J",
+    "code_sha256": "4316ab7e21a569832cdca6fd4db119f5b4f1615de43bb9d42a6a19bd94c57f7a",
+    "utc": "2026-11-07T03:27:18.575925+00:00",
+    "n_tuning_candidates": 17,
+    "selection_rule": "largest mean on seeds 0..1999; source fixed before fresh evaluation",
+    "ablation": "fixed 70 bps"
+  },
+  "controlled_tuning_comparisons": [
+    {
+      "candidate": "D",
+      "reference": "F",
+      "paired": {
+        "reference": "tuning variant F",
+        "reference_sha256": "6dd509ab062e87284bd402c54956783e29e8d47a8abc5edae7ee1c24322b8704",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -0.02197313751501825,
+        "se": 0.05213051955577068,
+        "worst": [
+          {
+            "seed": 1359,
+            "difference": -10.30095474821951
+          },
+          {
+            "seed": 334,
+            "difference": -9.099433405358411
+          },
+          {
+            "seed": 1128,
+            "difference": -8.25102625194262
+          },
+          {
+            "seed": 1716,
+            "difference": -7.660100759885779
+          },
+          {
+            "seed": 1155,
+            "difference": -7.60766045731998
+          }
+        ]
+      }
+    },
+    {
+      "candidate": "P",
+      "reference": "Q",
+      "paired": {
+        "reference": "tuning variant Q",
+        "reference_sha256": "699b5fbd60dd9f2f569ff77ae1e34e395fc28b809b5983713c401a4ddc966278",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 0.5847560531674207,
+        "se": 0.014683134670125804,
+        "worst": [
+          {
+            "seed": 342,
+            "difference": -2.5547105239897974
+          },
+          {
+            "seed": 31,
+            "difference": -1.756684041473477
+          },
+          {
+            "seed": 1833,
+            "difference": -1.6259241852103514
+          },
+          {
+            "seed": 677,
+            "difference": -1.6090221002924636
+          },
+          {
+            "seed": 1335,
+            "difference": -1.5848318632980636
+          }
+        ]
+      }
+    },
+    {
+      "candidate": "J",
+      "reference": "G",
+      "paired": {
+        "reference": "tuning variant G",
+        "reference_sha256": "824770903026a7eabd46c3b11069e5296e5b36515f4bac83f9c80329926dc763",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 0.623098492454923,
+        "se": 0.04980967206663981,
+        "worst": [
+          {
+            "seed": 1532,
+            "difference": -10.230699259751987
+          },
+          {
+            "seed": 259,
+            "difference": -8.47333833219733
+          },
+          {
+            "seed": 601,
+            "difference": -7.92369302917308
+          },
+          {
+            "seed": 1475,
+            "difference": -7.317662996467618
+          },
+          {
+            "seed": 1131,
+            "difference": -6.556575659486498
+          }
+        ]
+      }
+    }
+  ],
+  "selected_parameters": {
+    "base_bps": 70,
+    "low_bps": 0,
+    "high_bps": 110,
+    "tolerance_bps": 20,
+    "decay_steps": 8,
+    "pre_band_tolerance_fraction": 1.0
+  },
+  "tried": [
+    {
+      "id": "A",
+      "parameters": {
+        "base_bps": 30,
+        "low_bps": 10,
+        "high_bps": 60,
+        "tolerance_bps": 20,
+        "decay_steps": 4,
+        "pre_band_tolerance_fraction": 1.0
+      },
+      "code_sha256": "6fb505925b6270df9834d410e7c3f3430fd6b63a5fc74c31214d18ca6f7ce4ec",
+      "score": {
+        "n": 2000,
+        "seed_start": 0,
+        "mean_edge": 333.5577697406976
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -35.24665087698805,
+        "se": 0.21589357903204512,
+        "worst": [
+          {
+            "seed": 1849,
+            "difference": -71.8922092367718
+          },
+          {
+            "seed": 118,
+            "difference": -65.58110560297712
+          },
+          {
+            "seed": 1588,
+            "difference": -65.26305112992503
+          },
+          {
+            "seed": 179,
+            "difference": -65.24804327036293
+          },
+          {
+            "seed": 1349,
+            "difference": -65.16966253442308
+          }
+        ]
+      },
+      "paired_vs_training_incumbent": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -35.24665087698805,
+        "se": 0.21589357903204512,
+        "worst": [
+          {
+            "seed": 1849,
+            "difference": -71.8922092367718
+          },
+          {
+            "seed": 118,
+            "difference": -65.58110560297712
+          },
+          {
+            "seed": 1588,
+            "difference": -65.26305112992503
+          },
+          {
+            "seed": 179,
+            "difference": -65.24804327036293
+          },
+          {
+            "seed": 1349,
+            "difference": -65.16966253442308
+          }
+        ]
+      }
+    },
+    {
+      "id": "B",
+      "parameters": {
+        "base_bps": 50,
+        "low_bps": 25,
+        "high_bps": 90,
+        "tolerance_bps": 40,
+        "decay_steps": 4,
+        "pre_band_tolerance_fraction": 1.0
+      },
+      "code_sha256": "16338152204db72d21c7f32b15178c4a7dd7afc154d029ba9c34f9313fc3a8bb",
+      "score": {
+        "n": 2000,
+        "seed_start": 0,
+        "mean_edge": 365.5159109244109
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -3.2885096932747775,
+        "se": 0.06104690802773436,
+        "worst": [
+          {
+            "seed": 1697,
+            "difference": -14.862786198678236
+          },
+          {
+            "seed": 1359,
+            "difference": -13.458564897671863
+          },
+          {
+            "seed": 16,
+            "difference": -12.567806507066223
+          },
+          {
+            "seed": 1606,
+            "difference": -11.683881284891584
+          },
+          {
+            "seed": 176,
+            "difference": -11.666979984675834
+          }
+        ]
+      },
+      "paired_vs_training_incumbent": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -3.2885096932747775,
+        "se": 0.06104690802773436,
+        "worst": [
+          {
+            "seed": 1697,
+            "difference": -14.862786198678236
+          },
+          {
+            "seed": 1359,
+            "difference": -13.458564897671863
+          },
+          {
+            "seed": 16,
+            "difference": -12.567806507066223
+          },
+          {
+            "seed": 1606,
+            "difference": -11.683881284891584
+          },
+          {
+            "seed": 176,
+            "difference": -11.666979984675834
+          }
+        ]
+      }
+    },
+    {
+      "id": "C",
+      "parameters": {
+        "base_bps": 50,
+        "low_bps": 40,
+        "high_bps": 70,
+        "tolerance_bps": 40,
+        "decay_steps": 4,
+        "pre_band_tolerance_fraction": 1.0
+      },
+      "code_sha256": "c279fac1c9f7afa8884ac10d722101aa1da113ea86ad00583451871ee197cd59",
+      "score": {
+        "n": 2000,
+        "seed_start": 0,
+        "mean_edge": 368.209552789691
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -0.5948678279947398,
+        "se": 0.029283800992690037,
+        "worst": [
+          {
+            "seed": 1606,
+            "difference": -4.618662678223757
+          },
+          {
+            "seed": 1175,
+            "difference": -4.489154940773346
+          },
+          {
+            "seed": 1654,
+            "difference": -4.450472745010359
+          },
+          {
+            "seed": 753,
+            "difference": -4.422777988008306
+          },
+          {
+            "seed": 1569,
+            "difference": -4.366094793382615
+          }
+        ]
+      },
+      "paired_vs_training_incumbent": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -0.5948678279947398,
+        "se": 0.029283800992690037,
+        "worst": [
+          {
+            "seed": 1606,
+            "difference": -4.618662678223757
+          },
+          {
+            "seed": 1175,
+            "difference": -4.489154940773346
+          },
+          {
+            "seed": 1654,
+            "difference": -4.450472745010359
+          },
+          {
+            "seed": 753,
+            "difference": -4.422777988008306
+          },
+          {
+            "seed": 1569,
+            "difference": -4.366094793382615
+          }
+        ]
+      }
+    },
+    {
+      "id": "D",
+      "parameters": {
+        "base_bps": 40,
+        "low_bps": 20,
+        "high_bps": 70,
+        "tolerance_bps": 40,
+        "decay_steps": 4,
+        "pre_band_tolerance_fraction": 1.0
+      },
+      "code_sha256": "7a858df2aba9a0b2e3f44daa300c4b2e0315d4c448eb0a8df66f48b7d5270e5b",
+      "score": {
+        "n": 2000,
+        "seed_start": 0,
+        "mean_edge": 357.98288512249394
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -10.821535495191746,
+        "se": 0.09506737102857613,
+        "worst": [
+          {
+            "seed": 1849,
+            "difference": -27.86701977550615
+          },
+          {
+            "seed": 1557,
+            "difference": -27.73467053078116
+          },
+          {
+            "seed": 256,
+            "difference": -25.641192109641054
+          },
+          {
+            "seed": 1588,
+            "difference": -25.33200898209003
+          },
+          {
+            "seed": 1349,
+            "difference": -24.975722241972903
+          }
+        ]
+      },
+      "paired_vs_training_incumbent": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -10.821535495191746,
+        "se": 0.09506737102857613,
+        "worst": [
+          {
+            "seed": 1849,
+            "difference": -27.86701977550615
+          },
+          {
+            "seed": 1557,
+            "difference": -27.73467053078116
+          },
+          {
+            "seed": 256,
+            "difference": -25.641192109641054
+          },
+          {
+            "seed": 1588,
+            "difference": -25.33200898209003
+          },
+          {
+            "seed": 1349,
+            "difference": -24.975722241972903
+          }
+        ]
+      }
+    },
+    {
+      "id": "E",
+      "parameters": {
+        "base_bps": 50,
+        "low_bps": 10,
+        "high_bps": 140,
+        "tolerance_bps": 40,
+        "decay_steps": 8,
+        "pre_band_tolerance_fraction": 1.0
+      },
+      "code_sha256": "23b19b4957f3a42ca08b23ef8894fd5e91269a27438b9241e29b2e41d78c702f",
+      "score": {
+        "n": 2000,
+        "seed_start": 0,
+        "mean_edge": 349.7040801537619
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -19.100340463923736,
+        "se": 0.13505545311424472,
+        "worst": [
+          {
+            "seed": 1359,
+            "difference": -42.11227366331241
+          },
+          {
+            "seed": 563,
+            "difference": -40.09590574231788
+          },
+          {
+            "seed": 315,
+            "difference": -39.18914686324706
+          },
+          {
+            "seed": 1467,
+            "difference": -37.938592161641395
+          },
+          {
+            "seed": 1700,
+            "difference": -37.391801950401316
+          }
+        ]
+      },
+      "paired_vs_training_incumbent": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -19.100340463923736,
+        "se": 0.13505545311424472,
+        "worst": [
+          {
+            "seed": 1359,
+            "difference": -42.11227366331241
+          },
+          {
+            "seed": 563,
+            "difference": -40.09590574231788
+          },
+          {
+            "seed": 315,
+            "difference": -39.18914686324706
+          },
+          {
+            "seed": 1467,
+            "difference": -37.938592161641395
+          },
+          {
+            "seed": 1700,
+            "difference": -37.391801950401316
+          }
+        ]
+      }
+    },
+    {
+      "id": "F",
+      "parameters": {
+        "base_bps": 40,
+        "low_bps": 39,
+        "high_bps": 41,
+        "tolerance_bps": 40,
+        "decay_steps": 4,
+        "pre_band_tolerance_fraction": 1.0
+      },
+      "code_sha256": "6dd509ab062e87284bd402c54956783e29e8d47a8abc5edae7ee1c24322b8704",
+      "score": {
+        "n": 2000,
+        "seed_start": 0,
+        "mean_edge": 358.004858260009
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -10.799562357676729,
+        "se": 0.08609055352137526,
+        "worst": [
+          {
+            "seed": 1849,
+            "difference": -26.347174210196954
+          },
+          {
+            "seed": 118,
+            "difference": -24.86146741946186
+          },
+          {
+            "seed": 179,
+            "difference": -24.023821963486682
+          },
+          {
+            "seed": 1503,
+            "difference": -23.782898381967243
+          },
+          {
+            "seed": 1660,
+            "difference": -22.65440950272705
+          }
+        ]
+      },
+      "paired_vs_training_incumbent": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -10.799562357676729,
+        "se": 0.08609055352137526,
+        "worst": [
+          {
+            "seed": 1849,
+            "difference": -26.347174210196954
+          },
+          {
+            "seed": 118,
+            "difference": -24.86146741946186
+          },
+          {
+            "seed": 179,
+            "difference": -24.023821963486682
+          },
+          {
+            "seed": 1503,
+            "difference": -23.782898381967243
+          },
+          {
+            "seed": 1660,
+            "difference": -22.65440950272705
+          }
+        ]
+      }
+    },
+    {
+      "id": "G",
+      "parameters": {
+        "base_bps": 70,
+        "low_bps": 69,
+        "high_bps": 71,
+        "tolerance_bps": 40,
+        "decay_steps": 4,
+        "pre_band_tolerance_fraction": 1.0
+      },
+      "code_sha256": "824770903026a7eabd46c3b11069e5296e5b36515f4bac83f9c80329926dc763",
+      "score": {
+        "n": 2000,
+        "seed_start": 0,
+        "mean_edge": 378.9712276263768
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 10.166807008691114,
+        "se": 0.1256182912217383,
+        "worst": [
+          {
+            "seed": 661,
+            "difference": -4.693036068306412
+          },
+          {
+            "seed": 445,
+            "difference": -3.8914440510144175
+          },
+          {
+            "seed": 1453,
+            "difference": -3.6481880781335008
+          },
+          {
+            "seed": 1420,
+            "difference": -3.4875568091249534
+          },
+          {
+            "seed": 795,
+            "difference": -3.151782415920934
+          }
+        ]
+      },
+      "paired_vs_training_incumbent": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 10.166807008691114,
+        "se": 0.1256182912217383,
+        "worst": [
+          {
+            "seed": 661,
+            "difference": -4.693036068306412
+          },
+          {
+            "seed": 445,
+            "difference": -3.8914440510144175
+          },
+          {
+            "seed": 1453,
+            "difference": -3.6481880781335008
+          },
+          {
+            "seed": 1420,
+            "difference": -3.4875568091249534
+          },
+          {
+            "seed": 795,
+            "difference": -3.151782415920934
+          }
+        ]
+      }
+    },
+    {
+      "id": "H",
+      "parameters": {
+        "base_bps": 45,
+        "low_bps": 0,
+        "high_bps": 75,
+        "tolerance_bps": 40,
+        "decay_steps": 4,
+        "pre_band_tolerance_fraction": 1.0
+      },
+      "code_sha256": "5049ea6fd463dfd0a28d3f4a10164f2ef1649c8de6f0d78fb53fd00d1963c4d4",
+      "score": {
+        "n": 2000,
+        "seed_start": 0,
+        "mean_edge": 359.6556320130539
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -9.148788604631799,
+        "se": 0.09289805479792372,
+        "worst": [
+          {
+            "seed": 1349,
+            "difference": -29.164607499002045
+          },
+          {
+            "seed": 1557,
+            "difference": -26.640700045060782
+          },
+          {
+            "seed": 1359,
+            "difference": -25.311942907322475
+          },
+          {
+            "seed": 1128,
+            "difference": -24.992878477609565
+          },
+          {
+            "seed": 256,
+            "difference": -23.18894531590081
+          }
+        ]
+      },
+      "paired_vs_training_incumbent": {
+        "reference": "tuning variant G",
+        "reference_sha256": "824770903026a7eabd46c3b11069e5296e5b36515f4bac83f9c80329926dc763",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -19.315595613322913,
+        "se": 0.19421206680083097,
+        "worst": [
+          {
+            "seed": 1349,
+            "difference": -60.05131557910539
+          },
+          {
+            "seed": 1849,
+            "difference": -54.94165075978748
+          },
+          {
+            "seed": 179,
+            "difference": -49.75738096016789
+          },
+          {
+            "seed": 1503,
+            "difference": -48.29011306146674
+          },
+          {
+            "seed": 118,
+            "difference": -48.22389787223739
+          }
+        ]
+      }
+    },
+    {
+      "id": "I",
+      "parameters": {
+        "base_bps": 50,
+        "low_bps": 0,
+        "high_bps": 70,
+        "tolerance_bps": 80,
+        "decay_steps": 2,
+        "pre_band_tolerance_fraction": 1.0
+      },
+      "code_sha256": "8c7c1d7113932103892015ce5596ed642fc9c85d5acbfafe770a7ef156482b94",
+      "score": {
+        "n": 2000,
+        "seed_start": 0,
+        "mean_edge": 325.96826048990255
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -42.83616012778312,
+        "se": 0.10883683019986407,
+        "worst": [
+          {
+            "seed": 334,
+            "difference": -59.865812330415
+          },
+          {
+            "seed": 486,
+            "difference": -59.13282803651788
+          },
+          {
+            "seed": 1214,
+            "difference": -57.761304863125076
+          },
+          {
+            "seed": 1923,
+            "difference": -57.382477420230316
+          },
+          {
+            "seed": 755,
+            "difference": -57.12400702436889
+          }
+        ]
+      },
+      "paired_vs_training_incumbent": {
+        "reference": "tuning variant G",
+        "reference_sha256": "824770903026a7eabd46c3b11069e5296e5b36515f4bac83f9c80329926dc763",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -53.002967136474226,
+        "se": 0.1954651135211562,
+        "worst": [
+          {
+            "seed": 1660,
+            "difference": -84.08552505792403
+          },
+          {
+            "seed": 1503,
+            "difference": -82.56783306036186
+          },
+          {
+            "seed": 1849,
+            "difference": -82.12161289188947
+          },
+          {
+            "seed": 1718,
+            "difference": -81.90805331728865
+          },
+          {
+            "seed": 118,
+            "difference": -81.39533220473282
+          }
+        ]
+      }
+    },
+    {
+      "id": "J",
+      "parameters": {
+        "base_bps": 70,
+        "low_bps": 0,
+        "high_bps": 110,
+        "tolerance_bps": 20,
+        "decay_steps": 8,
+        "pre_band_tolerance_fraction": 1.0
+      },
+      "code_sha256": "4316ab7e21a569832cdca6fd4db119f5b4f1615de43bb9d42a6a19bd94c57f7a",
+      "score": {
+        "n": 2000,
+        "seed_start": 0,
+        "mean_edge": 379.59432611883176
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 10.789905501146038,
+        "se": 0.13296393409316776,
+        "worst": [
+          {
+            "seed": 907,
+            "difference": -4.748794891501575
+          },
+          {
+            "seed": 1994,
+            "difference": -4.362960609652021
+          },
+          {
+            "seed": 520,
+            "difference": -3.888054026289467
+          },
+          {
+            "seed": 445,
+            "difference": -3.697151116484463
+          },
+          {
+            "seed": 1532,
+            "difference": -3.6360404090995644
+          }
+        ]
+      },
+      "paired_vs_training_incumbent": {
+        "reference": "tuning variant G",
+        "reference_sha256": "824770903026a7eabd46c3b11069e5296e5b36515f4bac83f9c80329926dc763",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 0.623098492454923,
+        "se": 0.04980967206663981,
+        "worst": [
+          {
+            "seed": 1532,
+            "difference": -10.230699259751987
+          },
+          {
+            "seed": 259,
+            "difference": -8.47333833219733
+          },
+          {
+            "seed": 601,
+            "difference": -7.92369302917308
+          },
+          {
+            "seed": 1475,
+            "difference": -7.317662996467618
+          },
+          {
+            "seed": 1131,
+            "difference": -6.556575659486498
+          }
+        ]
+      }
+    },
+    {
+      "id": "K",
+      "parameters": {
+        "base_bps": 80,
+        "low_bps": 10,
+        "high_bps": 120,
+        "tolerance_bps": 40,
+        "decay_steps": 4,
+        "pre_band_tolerance_fraction": 1.0
+      },
+      "code_sha256": "17bab13d97d03047ab0a8da33b9d6b49c45921cd2457f86590453bb4aec3c7fd",
+      "score": {
+        "n": 2000,
+        "seed_start": 0,
+        "mean_edge": 378.7067236549653
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 9.902303037279593,
+        "se": 0.17727437537037305,
+        "worst": [
+          {
+            "seed": 1759,
+            "difference": -11.304781200202683
+          },
+          {
+            "seed": 1508,
+            "difference": -10.987647382939713
+          },
+          {
+            "seed": 1994,
+            "difference": -10.955988070461103
+          },
+          {
+            "seed": 113,
+            "difference": -10.673546849318484
+          },
+          {
+            "seed": 661,
+            "difference": -10.463280931597808
+          }
+        ]
+      },
+      "paired_vs_training_incumbent": {
+        "reference": "tuning variant J",
+        "reference_sha256": "4316ab7e21a569832cdca6fd4db119f5b4f1615de43bb9d42a6a19bd94c57f7a",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -0.8876024638664438,
+        "se": 0.08022353154812127,
+        "worst": [
+          {
+            "seed": 1508,
+            "difference": -12.084827008795912
+          },
+          {
+            "seed": 866,
+            "difference": -11.189251290880236
+          },
+          {
+            "seed": 1960,
+            "difference": -11.122886622143483
+          },
+          {
+            "seed": 404,
+            "difference": -10.581244555946682
+          },
+          {
+            "seed": 346,
+            "difference": -10.326965729957067
+          }
+        ]
+      }
+    },
+    {
+      "id": "L",
+      "parameters": {
+        "base_bps": 90,
+        "low_bps": 20,
+        "high_bps": 140,
+        "tolerance_bps": 40,
+        "decay_steps": 4,
+        "pre_band_tolerance_fraction": 1.0
+      },
+      "code_sha256": "1a99d873f2e835627ddb58c5039785eec1a6c28fe72163ae3bac3a2d5e3b7ada",
+      "score": {
+        "n": 2000,
+        "seed_start": 0,
+        "mean_edge": 374.842095831078
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 6.037675213392337,
+        "se": 0.21756120042253438,
+        "worst": [
+          {
+            "seed": 1994,
+            "difference": -20.970189850301864
+          },
+          {
+            "seed": 1508,
+            "difference": -19.969130080227217
+          },
+          {
+            "seed": 1150,
+            "difference": -18.789432787055887
+          },
+          {
+            "seed": 661,
+            "difference": -18.644728696046855
+          },
+          {
+            "seed": 540,
+            "difference": -17.898848281363428
+          }
+        ]
+      },
+      "paired_vs_training_incumbent": {
+        "reference": "tuning variant J",
+        "reference_sha256": "4316ab7e21a569832cdca6fd4db119f5b4f1615de43bb9d42a6a19bd94c57f7a",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -4.752230287753701,
+        "se": 0.1166541838399215,
+        "worst": [
+          {
+            "seed": 1508,
+            "difference": -21.066309706083416
+          },
+          {
+            "seed": 292,
+            "difference": -20.551820995578737
+          },
+          {
+            "seed": 1606,
+            "difference": -19.027034124521833
+          },
+          {
+            "seed": 1843,
+            "difference": -18.854449118335765
+          },
+          {
+            "seed": 1463,
+            "difference": -18.350335929559833
+          }
+        ]
+      }
+    },
+    {
+      "id": "M",
+      "parameters": {
+        "base_bps": 100,
+        "low_bps": 99,
+        "high_bps": 101,
+        "tolerance_bps": 40,
+        "decay_steps": 4,
+        "pre_band_tolerance_fraction": 1.0
+      },
+      "code_sha256": "ba55300c5b60359eb088e7406995d722d4c7ae620c3d17d2e677b8c1fb5e039b",
+      "score": {
+        "n": 2000,
+        "seed_start": 0,
+        "mean_edge": 373.9707682512087
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 5.166347633523017,
+        "se": 0.2499373351641195,
+        "worst": [
+          {
+            "seed": 661,
+            "difference": -26.175604691057288
+          },
+          {
+            "seed": 1508,
+            "difference": -24.521686579398533
+          },
+          {
+            "seed": 1150,
+            "difference": -23.275438113762675
+          },
+          {
+            "seed": 1468,
+            "difference": -21.870672443658066
+          },
+          {
+            "seed": 1843,
+            "difference": -21.058149370799413
+          }
+        ]
+      },
+      "paired_vs_training_incumbent": {
+        "reference": "tuning variant J",
+        "reference_sha256": "4316ab7e21a569832cdca6fd4db119f5b4f1615de43bb9d42a6a19bd94c57f7a",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -5.62355786762302,
+        "se": 0.14707537014616742,
+        "worst": [
+          {
+            "seed": 1508,
+            "difference": -25.618866205254733
+          },
+          {
+            "seed": 661,
+            "difference": -24.368288823459125
+          },
+          {
+            "seed": 1400,
+            "difference": -23.731833602546203
+          },
+          {
+            "seed": 1843,
+            "difference": -23.193240064204872
+          },
+          {
+            "seed": 709,
+            "difference": -22.932085720523332
+          }
+        ]
+      }
+    },
+    {
+      "id": "N",
+      "parameters": {
+        "base_bps": 85,
+        "low_bps": 84,
+        "high_bps": 86,
+        "tolerance_bps": 40,
+        "decay_steps": 4,
+        "pre_band_tolerance_fraction": 1.0
+      },
+      "code_sha256": "658e8e2e373f39f00b15f66b410666f22fce6d0d04631d28f49347205397728a",
+      "score": {
+        "n": 2000,
+        "seed_start": 0,
+        "mean_edge": 378.80289167670054
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 9.998471059014847,
+        "se": 0.19371671975702007,
+        "worst": [
+          {
+            "seed": 661,
+            "difference": -13.751904014192462
+          },
+          {
+            "seed": 1508,
+            "difference": -12.119206834829527
+          },
+          {
+            "seed": 1150,
+            "difference": -11.369096830880494
+          },
+          {
+            "seed": 795,
+            "difference": -10.460778486079846
+          },
+          {
+            "seed": 445,
+            "difference": -9.916256488774053
+          }
+        ]
+      },
+      "paired_vs_training_incumbent": {
+        "reference": "tuning variant J",
+        "reference_sha256": "4316ab7e21a569832cdca6fd4db119f5b4f1615de43bb9d42a6a19bd94c57f7a",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -0.79143444213119,
+        "se": 0.09028432055654786,
+        "worst": [
+          {
+            "seed": 1508,
+            "difference": -13.216386460685726
+          },
+          {
+            "seed": 1453,
+            "difference": -13.02680724046877
+          },
+          {
+            "seed": 1400,
+            "difference": -12.163877730999047
+          },
+          {
+            "seed": 661,
+            "difference": -11.944588146594299
+          },
+          {
+            "seed": 1843,
+            "difference": -11.711061191433942
+          }
+        ]
+      }
+    },
+    {
+      "id": "O",
+      "parameters": {
+        "base_bps": 75,
+        "low_bps": 74,
+        "high_bps": 76,
+        "tolerance_bps": 40,
+        "decay_steps": 4,
+        "pre_band_tolerance_fraction": 1.0
+      },
+      "code_sha256": "ae4904a699cf46c5a21037c0d4e1df30a3a42bed255b62e764e20544870f21e7",
+      "score": {
+        "n": 2000,
+        "seed_start": 0,
+        "mean_edge": 379.5391302225229
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 10.734709604837182,
+        "se": 0.15012474593106723,
+        "worst": [
+          {
+            "seed": 661,
+            "difference": -7.202811161699344
+          },
+          {
+            "seed": 445,
+            "difference": -5.794276454918986
+          },
+          {
+            "seed": 1420,
+            "difference": -5.27104586366022
+          },
+          {
+            "seed": 1453,
+            "difference": -5.236781084104223
+          },
+          {
+            "seed": 1508,
+            "difference": -5.162776707381681
+          }
+        ]
+      },
+      "paired_vs_training_incumbent": {
+        "reference": "tuning variant J",
+        "reference_sha256": "4316ab7e21a569832cdca6fd4db119f5b4f1615de43bb9d42a6a19bd94c57f7a",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -0.05519589630885416,
+        "se": 0.05721940562889982,
+        "worst": [
+          {
+            "seed": 1453,
+            "difference": -8.663740001264955
+          },
+          {
+            "seed": 370,
+            "difference": -7.798153896707106
+          },
+          {
+            "seed": 1400,
+            "difference": -7.741538286501509
+          },
+          {
+            "seed": 970,
+            "difference": -7.168332808393927
+          },
+          {
+            "seed": 1888,
+            "difference": -7.09561034275589
+          }
+        ]
+      }
+    },
+    {
+      "id": "Q",
+      "parameters": {
+        "base_bps": 75,
+        "low_bps": 65,
+        "high_bps": 95,
+        "tolerance_bps": 40,
+        "decay_steps": 4,
+        "pre_band_tolerance_fraction": 1.0
+      },
+      "code_sha256": "699b5fbd60dd9f2f569ff77ae1e34e395fc28b809b5983713c401a4ddc966278",
+      "score": {
+        "n": 2000,
+        "seed_start": 0,
+        "mean_edge": 378.706752302502
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 9.90233168481638,
+        "se": 0.1540106157829339,
+        "worst": [
+          {
+            "seed": 661,
+            "difference": -8.110245031787201
+          },
+          {
+            "seed": 907,
+            "difference": -6.810647927587837
+          },
+          {
+            "seed": 795,
+            "difference": -6.75408484739927
+          },
+          {
+            "seed": 1994,
+            "difference": -6.6462250510935235
+          },
+          {
+            "seed": 1508,
+            "difference": -6.617838280512785
+          }
+        ]
+      },
+      "paired_vs_training_incumbent": {
+        "reference": "tuning variant J",
+        "reference_sha256": "4316ab7e21a569832cdca6fd4db119f5b4f1615de43bb9d42a6a19bd94c57f7a",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -0.8875738163296579,
+        "se": 0.05669511535125955,
+        "worst": [
+          {
+            "seed": 1453,
+            "difference": -8.494747842901972
+          },
+          {
+            "seed": 1843,
+            "difference": -7.867894107177108
+          },
+          {
+            "seed": 1888,
+            "difference": -7.759090893799737
+          },
+          {
+            "seed": 1508,
+            "difference": -7.715017906368985
+          },
+          {
+            "seed": 1400,
+            "difference": -7.626877232972504
+          }
+        ]
+      }
+    },
+    {
+      "id": "P",
+      "parameters": {
+        "base_bps": 75,
+        "low_bps": 65,
+        "high_bps": 95,
+        "tolerance_bps": 40,
+        "decay_steps": 4,
+        "pre_band_tolerance_fraction": 0.5
+      },
+      "code_sha256": "31bd35d7ed240feca01dd7ba7920a5b7a692549e64c2cfe208343972eb45ffc4",
+      "score": {
+        "n": 2000,
+        "seed_start": 0,
+        "mean_edge": 379.29150835566946
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 10.487087737983801,
+        "se": 0.15301844961512062,
+        "worst": [
+          {
+            "seed": 661,
+            "difference": -7.028317122089561
+          },
+          {
+            "seed": 907,
+            "difference": -5.869098158863011
+          },
+          {
+            "seed": 445,
+            "difference": -5.631016233467733
+          },
+          {
+            "seed": 1994,
+            "difference": -5.525521357561729
+          },
+          {
+            "seed": 1453,
+            "difference": -5.368592710972678
+          }
+        ]
+      },
+      "paired_vs_training_incumbent": {
+        "reference": "tuning variant J",
+        "reference_sha256": "4316ab7e21a569832cdca6fd4db119f5b4f1615de43bb9d42a6a19bd94c57f7a",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -0.3028177631622371,
+        "se": 0.055702146527157465,
+        "worst": [
+          {
+            "seed": 1453,
+            "difference": -8.79555162813341
+          },
+          {
+            "seed": 1888,
+            "difference": -7.482653702070877
+          },
+          {
+            "seed": 326,
+            "difference": -7.0558916625051324
+          },
+          {
+            "seed": 1400,
+            "difference": -6.942099692105444
+          },
+          {
+            "seed": 1843,
+            "difference": -6.812174869579906
+          }
+        ]
+      }
+    }
+  ],
+  "next": [
+    "At the selected base fee, independently ablate low fee, high fee and decay to separate useful state response from the symmetric fee level.",
+    "Instrument training simulations to measure the arb/retail confusion matrix, then tune independent pre-trade and post-trade band tolerances without changing fee levels.",
+    "Compare the state machine against the network incumbent on fresh paired seeds; retain or simplify it only if its incremental gain clears two standard errors."
+  ],
+  "code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\nimport {AMMStrategyBase} from \"./AMMStrategyBase.sol\";\nimport {TradeInfo} from \"./IAMMStrategy.sol\";\n\n/// @notice Three-state fee policy with a tolerant inferred-price band test.\ncontract Strategy is AMMStrategyBase {\n    uint256 private constant BASE = 70 * BPS;\n    uint256 private constant LOW = 0 * BPS;\n    uint256 private constant HIGH = 110 * BPS;\n    uint256 private constant TOLERANCE = 20 * BPS;\n    uint256 private constant DECAY = 8;\n\n    // 0: inferred fair price; 1: last timestamp plus one; 2/3: live bid/ask;\n    // 4: state (0 retail, 1 arb buys X, 2 arb sells X);\n    // 5: state-change timestamp; 6: previous post-trade spot.\n    function afterInitialize(uint256 x, uint256 y)\n        external override returns (uint256, uint256)\n    {\n        slots[0] = wdiv(y, x);\n        slots[1] = 0;\n        slots[2] = BASE;\n        slots[3] = BASE;\n        slots[4] = 0;\n        slots[5] = 0;\n        slots[6] = slots[0];\n        return (BASE, BASE);\n    }\n\n    function afterSwap(TradeInfo calldata t)\n        external override returns (uint256 bidFee, uint256 askFee)\n    {\n        uint256 spot = wdiv(t.reserveY, t.reserveX);\n        bool first = t.timestamp + 1 > slots[1];\n        uint256 state;\n        if (first) {\n            uint256 elapsed = slots[1] == 0 ? 1 : t.timestamp + 1 - slots[1];\n            uint256 fee = t.isBuy ? slots[2] : slots[3];\n            uint256 implied = t.isBuy ? wmul(spot, WAD - fee) : wdiv(spot, WAD - fee);\n            uint256 priorEdge = t.isBuy\n                ? wmul(slots[6], WAD - fee) : wdiv(slots[6], WAD - fee);\n            uint256 fair = slots[0];\n            // Linear uncertainty allowance, capped to avoid accepting huge retail moves.\n            uint256 tolerance = wmul(fair, TOLERANCE + (elapsed > 10 ? 10 : elapsed) * 2 * BPS);\n            bool towardBand = t.isBuy ? priorEdge + tolerance >= fair : priorEdge <= fair + tolerance;\n            if (towardBand && absDiff(implied, fair) <= tolerance) {\n                state = t.isBuy ? 2 : 1;\n                slots[0] = implied;\n            } else {\n                // A noisy first trade still carries price information. Bound its influence.\n                uint256 limit = wmul(fair, 100 * BPS);\n                if (implied > fair) slots[0] = fair + (implied - fair > limit ? limit : implied - fair) / 4;\n                else slots[0] = fair - (fair - implied > limit ? limit : fair - implied) / 4;\n            }\n        }\n        if (state != slots[4]) {\n            slots[4] = state;\n            slots[5] = t.timestamp;\n        }\n        uint256 age = t.timestamp - slots[5];\n        bidFee = BASE;\n        askFee = BASE;\n        if (state != 0 && age < DECAY) {\n            uint256 low = BASE - (BASE - LOW) * (DECAY - age) / DECAY;\n            uint256 high = BASE + (HIGH - BASE) * (DECAY - age) / DECAY;\n            bidFee = state == 1 ? low : high;\n            askFee = state == 1 ? high : low;\n        }\n        slots[1] = t.timestamp + 1;\n        slots[2] = bidFee;\n        slots[3] = askFee;\n        slots[6] = spot;\n    }\n\n    function getName() external pure override returns (string memory) {\n        return \"BandState\";\n    }\n}\n",
+  "code_sha256": "4316ab7e21a569832cdca6fd4db119f5b4f1615de43bb9d42a6a19bd94c57f7a",
+  "score": {
+    "n": 1000,
+    "seed_start": 0,
+    "mean_edge": 380.2679123165339
+  },
+  "paired": {
+    "reference": "contracts/src/StarterStrategy.sol",
+    "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+    "seed_start": 100000,
+    "n": 2000,
+    "mean_diff": 10.778902870221694,
+    "se": 0.14088502689433996,
+    "worst": [
+      {
+        "seed": 100855,
+        "difference": -6.475187145945142
+      },
+      {
+        "seed": 101071,
+        "difference": -5.93833195969637
+      },
+      {
+        "seed": 100621,
+        "difference": -5.231054380485887
+      },
+      {
+        "seed": 100710,
+        "difference": -4.4374852190203455
+      },
+      {
+        "seed": 101621,
+        "difference": -4.049341014916365
+      }
+    ]
+  },
+  "fixed_fee_ablation": {
+    "base_bps": 70,
+    "code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\nimport {AMMStrategyBase} from \"./AMMStrategyBase.sol\";\nimport {IAMMStrategy, TradeInfo} from \"./IAMMStrategy.sol\";\n\n/// @title Starter Strategy - 70 Basis Points\n/// @notice A starting point with fixed 70 bps fees. Copy and modify this file.\ncontract Strategy is AMMStrategyBase {\n    uint256 public constant FEE = 70 * BPS;\n\n    function afterInitialize(uint256, uint256) external pure override returns (uint256, uint256) {\n        return (FEE, FEE);\n    }\n\n    function afterSwap(TradeInfo calldata) external pure override returns (uint256, uint256) {\n        return (FEE, FEE);\n    }\n\n    function getName() external pure override returns (string memory) {\n        return \"FixedBase70\";\n    }\n}\n",
+    "code_sha256": "e16053921e8899286d6f83c18b748a12fae74232e4e0dd1a8d93061baca80547",
+    "score": {
+      "n": 2000,
+      "seed_start": 100000,
+      "mean_edge": 379.57509615872306
+    },
+    "paired": {
+      "reference": "fixed 70 bps control",
+      "reference_sha256": "e16053921e8899286d6f83c18b748a12fae74232e4e0dd1a8d93061baca80547",
+      "seed_start": 100000,
+      "n": 2000,
+      "mean_diff": 0.7051081488625784,
+      "se": 0.049304226501107405,
+      "worst": [
+        {
+          "seed": 100935,
+          "difference": -10.814030957304112
+        },
+        {
+          "seed": 100479,
+          "difference": -10.671061646222995
+        },
+        {
+          "seed": 100855,
+          "difference": -9.277775016431178
+        },
+        {
+          "seed": 101320,
+          "difference": -8.296230084378863
+        },
+        {
+          "seed": 101327,
+          "difference": -8.240559735155784
+        }
+      ]
+    },
+    "state_gain_clears_2se": true,
+    "paired_vs_starter": {
+      "reference": "contracts/src/StarterStrategy.sol",
+      "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+      "seed_start": 100000,
+      "n": 2000,
+      "mean_diff": 10.073794721359116,
+      "se": 0.1338400095095699,
+      "worst": [
+        {
+          "seed": 101071,
+          "difference": -5.776739950491617
+        },
+        {
+          "seed": 101882,
+          "difference": -4.293128259626542
+        },
+        {
+          "seed": 100645,
+          "difference": -3.6124244493796027
+        },
+        {
+          "seed": 100631,
+          "difference": -3.4098961564359342
+        },
+        {
+          "seed": 101126,
+          "difference": -3.1529219118158096
+        }
+      ]
+    },
+    "seconds": 192.5614600670524
+  },
+  "paired_over_previous_best": {
+    "reference": "contracts/src/StarterStrategy.sol",
+    "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+    "seed_start": 100000,
+    "n": 2000,
+    "mean_diff": 10.778902870221694,
+    "se": 0.14088502689433996,
+    "worst": [
+      {
+        "seed": 100855,
+        "difference": -6.475187145945142
+      },
+      {
+        "seed": 101071,
+        "difference": -5.93833195969637
+      },
+      {
+        "seed": 100621,
+        "difference": -5.231054380485887
+      },
+      {
+        "seed": 100710,
+        "difference": -4.4374852190203455
+      },
+      {
+        "seed": 101621,
+        "difference": -4.049341014916365
+      }
+    ]
+  },
+  "previous_best_note": "The brief supplies upstream StarterStrategy.sol as the reference and no separately promoted previous-best source; both reference labels denote that same contract. Tuning leaders were not promoted.",
+  "fresh_score": {
+    "n": 2000,
+    "seed_start": 100000,
+    "mean_edge": 380.2802043075856
+  },
+  "seconds_per_simulation": 0.11582868187059649,
+  "timing": {
+    "workers": 4,
+    "batch_size": 20,
+    "candidate_seconds": 231.65736374119297,
+    "reference_seconds": 203.55949935968965,
+    "seconds_per_pair": 0.21760843155044132,
+    "excludes": "Compilation; includes Rust execution, batch overhead and extraction of results.",
+    "pilot": {
+      "n": 20,
+      "candidate_seconds": 2.1983963940292597,
+      "reference_seconds": 2.299151471350342,
+      "projected_2000_pair_seconds": 449.7547865379602
+    }
+  },
+  "validate_ok": true,
+  "promoted": true,
+  "ranked_promotions": [
+    {
+      "rank": 1,
+      "file": "candidates/band-state/Strategy.sol",
+      "code_sha256": "4316ab7e21a569832cdca6fd4db119f5b4f1615de43bb9d42a6a19bd94c57f7a",
+      "score": {
+        "n": 1000,
+        "seed_start": 0,
+        "mean_edge": 380.2679123165339
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 100000,
+        "n": 2000,
+        "mean_diff": 10.778902870221694,
+        "se": 0.14088502689433996,
+        "worst": [
+          {
+            "seed": 100855,
+            "difference": -6.475187145945142
+          },
+          {
+            "seed": 101071,
+            "difference": -5.93833195969637
+          },
+          {
+            "seed": 100621,
+            "difference": -5.231054380485887
+          },
+          {
+            "seed": 100710,
+            "difference": -4.4374852190203455
+          },
+          {
+            "seed": 101621,
+            "difference": -4.049341014916365
+          }
+        ]
+      }
+    }
+  ],
+  "established_best": {
+    "file": "candidates/band-state/Strategy.sol",
+    "code_sha256": "4316ab7e21a569832cdca6fd4db119f5b4f1615de43bb9d42a6a19bd94c57f7a",
+    "score": {
+      "n": 1000,
+      "seed_start": 0,
+      "mean_edge": 380.2679123165339
+    }
+  },
+  "citations": [
+    {
+      "title": "Official simulator at required commit",
+      "url": "https://github.com/benedictbrady/amm-challenge/tree/6b6921f8d463314aa7c96234e1be25a25245f704",
+      "use": "API, fee accounting, arbitrage equations, configuration and scoring."
+    },
+    {
+      "title": "Algebra: AMM fee challenge notes",
+      "url": "https://www.linkedin.com/pulse/amm-fee-challenge-notes-from-our-run-optimization-arena-qe3ff",
+      "use": "Public discussion of asymmetric fees and first-in-block ordering; performance claims not independently verified."
+    },
+    {
+      "title": "Public research methodology post-mortem",
+      "url": "https://github.com/dipankar/amm-challenge/blob/main/ANALYSIS.md",
+      "use": "Warns about the limitations of classification-only strategies; strategy code was not copied."
+    }
+  ],
+  "changes": [
+    "candidates/band-state/Strategy.sol",
+    "candidates/band-state/result.json",
+    "candidates/band-state/NOTES.md",
+    "artifacts/goal/batches/r1/items/band-state/result.json"
+  ],
+  "checks": [
+    {
+      "command": "Reconstruct every measured source from the delivered source and recorded parameter table",
+      "result": "All 17 SHA-256 hashes match the actual scored sources."
+    },
+    {
+      "command": "git -C test/scratch/band-state/simulator rev-parse HEAD; git -C test/scratch/band-state/simulator diff --exit-code",
+      "result": "Required commit verified; no tracked upstream changes."
+    },
+    {
+      "command": "maturin develop --release --manifest-path test/scratch/band-state/simulator/amm_sim_rs/Cargo.toml",
+      "result": "Release engine built successfully with scratch-local dependencies."
+    },
+    {
+      "command": "amm-match validate candidates/band-state/Strategy.sol",
+      "result": "Validating strategy...\nCompiling strategy...\nStrategy 'BandState' validated successfully!"
+    },
+    {
+      "command": "pytest -q -s test/scratch/band-state/test_state.py",
+      "result": "Source SHA-256: 4316ab7e21a569832cdca6fd4db119f5b4f1615de43bb9d42a6a19bd94c57f7a\n....Maximum measured swap gas in 2000-swap stress test: 52658\n.\n5 passed in 10.30s",
+      "peak_swap_gas": 52658
+    },
+    {
+      "command": "Compare harness configurations to MatchRunner._build_configs for seeds 0..1999",
+      "result": "All 12 fields matched on every seed."
+    },
+    {
+      "command": "python3 test/scratch/band-state/tune.py [variant IDs]",
+      "result": "17 candidates each measured on 2000 paired tuning seeds; per-seed scores cached and statistics reported in tried."
+    },
+    {
+      "command": "python3 test/scratch/band-state/measure.py candidates/band-state/Strategy.sol --start 100000 --n 2000 --reference test/scratch/band-state/simulator/contracts/src/StarterStrategy.sol",
+      "result": "Completed 2000 fresh paired simulations; candidate was frozen before evaluation."
+    },
+    {
+      "command": "amm-match run candidates/band-state/Strategy.sol --simulations 20",
+      "result": "Validating strategy...\nCompiling strategy...\nStrategy: BandState\n\nRunning 20 simulations...\n\nBandState Edge: 408.32"
+    },
+    {
+      "command": "python3 test/scratch/band-state/measure.py test/scratch/band-state/FixedBase.sol --start 100000 --n 2000",
+      "result": "Completed 2000 same-seed fixed-base ablation runs after freezing the candidate; ablation was not used for tuning."
+    },
+    {
+      "command": "Read back both JSON copies; verify source bytes, SHA-256, size limit, required counts and untracked named output",
+      "result": "Passed. JSON copies are identical, embedded source matches Strategy.sol, hashes match, each result is below 64000 bytes, and the named output is untracked."
+    }
+  ],
+  "limitations": [
+    "The fixed-fee ablation measures the aggregate state response; it does not identify which individual component helps.",
+    "Local scores are not an official leaderboard submission.",
+    "Classification is heuristic because the true fair price and trader identity are hidden.",
+    "Fees decay only on callbacks, not during idle steps.",
+    "Tuning comparisons are selection-biased; only the final reserved-seed comparison supports promotion."
+  ],
+  "setup_failures_resolved": [
+    "python command absent: used python3.",
+    "python3 -m venv lacked ensurepip: bootstrapped pip inside the scratch venv.",
+    "Rustup initially could not use /tmp: supplied scratch-local TMPDIR.",
+    "System Rust/C compiler absent: installed local Rust and Zig linker.",
+    "One exploratory arbitrageur.rs path was wrong: read src/market/arbitrageur.rs.",
+    "One interactive harness import lacked sys.path: corrected the scratch module path."
+  ],
+  "selection": {
+    "rule": "Largest mean on tuning seeds 0..1999; source frozen before fresh evaluation.",
+    "runner_up": "O",
+    "n": 2000,
+    "seed_start": 0,
+    "mean_diff_vs_runner_up": 0.05519589630885416,
+    "se_vs_runner_up": 0.05721940562889982,
+    "limitation": "The tuning lead over O is within one standard error; superiority over O is not established. Fresh validation compares with the prescribed starter and a fixed 70 bps ablation."
+  }
+}

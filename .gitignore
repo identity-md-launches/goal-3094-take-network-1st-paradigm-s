@@ -1,0 +1,45 @@
+# Local toolchains / venvs (see tools/README.md)
+.deps/
+.venv/
+venv/
+
+# Python build output and caches
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+build/
+dist/
+*.so
+
+# Rust build output (amm_sim_rs)
+target/
+tools/amm-challenge/amm_sim_rs/target/
+Cargo.lock
+
+# Foundry output (tools/amm-challenge/contracts)
+out/
+cache/
+lib/
+
+# Scratch space for workers (deleted before submission)
+test/scratch/
+
+# Measurement outputs
+*.csv
+!best/*.csv
+
+# Agent/editor/home-dir noise present in worker checkouts
+.claude/
+.npm/
+.idea
+.vscode
+.bash_profile
+.bashrc
+.profile
+.zprofile
+.zshrc
+.gitconfig
+.mcp.json
+.gitmodules
+.ripgreprc

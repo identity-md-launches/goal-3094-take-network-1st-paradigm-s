@@ -1,0 +1,273 @@
+{
+  "approach": "Independent bid and ask fees. A trade of at least 0.50% of post-trade Y reserves widens the opposite side by 135 bps, capped at base plus two bumps. Both sides start at 30 bps; excess fees decay by 7 bps per elapsed observed step. This protects the side a return arbitrage would use while leaving the other side open to retail flow.",
+  "tuned_values": {
+    "bid": {
+      "base_bps": 30,
+      "size_threshold_bps_of_y_reserves": 50,
+      "widen_bps": 135,
+      "decay_bps_per_step": 7
+    },
+    "ask": {
+      "base_bps": 30,
+      "size_threshold_bps_of_y_reserves": 50,
+      "widen_bps": 135,
+      "decay_bps_per_step": 7
+    },
+    "cap_bumps": 2
+  },
+  "tried": [
+    {
+      "stage": "fixed bases",
+      "seed_start": 0,
+      "n_per_setting": 100,
+      "settings": 9,
+      "best_parameters": [
+        80,
+        80,
+        10000,
+        10000,
+        0,
+        0,
+        0,
+        0
+      ],
+      "best_cap_multiple": 3,
+      "best_mean_edge": 391.7258791004588,
+      "best_paired_mean_vs_selected": -54.85139009731438
+    },
+    {
+      "stage": "coarse dynamic",
+      "seed_start": 0,
+      "n_per_setting": 100,
+      "settings": 30,
+      "best_parameters": [
+        60,
+        60,
+        30,
+        30,
+        60,
+        60,
+        10,
+        10
+      ],
+      "best_cap_multiple": 3,
+      "best_mean_edge": 426.6158760237849,
+      "best_paired_mean_vs_selected": -19.961393173988313
+    },
+    {
+      "stage": "refined dynamic",
+      "seed_start": 0,
+      "n_per_setting": 100,
+      "settings": 32,
+      "best_parameters": [
+        45,
+        45,
+        45,
+        45,
+        100,
+        100,
+        15,
+        15
+      ],
+      "best_cap_multiple": 3,
+      "best_mean_edge": 439.8855511213026,
+      "best_paired_mean_vs_selected": -6.691718076470579
+    },
+    {
+      "stage": "coordinate pass 1",
+      "seed_start": 100,
+      "n_per_setting": 200,
+      "settings": 23,
+      "best_parameters": [
+        40,
+        40,
+        40,
+        40,
+        120,
+        120,
+        10,
+        10
+      ],
+      "best_cap_multiple": 2,
+      "best_mean_edge": 431.5139046081167,
+      "best_paired_mean_vs_selected": -4.673552637570879
+    },
+    {
+      "stage": "coordinate pass 2",
+      "seed_start": 300,
+      "n_per_setting": 500,
+      "settings": 18,
+      "best_parameters": [
+        30,
+        30,
+        45,
+        45,
+        135,
+        135,
+        7,
+        7
+      ],
+      "best_cap_multiple": 3,
+      "best_mean_edge": 434.5839829091306,
+      "best_paired_mean_vs_selected": -0.5838401749463742
+    },
+    {
+      "stage": "bid/ask sweeps",
+      "seed_start": 800,
+      "n_per_setting": 400,
+      "settings": 17,
+      "best_parameters": [
+        30,
+        30,
+        50,
+        50,
+        135,
+        135,
+        7,
+        7
+      ],
+      "best_cap_multiple": 3,
+      "best_mean_edge": 429.5021781412976,
+      "best_paired_mean_vs_selected": 0.0
+    },
+    {
+      "stage": "confirmation",
+      "seed_start": 1200,
+      "n_per_setting": 800,
+      "settings": 12,
+      "best_parameters": [
+        30,
+        30,
+        50,
+        50,
+        135,
+        135,
+        7,
+        7
+      ],
+      "best_cap_multiple": 2,
+      "best_mean_edge": 434.60629890573733,
+      "best_paired_mean_vs_selected": 0.0
+    }
+  ],
+  "next": [
+    "Estimate the hidden fair price from post-arbitrage band-edge trades and use its gap to set directional fees.",
+    "Separate large retail trades from first-in-step arbitrage using timestamp and direction before widening.",
+    "Adapt the base fee to inferred volatility and inventory; evaluate changes with 2,000 paired fresh seeds."
+  ],
+  "code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\nimport {AMMStrategyBase} from \"./AMMStrategyBase.sol\";\nimport {TradeInfo} from \"./IAMMStrategy.sol\";\n\n/// @notice Raises the fee on the side exposed by a large price-moving trade.\ncontract Strategy is AMMStrategyBase {\n    uint256 private constant BASE_BID = 30 * BPS;\n    uint256 private constant BASE_ASK = 30 * BPS;\n    uint256 private constant THRESHOLD_BID = 50; // bps of Y reserves\n    uint256 private constant THRESHOLD_ASK = 50; // bps of Y reserves\n    uint256 private constant BUMP_BID = 135 * BPS;\n    uint256 private constant BUMP_ASK = 135 * BPS;\n    uint256 private constant DECAY_BID = 7 * BPS; // bps per elapsed step\n    uint256 private constant DECAY_ASK = 7 * BPS;\n    uint256 private constant MAX_BID = BASE_BID + 2 * BUMP_BID;\n    uint256 private constant MAX_ASK = BASE_ASK + 2 * BUMP_ASK;\n\n    // slots[0] = bid fee, slots[1] = ask fee, slots[2] = last observed step.\n    function afterInitialize(uint256, uint256) external override returns (uint256, uint256) {\n        slots[0] = BASE_BID;\n        slots[1] = BASE_ASK;\n        slots[2] = 0;\n        return (BASE_BID, BASE_ASK);\n    }\n\n    function afterSwap(TradeInfo calldata trade) external override returns (uint256 bidFee, uint256 askFee) {\n        uint256 elapsed = trade.timestamp > slots[2] ? trade.timestamp - slots[2] : 0;\n        bidFee = slots[0];\n        askFee = slots[1];\n\n        // Saturating linear decay avoids underflow and cannot cross the base fee.\n        uint256 excessBid = bidFee - BASE_BID;\n        uint256 excessAsk = askFee - BASE_ASK;\n        uint256 bidDecay = elapsed * DECAY_BID;\n        uint256 askDecay = elapsed * DECAY_ASK;\n        bidFee = BASE_BID + (bidDecay >= excessBid ? 0 : excessBid - bidDecay);\n        askFee = BASE_ASK + (askDecay >= excessAsk ? 0 : excessAsk - askDecay);\n\n        // When this AMM buys X, spot falls and a return trade uses its ask.\n        // When it sells X, spot rises and a return trade uses its bid.\n        if (trade.reserveY > 0) {\n            uint256 sizeBps = trade.amountY * 10000 / trade.reserveY;\n            if (trade.isBuy) {\n                if (sizeBps >= THRESHOLD_ASK) {\n                    askFee = askFee + BUMP_ASK;\n                    if (askFee > MAX_ASK) askFee = MAX_ASK;\n                }\n            } else {\n                if (sizeBps >= THRESHOLD_BID) {\n                    bidFee = bidFee + BUMP_BID;\n                    if (bidFee > MAX_BID) bidFee = MAX_BID;\n                }\n            }\n        }\n\n        slots[0] = bidFee;\n        slots[1] = askFee;\n        slots[2] = trade.timestamp;\n        return (bidFee, askFee);\n    }\n\n    function getName() external pure override returns (string memory) {\n        return \"ExampleTuned\";\n    }\n}\n",
+  "code_sha256": "0b262897556896df7d0792f531096a0b730a0363a0ddd7b857cc635a23180c07",
+  "score": {
+    "n": 1000,
+    "mean_edge": 435.16220010470994
+  },
+  "paired": {
+    "reference": "contracts/src/StarterStrategy.sol at 6b6921f8d463314aa7c96234e1be25a25245f704",
+    "seed_start": 100000,
+    "n": 2000,
+    "mean_diff": 65.71226105406619,
+    "se": 0.3472059830117122,
+    "worst": [
+      {
+        "seed": 100645,
+        "diff": 28.125249534884347
+      },
+      {
+        "seed": 100357,
+        "diff": 28.925404473331753
+      },
+      {
+        "seed": 101882,
+        "diff": 32.61803847847793
+      },
+      {
+        "seed": 101559,
+        "diff": 33.54280503445824
+      },
+      {
+        "seed": 101263,
+        "diff": 34.67965021925107
+      }
+    ]
+  },
+  "paired_previous_best": {
+    "reference": "symmetric dynamic incumbent, SHA-256 d4226fadfb03dcd28f9b412427fe12dc525882d41398bde153cf37ea683e577c",
+    "seed_start": 100000,
+    "n": 2000,
+    "mean_diff": 0.8145439646022257,
+    "se": 0.07548650571926896,
+    "worst": [
+      {
+        "seed": 100270,
+        "diff": -17.932238515038307
+      },
+      {
+        "seed": 101858,
+        "diff": -13.870611392936041
+      },
+      {
+        "seed": 101965,
+        "diff": -13.319246261564103
+      },
+      {
+        "seed": 101256,
+        "diff": -12.39164045063626
+      },
+      {
+        "seed": 101502,
+        "diff": -12.087249398819154
+      }
+    ]
+  },
+  "seconds_per_simulation": 0.050964071901049464,
+  "validate_ok": true,
+  "citations": [
+    {
+      "title": "AMM challenge simulator and README at pinned commit",
+      "url": "https://github.com/benedictbrady/amm-challenge/tree/6b6921f8d463314aa7c96234e1be25a25245f704",
+      "use": "Rules, example, and engine source"
+    },
+    {
+      "title": "Algebra Finance AMM fee challenge notes",
+      "url": "https://www.linkedin.com/pulse/amm-fee-challenge-notes-from-our-run-optimization-arena-qe3ff",
+      "use": "Public write-up on asymmetric fees and simulation tuning"
+    },
+    {
+      "title": "AMM challenge research post-mortem",
+      "url": "https://github.com/dipankar/amm-challenge/blob/main/ANALYSIS.md",
+      "use": "Public discussion of the limitations of size-triggered spike and decay versus fair-price estimation"
+    }
+  ],
+  "changed": [
+    "candidates/example-tuned/Strategy.sol",
+    "candidates/example-tuned/result.json",
+    "candidates/example-tuned/NOTES.md",
+    "artifacts/goal/batches/r1/items/example-tuned/result.json"
+  ],
+  "checks": [
+    {
+      "command": "git -C test/scratch/amm-challenge checkout 6b6921f8d463314aa7c96234e1be25a25245f704",
+      "result": "Pinned simulator source checked out."
+    },
+    {
+      "command": "maturin develop --release -m test/scratch/amm-challenge/amm_sim_rs/Cargo.toml",
+      "result": "Rust Python extension built successfully."
+    },
+    {
+      "command": "amm-match validate candidates/example-tuned/Strategy.sol",
+      "result": "Strategy ExampleTuned validated successfully; Solidity compilation and deployment passed."
+    },
+    {
+      "command": "amm-match run candidates/example-tuned/Strategy.sol --simulations 20",
+      "result": "20-seed smoke score 463.66 edge."
+    },
+    {
+      "command": "python test/scratch/measure.py",
+      "result": "Candidate score 435.1622 on seeds 0-999; fresh paired gain over starter 65.7123 ± 0.3472 SE and over incumbent 0.8145 ± 0.0755 SE on seeds 100000-101999."
+    },
+    {
+      "command": "amm-match run candidates/example-tuned/Strategy.sol --simulations 1000",
+      "result": "Official CLI reported 435.16 edge, matching custom seeded runner mean 435.1622 on seeds 0-999."
+    }
+  ]
+}

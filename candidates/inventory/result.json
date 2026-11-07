@@ -1,0 +1,640 @@
+{
+  "approach": "Fee-adjusted inferred fair price, asymmetric quotes, reserve-value imbalance relative to initialization, and bounded reserve-depth spread adjustment.",
+  "tried": [
+    {
+      "name": "inventory_v1",
+      "candidate": {
+        "path": "test/scratch/inventory_v1.sol",
+        "sha256": "d71b3c63b3149df23db985841aad51873a7b1001a12b75713640133970d144d8",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_edge": 459.92038953275807,
+        "seconds": 359.48365244967863,
+        "seconds_per_simulation": 0.1797418262248393
+      },
+      "paired": {
+        "reference": "test/scratch/amm/contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 91.11596891507232,
+        "se": 1.1189465707087318,
+        "worst": [
+          {
+            "seed": 259,
+            "difference": -192.15580896194393
+          },
+          {
+            "seed": 1657,
+            "difference": -169.58751809910905
+          },
+          {
+            "seed": 412,
+            "difference": -149.55504502844371
+          },
+          {
+            "seed": 1041,
+            "difference": -139.25719854615906
+          },
+          {
+            "seed": 1919,
+            "difference": -131.4223308364912
+          }
+        ]
+      },
+      "reference": {
+        "path": "test/scratch/amm/contracts/src/StarterStrategy.sol",
+        "sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_edge": 368.80442061768565,
+        "seconds": 341.1632982180454,
+        "seconds_per_simulation": 0.17058164910902268
+      }
+    },
+    {
+      "name": "no_inventory",
+      "sha256": "9d264d7db724e612f440bf1d3ae09614bd68cf2a30319e1aa4cc9f1534c5c4e8",
+      "mean_edge": 440.8593848744085,
+      "paired": {
+        "reference": "test/scratch/amm/contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 72.05496425672283,
+        "se": 1.1415475163919202,
+        "worst": [
+          {
+            "seed": 259,
+            "difference": -196.55875219301726
+          },
+          {
+            "seed": 1657,
+            "difference": -171.96676938114874
+          },
+          {
+            "seed": 412,
+            "difference": -158.25889715856428
+          },
+          {
+            "seed": 675,
+            "difference": -147.43443052207255
+          },
+          {
+            "seed": 1041,
+            "difference": -138.66014486180984
+          }
+        ]
+      },
+      "seconds_per_simulation": 0.18883310344070195
+    },
+    {
+      "name": "no_depth",
+      "sha256": "eaa876d16305ff61f9e69a28cc53ec8642336cb2bbb31ad09f334a561e30afca",
+      "mean_edge": 459.9962467811333,
+      "paired": {
+        "reference": "test/scratch/amm/contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 91.19182616344766,
+        "se": 1.1142507571361449,
+        "worst": [
+          {
+            "seed": 259,
+            "difference": -192.53816493544323
+          },
+          {
+            "seed": 1657,
+            "difference": -169.76898651726907
+          },
+          {
+            "seed": 412,
+            "difference": -149.99035856767685
+          },
+          {
+            "seed": 1041,
+            "difference": -140.6328381423148
+          },
+          {
+            "seed": 1919,
+            "difference": -132.4271182365515
+          }
+        ]
+      },
+      "seconds_per_simulation": 0.13083965077484028
+    },
+    {
+      "name": "inventory_half",
+      "sha256": "8cab12c0db22d635818397d5bc09b9306250ccabfb25f439ee783607df1efd2e",
+      "mean_edge": 462.7172279431862,
+      "paired": {
+        "reference": "test/scratch/amm/contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 93.91280732550051,
+        "se": 1.107298844662196,
+        "worst": [
+          {
+            "seed": 259,
+            "difference": -192.00905428660792
+          },
+          {
+            "seed": 1657,
+            "difference": -161.2253138368187
+          },
+          {
+            "seed": 412,
+            "difference": -149.33514618499436
+          },
+          {
+            "seed": 1041,
+            "difference": -138.70083372287704
+          },
+          {
+            "seed": 1919,
+            "difference": -132.51827431140663
+          }
+        ]
+      },
+      "seconds_per_simulation": 0.0877524292867165
+    },
+    {
+      "name": "inventory_widen",
+      "sha256": "cbf30e46305f3d1e07a7c70ff156ed3d66062e96e7d62a21231a13fdb1f97219",
+      "mean_edge": 218.08815363906265,
+      "paired": {
+        "reference": "test/scratch/amm/contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -150.716266978623,
+        "se": 1.4336450505665326,
+        "worst": [
+          {
+            "seed": 901,
+            "difference": -343.8797116095631
+          },
+          {
+            "seed": 1596,
+            "difference": -333.1447813165724
+          },
+          {
+            "seed": 89,
+            "difference": -325.475506719308
+          },
+          {
+            "seed": 1118,
+            "difference": -322.0298908556192
+          },
+          {
+            "seed": 323,
+            "difference": -318.14773711708335
+          }
+        ]
+      },
+      "seconds_per_simulation": 0.05246437100158073
+    },
+    {
+      "name": "inventory_fast",
+      "sha256": "67eaa8671d4e31f56153552edd4998e76cb9880833498a564e484211102a2303",
+      "mean_edge": 403.25795796312065,
+      "paired": {
+        "reference": "test/scratch/amm/contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 34.45353734543503,
+        "se": 1.1734967392958129,
+        "worst": [
+          {
+            "seed": 208,
+            "difference": -239.848537278158
+          },
+          {
+            "seed": 1007,
+            "difference": -187.9426617619989
+          },
+          {
+            "seed": 1744,
+            "difference": -185.55814050654533
+          },
+          {
+            "seed": 407,
+            "difference": -174.5818918484708
+          },
+          {
+            "seed": 1431,
+            "difference": -173.6011426490369
+          }
+        ]
+      },
+      "seconds_per_simulation": 0.07887809198256582
+    },
+    {
+      "name": "inventory_low_spread",
+      "sha256": "f7e00f5098e73c1e4b82436290684a6149bbaeee2e8b1af0af1698c1170bcbd7",
+      "mean_edge": 473.398959448194,
+      "paired": {
+        "reference": "test/scratch/amm/contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 104.59453883050828,
+        "se": 1.052714924815377,
+        "worst": [
+          {
+            "seed": 259,
+            "difference": -190.5394192795948
+          },
+          {
+            "seed": 1657,
+            "difference": -138.89497978709304
+          },
+          {
+            "seed": 412,
+            "difference": -134.93093643034211
+          },
+          {
+            "seed": 1041,
+            "difference": -125.79639621794618
+          },
+          {
+            "seed": 254,
+            "difference": -112.0258661481659
+          }
+        ]
+      },
+      "seconds_per_simulation": 0.0989852337546181
+    },
+    {
+      "name": "fixed30",
+      "candidate": {
+        "path": "test/scratch/fixed30.sol",
+        "sha256": "9bf61770e9049d495ea17cc8051f3c21ec3d04140734aa509edc8987b23e89f9",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_edge": 342.94218249497794,
+        "seconds": 403.89928671810776,
+        "seconds_per_simulation": 0.20194964335905388
+      },
+      "paired": {
+        "reference": "test/scratch/amm/contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -25.862238122707726,
+        "se": 0.19765280872841595,
+        "worst": [
+          {
+            "seed": 1849,
+            "difference": -63.387074966086516
+          },
+          {
+            "seed": 118,
+            "difference": -57.60228581864965
+          },
+          {
+            "seed": 179,
+            "difference": -56.15902084995349
+          },
+          {
+            "seed": 1503,
+            "difference": -54.00285955204623
+          },
+          {
+            "seed": 1588,
+            "difference": -52.96637616291895
+          }
+        ]
+      }
+    },
+    {
+      "name": "inventory_balance",
+      "candidate": {
+        "path": "test/scratch/inventory_balance.sol",
+        "sha256": "12cc2ddadd0be5fc68c59b7a293d34c0a780c17901b354d2bc9d419d79d62679",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_edge": 448.7486467217635,
+        "seconds": 530.6850257599726,
+        "seconds_per_simulation": 0.26534251287998634
+      },
+      "paired": {
+        "reference": "test/scratch/amm/contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 79.94422610407787,
+        "se": 0.7168305430371698,
+        "worst": [
+          {
+            "seed": 1789,
+            "difference": 17.528113850117734
+          },
+          {
+            "seed": 922,
+            "difference": 23.837601389885947
+          },
+          {
+            "seed": 1256,
+            "difference": 25.543020089377535
+          },
+          {
+            "seed": 1541,
+            "difference": 25.96995549500616
+          },
+          {
+            "seed": 1894,
+            "difference": 26.237163220264677
+          }
+        ]
+      },
+      "reference": {
+        "path": "test/scratch/amm/contracts/src/StarterStrategy.sol",
+        "sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_edge": 368.80442061768565,
+        "seconds": 341.1632982180454,
+        "seconds_per_simulation": 0.17058164910902268
+      }
+    }
+  ],
+  "next": [
+    "Test inventory skew on an independently improved fair-price estimator, with paired ablation.",
+    "Separate X-value and Y depth terms to account for order-side liquidity; test on unused tuning seeds.",
+    "Test time-gap-dependent filtering and a no-arbitrage price interval, then confirm on a new holdout."
+  ],
+  "code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\nimport {AMMStrategyBase} from \"./AMMStrategyBase.sol\";\nimport {TradeInfo} from \"./IAMMStrategy.sol\";\n\n/// @notice Fair-value quotes with bounded inventory and depth adjustments.\ncontract Strategy is AMMStrategyBase {\n    // slots: 0 fair price, 1 timestamp, 2 bid, 3 ask, 4 initial Y,\n    // 5 initial value imbalance (encoded with a WAD offset).\n    function afterInitialize(uint256 initialX, uint256 initialY)\n        external override returns (uint256, uint256)\n    {\n        slots[0] = wdiv(initialY, initialX);\n        slots[1] = 0;\n        slots[2] = 30 * BPS;\n        slots[3] = 30 * BPS;\n        slots[4] = initialY;\n        uint256 xValue = wmul(initialX, slots[0]);\n        slots[5] = uint256(int256(WAD) +\n            (int256(xValue) - int256(initialY)) * int256(WAD) / int256(xValue + initialY));\n        return (slots[2], slots[3]);\n    }\n\n    function afterSwap(TradeInfo calldata t)\n        external override returns (uint256 bidFee, uint256 askFee)\n    {\n        uint256 spot = wdiv(t.reserveY, t.reserveX);\n        uint256 implied = t.isBuy\n            ? wmul(spot, WAD - slots[2])\n            : wdiv(spot, WAD - slots[3]);\n        uint256 fair = slots[0];\n        // First trade can be arbitrage; later trades share the same fair price.\n        uint256 alpha = t.timestamp > slots[1] ? 2600 : 500;\n        implied = clamp(implied, fair * 97 / 100, fair * 103 / 100);\n        fair = (fair * (10000 - alpha) + implied * alpha) / 10000;\n        slots[0] = fair;\n        slots[1] = t.timestamp;\n\n        uint256 xValue = wmul(t.reserveX, fair);\n        int256 inventory = (int256(xValue) - int256(t.reserveY)) * int256(WAD)\n            / int256(xValue + t.reserveY) - (int256(slots[5]) - int256(WAD));\n        // A long X balance raises the buying fee and lowers the selling fee.\n        int256 skew = inventory / 10;\n        int256 cap = int256(10 * BPS);\n        if (skew > cap) skew = cap;\n        if (skew < -cap) skew = -cap;\n        // Shallower reserves increase adverse-selection cost per unit of flow.\n        uint256 depth = clamp(wdiv(slots[4], t.reserveY), WAD / 2, 2 * WAD);\n        int256 spread = int256(15 * BPS + wmul(5 * BPS, depth));\n        int256 deviation = (int256(spot) - int256(fair)) * int256(WAD) / int256(fair);\n        bidFee = bounded(spread + deviation + skew);\n        askFee = bounded(spread - deviation - skew);\n        slots[2] = bidFee;\n        slots[3] = askFee;\n    }\n\n    function bounded(int256 fee) internal pure returns (uint256) {\n        return fee <= 0 ? 0 : clampFee(uint256(fee));\n    }\n\n    function getName() external pure override returns (string memory) {\n        return \"InventoryDepthR1\";\n    }\n}\n",
+  "code_sha256": "f7e00f5098e73c1e4b82436290684a6149bbaeee2e8b1af0af1698c1170bcbd7",
+  "score": {
+    "n": 1000,
+    "mean_edge": 474.0638416918613,
+    "seed_start": 0
+  },
+  "paired": {
+    "reference": "contracts/src/StarterStrategy.sol",
+    "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+    "seed_start": 100000,
+    "n": 2000,
+    "mean_diff": 104.48994039293486,
+    "se": 1.1041392117721462,
+    "worst": [
+      {
+        "seed": 101110,
+        "difference": -172.27562479468156
+      },
+      {
+        "seed": 100241,
+        "difference": -150.2166574348416
+      },
+      {
+        "seed": 100385,
+        "difference": -138.67544953469127
+      },
+      {
+        "seed": 101140,
+        "difference": -133.02482631890553
+      },
+      {
+        "seed": 100030,
+        "difference": -112.95871134618818
+      }
+    ]
+  },
+  "seconds_per_simulation": 0.10080380130256526,
+  "validate_ok": true,
+  "citations": [
+    {
+      "url": "https://github.com/benedictbrady/amm-challenge/tree/6b6921f8d463314aa7c96234e1be25a25245f704",
+      "use": "Pinned simulator, fee equations, baseline and compiler."
+    },
+    {
+      "url": "https://github.com/dipankar/amm-challenge/blob/main/ANALYSIS.md",
+      "use": "Public post-mortem: state estimation and ablation; reported scores not treated as comparable measurements."
+    },
+    {
+      "url": "https://github.com/jiayaoqijia/amm-challenge-yq/blob/main/README.md",
+      "use": "Public description of implied-price filtering; no public strategy source copied."
+    }
+  ],
+  "changed": [
+    "candidates/inventory/Strategy.sol",
+    "candidates/inventory/result.json",
+    "candidates/inventory/NOTES.md",
+    "artifacts/goal/batches/r1/items/inventory/result.json"
+  ],
+  "checks": {
+    "simulator_commit": "6b6921f8d463314aa7c96234e1be25a25245f704",
+    "configuration": "10000 steps, randomized parameters per upstream _build_configs, normalizer fixed 30 bps, 8 workers",
+    "harness": "Compared all 12 configuration fields with upstream on seeds 0..19; exact equality. Per-seed differences use result.edges[submission].",
+    "commands": [
+      "maturin develop --release --manifest-path test/scratch/amm/amm_sim_rs/Cargo.toml",
+      "amm-match validate candidates/inventory/Strategy.sol",
+      "python test/scratch/checks.py",
+      "python test/scratch/bench.py candidates/inventory/Strategy.sol --reference test/scratch/amm/contracts/src/StarterStrategy.sol --start 100000 --n 2000 --out test/scratch/final_compare.json",
+      "python test/scratch/bench.py candidates/inventory/Strategy.sol --n 1000 --out test/scratch/final_score.json",
+      "python test/scratch/sweep.py",
+      "python test/scratch/finish_pipeline.py",
+      "Python JSON/source SHA-256/schema/size/path checks"
+    ],
+    "gas": "Successful stress calls under enforced 250000 cap; adapter gas_used is only an estimate, not actual measured gas.",
+    "setup_failures": [
+      "python/cargo/rustc initially absent from PATH; installed local Rust and Python dependencies in scratch.",
+      "python3 -m venv lacked ensurepip; bootstrapped pip in the local venv.",
+      "rustup initial mktemp failed because /tmp unavailable; set TMPDIR to scratch and reran successfully.",
+      "Exploratory reads of nonexistent amm_sim_rs/src/amm.rs and src/batch.rs failed; discovered and read src/amm/cfmm.rs and src/simulation/runner.rs instead. No build failure resulted."
+    ],
+    "stress_calls": 501,
+    "stress_result": "All successful; all output fees within bounds; 250000 gas cap enforced.",
+    "metric": "Native pinned Rust result.edges[submission]; no score-sign or engine modifications."
+  },
+  "promotion": {
+    "promoted": true,
+    "previous_best": "contracts/src/StarterStrategy.sol",
+    "previous_best_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+    "rule": "Only this held-out result can promote; training selection is not promotion."
+  },
+  "limitations": [
+    "One bounded round-1 item; no leaderboard submission or rank claim.",
+    "Inventory value imbalance is algebraically tied to spot/fair price, not an independent risk factor.",
+    "Reported wall time depends on worker count and concurrent benchmark load.",
+    "Depth contribution is not independently validated in the selected low-spread architecture; in the initial model, adding depth reduced training edge slightly. The frozen selected source was retained without holdout-driven tuning."
+  ],
+  "inventory_ablation": {
+    "candidate": {
+      "path": "candidates/inventory/Strategy.sol",
+      "sha256": "f7e00f5098e73c1e4b82436290684a6149bbaeee2e8b1af0af1698c1170bcbd7",
+      "seed_start": 100000,
+      "n": 2000,
+      "mean_edge": 473.9912418302988,
+      "seconds": 201.60760260513052,
+      "seconds_per_simulation": 0.10080380130256526
+    },
+    "reference": {
+      "path": "test/scratch/final_no_inventory.sol",
+      "sha256": "a50954735512b7a95e24015c7e909b842156be1940e1dc99fc1d9843731926b7",
+      "seed_start": 100000,
+      "n": 2000,
+      "mean_edge": 458.84088824876426,
+      "seconds": 186.33464556746185,
+      "seconds_per_simulation": 0.09316732278373092
+    },
+    "paired": {
+      "reference": "test/scratch/final_no_inventory.sol",
+      "reference_sha256": "a50954735512b7a95e24015c7e909b842156be1940e1dc99fc1d9843731926b7",
+      "seed_start": 100000,
+      "n": 2000,
+      "mean_diff": 15.150353581534546,
+      "se": 0.38002231400632963,
+      "worst": [
+        {
+          "seed": 100662,
+          "difference": -138.63391151575678
+        },
+        {
+          "seed": 100638,
+          "difference": -94.50772715965542
+        },
+        {
+          "seed": 101993,
+          "difference": -76.50427612177566
+        },
+        {
+          "seed": 101713,
+          "difference": -69.78400057108433
+        },
+        {
+          "seed": 101317,
+          "difference": -50.227126779180935
+        }
+      ]
+    }
+  },
+  "versus_initial_candidate": {
+    "candidate": {
+      "path": "candidates/inventory/Strategy.sol",
+      "sha256": "f7e00f5098e73c1e4b82436290684a6149bbaeee2e8b1af0af1698c1170bcbd7",
+      "seed_start": 100000,
+      "n": 2000,
+      "mean_edge": 473.9912418302988,
+      "seconds": 201.60760260513052,
+      "seconds_per_simulation": 0.10080380130256526
+    },
+    "reference": {
+      "path": "test/scratch/inventory_v1.sol",
+      "sha256": "d71b3c63b3149df23db985841aad51873a7b1001a12b75713640133970d144d8",
+      "seed_start": 100000,
+      "n": 2000,
+      "mean_edge": 461.0028295393235,
+      "seconds": 176.52939363010228,
+      "seconds_per_simulation": 0.08826469681505114
+    },
+    "paired": {
+      "reference": "test/scratch/inventory_v1.sol",
+      "reference_sha256": "d71b3c63b3149df23db985841aad51873a7b1001a12b75713640133970d144d8",
+      "seed_start": 100000,
+      "n": 2000,
+      "mean_diff": 12.988412290975226,
+      "se": 0.4297782832634658,
+      "worst": [
+        {
+          "seed": 100030,
+          "difference": -183.13929277572822
+        },
+        {
+          "seed": 100097,
+          "difference": -182.0255257317085
+        },
+        {
+          "seed": 100662,
+          "difference": -136.03468040689006
+        },
+        {
+          "seed": 100638,
+          "difference": -95.66020466795845
+        },
+        {
+          "seed": 101993,
+          "difference": -79.73749111535165
+        }
+      ]
+    }
+  },
+  "selection": {
+    "name": "inventory_low_spread",
+    "training_mean": 473.398959448194,
+    "choices": [
+      [
+        "inventory_v1",
+        459.92038953275807
+      ],
+      [
+        "no_depth",
+        459.9962467811333
+      ],
+      [
+        "inventory_half",
+        462.7172279431862
+      ],
+      [
+        "inventory_widen",
+        218.08815363906265
+      ],
+      [
+        "inventory_fast",
+        403.25795796312065
+      ],
+      [
+        "inventory_low_spread",
+        473.398959448194
+      ],
+      [
+        "inventory_balance",
+        448.7486467217635
+      ]
+    ]
+  },
+  "depth_ablation_initial_model": {
+    "reference": "test/scratch/no_depth.sol",
+    "reference_sha256": "eaa876d16305ff61f9e69a28cc53ec8642336cb2bbb31ad09f334a561e30afca",
+    "seed_start": 0,
+    "n": 2000,
+    "mean_diff": -0.07585724837533246,
+    "se": 0.11918971894666171,
+    "worst": [
+      {
+        "seed": 1090,
+        "difference": -69.04634714938987
+      },
+      {
+        "seed": 22,
+        "difference": -66.9264442702272
+      },
+      {
+        "seed": 1111,
+        "difference": -64.27603335242111
+      },
+      {
+        "seed": 280,
+        "difference": -39.025142591072836
+      },
+      {
+        "seed": 261,
+        "difference": -35.0413762657609
+      }
+    ]
+  },
+  "heldout_score": {
+    "seed_start": 100000,
+    "n": 2000,
+    "mean_edge": 473.9912418302988
+  },
+  "previous_best_score": {
+    "seed_start": 100000,
+    "n": 2000,
+    "mean_edge": 369.50130143736396
+  }
+}

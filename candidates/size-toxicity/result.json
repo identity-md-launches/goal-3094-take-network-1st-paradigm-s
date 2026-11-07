@@ -1,0 +1,979 @@
+{
+  "approach": "First-principles asymmetric fair-value quotes plus separate bid/ask toxicity accumulators. Each trade adds SIZE_GAIN*(amountY/reserveY)^2 and a quadratic decayed same-direction streak surcharge to its side. Pressures decay with elapsed steps, are bounded, and use eight of the 32 slots. Fair price is a smoothed fee-band-edge inference from first-in-step trades. No external calls, assembly, or history loops.",
+  "tried": [
+    {
+      "label": "A",
+      "parameters": {
+        "BASE": 2500,
+        "ALPHA": 260,
+        "SIZE_GAIN": 30,
+        "STREAK_GAIN": 10,
+        "DECAY": 1000,
+        "SKEW": 1000
+      },
+      "code_sha256": "301844e4e51ecd53db5e0cff90a669a5ad3ed65d1156499615ffb43befdfd32e",
+      "score": {
+        "n": 1000,
+        "mean_edge": 480.5497197727031
+      },
+      "training_score": {
+        "seed_start": 0,
+        "n": 2000,
+        "mean_edge": 479.42046216127903
+      },
+      "paired": {
+        "reference": "test/scratch/simulator/contracts/src/StarterStrategy.sol",
+        "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 110.61604154359331,
+        "se": 0.787410080523976,
+        "worst": [
+          {
+            "seed": 1046,
+            "diff": -1.6016755973273007
+          },
+          {
+            "seed": 1905,
+            "diff": 5.348833245127707
+          },
+          {
+            "seed": 1668,
+            "diff": 12.427654672842493
+          },
+          {
+            "seed": 734,
+            "diff": 19.926585937869447
+          },
+          {
+            "seed": 1732,
+            "diff": 21.978242173121885
+          }
+        ]
+      },
+      "role": "eligible configuration",
+      "seconds_per_simulation": 0.26610064638598124
+    },
+    {
+      "label": "B",
+      "parameters": {
+        "BASE": 2500,
+        "ALPHA": 600,
+        "SIZE_GAIN": 30,
+        "STREAK_GAIN": 10,
+        "DECAY": 1000,
+        "SKEW": 1000
+      },
+      "code_sha256": "c22645615e226ce4e28fd42895b3c98c5116fdff99e7daf5da4ea604cf70125f",
+      "score": {
+        "n": 1000,
+        "mean_edge": 427.75770858115914
+      },
+      "training_score": {
+        "seed_start": 0,
+        "n": 2000,
+        "mean_edge": 426.553961863498
+      },
+      "paired": {
+        "reference": "test/scratch/A.sol",
+        "reference_sha256": "301844e4e51ecd53db5e0cff90a669a5ad3ed65d1156499615ffb43befdfd32e",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -52.86650029778101,
+        "se": 0.4525629017322739,
+        "worst": [
+          {
+            "seed": 1270,
+            "diff": -153.89683272862885
+          },
+          {
+            "seed": 896,
+            "diff": -149.1478727780197
+          },
+          {
+            "seed": 1164,
+            "diff": -147.54453611574297
+          },
+          {
+            "seed": 1501,
+            "diff": -137.96363015523661
+          },
+          {
+            "seed": 1865,
+            "diff": -130.36558497814224
+          }
+        ]
+      },
+      "role": "eligible configuration",
+      "seconds_per_simulation": 0.5815750112774549
+    },
+    {
+      "label": "C",
+      "parameters": {
+        "BASE": 3000,
+        "ALPHA": 260,
+        "SIZE_GAIN": 30,
+        "STREAK_GAIN": 10,
+        "DECAY": 1000,
+        "SKEW": 1000
+      },
+      "code_sha256": "7f06e747579a62f2a881481363c5759ea0c5873458c039b2b7fcfc9c84abb8ec",
+      "score": {
+        "n": 1000,
+        "mean_edge": 474.93928359057054
+      },
+      "training_score": {
+        "seed_start": 0,
+        "n": 2000,
+        "mean_edge": 474.015961187373
+      },
+      "paired": {
+        "reference": "test/scratch/A.sol",
+        "reference_sha256": "301844e4e51ecd53db5e0cff90a669a5ad3ed65d1156499615ffb43befdfd32e",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -5.404500973905943,
+        "se": 0.23684810398403158,
+        "worst": [
+          {
+            "seed": 332,
+            "diff": -106.68011535880146
+          },
+          {
+            "seed": 14,
+            "diff": -99.2677789948641
+          },
+          {
+            "seed": 1933,
+            "diff": -69.418609591821
+          },
+          {
+            "seed": 1241,
+            "diff": -57.43223625926953
+          },
+          {
+            "seed": 1291,
+            "diff": -52.87391316882247
+          }
+        ]
+      },
+      "role": "eligible configuration",
+      "seconds_per_simulation": 0.48766309323644963
+    },
+    {
+      "label": "D",
+      "parameters": {
+        "BASE": 2500,
+        "ALPHA": 260,
+        "SIZE_GAIN": 300,
+        "STREAK_GAIN": 50,
+        "DECAY": 1000,
+        "SKEW": 1000
+      },
+      "code_sha256": "d3d4ba7557352a064ca9a5763883b69709e71eab81c82ee8f0b8b54b853f6a8d",
+      "score": {
+        "n": 1000,
+        "mean_edge": 459.8482645926341
+      },
+      "training_score": {
+        "seed_start": 0,
+        "n": 2000,
+        "mean_edge": 459.0722568309237
+      },
+      "paired": {
+        "reference": "test/scratch/A.sol",
+        "reference_sha256": "301844e4e51ecd53db5e0cff90a669a5ad3ed65d1156499615ffb43befdfd32e",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -20.348205330355235,
+        "se": 0.36546588046895967,
+        "worst": [
+          {
+            "seed": 634,
+            "diff": -136.30853202949532
+          },
+          {
+            "seed": 542,
+            "diff": -128.7438008915591
+          },
+          {
+            "seed": 14,
+            "diff": -117.84642583606188
+          },
+          {
+            "seed": 310,
+            "diff": -116.89210086455296
+          },
+          {
+            "seed": 1562,
+            "diff": -110.5947888556791
+          }
+        ]
+      },
+      "role": "eligible configuration",
+      "seconds_per_simulation": 0.6948160432399599
+    },
+    {
+      "label": "E",
+      "parameters": {
+        "BASE": 2500,
+        "ALPHA": 260,
+        "SIZE_GAIN": 0,
+        "STREAK_GAIN": 0,
+        "DECAY": 1000,
+        "SKEW": 1000
+      },
+      "code_sha256": "bed6efa78b24c0941c4a209cdcc1113bd6442680233a19c588f642c28a7db983",
+      "score": {
+        "n": 1000,
+        "mean_edge": 481.7105637093854
+      },
+      "training_score": {
+        "seed_start": 0,
+        "n": 2000,
+        "mean_edge": 480.57309836077235
+      },
+      "paired": {
+        "reference": "test/scratch/A.sol",
+        "reference_sha256": "301844e4e51ecd53db5e0cff90a669a5ad3ed65d1156499615ffb43befdfd32e",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 1.1526361994934078,
+        "se": 0.18515662953363632,
+        "worst": [
+          {
+            "seed": 1562,
+            "diff": -102.6741461221527
+          },
+          {
+            "seed": 1724,
+            "diff": -50.19697513678017
+          },
+          {
+            "seed": 238,
+            "diff": -45.465015728944365
+          },
+          {
+            "seed": 406,
+            "diff": -39.04968885623538
+          },
+          {
+            "seed": 1612,
+            "diff": -38.65474361406439
+          }
+        ]
+      },
+      "role": "no-toxicity ablation; not eligible as the requested toxicity implementation",
+      "seconds_per_simulation": 0.38035826853703475
+    },
+    {
+      "label": "F",
+      "parameters": {
+        "BASE": 4000,
+        "ALPHA": 600,
+        "SIZE_GAIN": 30,
+        "STREAK_GAIN": 10,
+        "DECAY": 1000,
+        "SKEW": 1000
+      },
+      "code_sha256": "3995166e51b97669e75f304362e7c68a3f9f1b698448221bfc37f24eeeeb5667",
+      "score": {
+        "n": 1000,
+        "mean_edge": 415.03346045477196
+      },
+      "training_score": {
+        "seed_start": 0,
+        "n": 2000,
+        "mean_edge": 413.7012826953103
+      },
+      "paired": {
+        "reference": "test/scratch/A.sol",
+        "reference_sha256": "301844e4e51ecd53db5e0cff90a669a5ad3ed65d1156499615ffb43befdfd32e",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -65.71917946596865,
+        "se": 0.46401657337867086,
+        "worst": [
+          {
+            "seed": 755,
+            "diff": -196.2765647862642
+          },
+          {
+            "seed": 206,
+            "diff": -195.10986369973728
+          },
+          {
+            "seed": 1604,
+            "diff": -176.52967093825657
+          },
+          {
+            "seed": 1005,
+            "diff": -148.46199271037779
+          },
+          {
+            "seed": 944,
+            "diff": -139.94716368467414
+          }
+        ]
+      },
+      "role": "eligible configuration",
+      "seconds_per_simulation": 0.45642894724500366
+    },
+    {
+      "label": "G",
+      "parameters": {
+        "BASE": 4000,
+        "ALPHA": 260,
+        "SIZE_GAIN": 30,
+        "STREAK_GAIN": 10,
+        "DECAY": 1000,
+        "SKEW": 1000
+      },
+      "code_sha256": "afe8253dd70278b94a8f274e1aec0551de9f2e604f2b73cfda0e67d31574a62c",
+      "score": {
+        "n": 1000,
+        "mean_edge": 460.29516199701976
+      },
+      "training_score": {
+        "seed_start": 0,
+        "n": 2000,
+        "mean_edge": 459.19699404162566
+      },
+      "paired": {
+        "reference": "test/scratch/A.sol",
+        "reference_sha256": "301844e4e51ecd53db5e0cff90a669a5ad3ed65d1156499615ffb43befdfd32e",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -20.223468119653397,
+        "se": 0.3148132293497394,
+        "worst": [
+          {
+            "seed": 332,
+            "diff": -114.6908408558516
+          },
+          {
+            "seed": 14,
+            "diff": -113.17297088789229
+          },
+          {
+            "seed": 1562,
+            "diff": -111.78825380319915
+          },
+          {
+            "seed": 310,
+            "diff": -97.33580601162248
+          },
+          {
+            "seed": 1680,
+            "diff": -97.01185880744487
+          }
+        ]
+      },
+      "role": "eligible configuration",
+      "seconds_per_simulation": 0.4355601551600266
+    },
+    {
+      "label": "H",
+      "parameters": {
+        "BASE": 5000,
+        "ALPHA": 600,
+        "SIZE_GAIN": 30,
+        "STREAK_GAIN": 10,
+        "DECAY": 1000,
+        "SKEW": 1000
+      },
+      "code_sha256": "2a98241b63c1d4552e7d14d7ee5357412e4a5ebb965118f502750a06ae826e30",
+      "score": {
+        "n": 1000,
+        "mean_edge": 401.9276215490016
+      },
+      "training_score": {
+        "seed_start": 0,
+        "n": 2000,
+        "mean_edge": 400.8289242625489
+      },
+      "paired": {
+        "reference": "test/scratch/A.sol",
+        "reference_sha256": "301844e4e51ecd53db5e0cff90a669a5ad3ed65d1156499615ffb43befdfd32e",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -78.59153789873007,
+        "se": 0.4831060156700394,
+        "worst": [
+          {
+            "seed": 1270,
+            "diff": -172.8668753260921
+          },
+          {
+            "seed": 1431,
+            "diff": -172.71849163858394
+          },
+          {
+            "seed": 1226,
+            "diff": -158.52099079722848
+          },
+          {
+            "seed": 896,
+            "diff": -158.42285856423746
+          },
+          {
+            "seed": 1463,
+            "diff": -156.60962512597706
+          }
+        ]
+      },
+      "role": "eligible configuration",
+      "seconds_per_simulation": 0.6254289643990342
+    },
+    {
+      "label": "I",
+      "parameters": {
+        "BASE": 2500,
+        "ALPHA": 100,
+        "SIZE_GAIN": 30,
+        "STREAK_GAIN": 10,
+        "DECAY": 1000,
+        "SKEW": 1000
+      },
+      "code_sha256": "a8a73fcec10548f226bb9b0b2884310d3740acc567f4c2d99736814c0f6b51cc",
+      "score": {
+        "n": 1000,
+        "mean_edge": 473.33655860325086
+      },
+      "training_score": {
+        "seed_start": 0,
+        "n": 2000,
+        "mean_edge": 472.3615331859281
+      },
+      "paired": {
+        "reference": "test/scratch/A.sol",
+        "reference_sha256": "301844e4e51ecd53db5e0cff90a669a5ad3ed65d1156499615ffb43befdfd32e",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -7.0589289753508355,
+        "se": 0.38670246303893563,
+        "worst": [
+          {
+            "seed": 542,
+            "diff": -158.77975141283173
+          },
+          {
+            "seed": 1149,
+            "diff": -79.82768643874414
+          },
+          {
+            "seed": 1272,
+            "diff": -75.99114342540219
+          },
+          {
+            "seed": 746,
+            "diff": -74.19101869907388
+          },
+          {
+            "seed": 1259,
+            "diff": -72.8445993980369
+          }
+        ]
+      },
+      "role": "eligible configuration",
+      "seconds_per_simulation": 0.49598082856251857
+    },
+    {
+      "label": "J",
+      "parameters": {
+        "BASE": 3000,
+        "ALPHA": 100,
+        "SIZE_GAIN": 30,
+        "STREAK_GAIN": 10,
+        "DECAY": 1000,
+        "SKEW": 1000
+      },
+      "code_sha256": "785fb4fa539b56d64b979418f6b4bf50ddfe3dbfe106e6a6ea937dff170cfb57",
+      "score": {
+        "n": 1000,
+        "mean_edge": 467.4654869594833
+      },
+      "training_score": {
+        "seed_start": 0,
+        "n": 2000,
+        "mean_edge": 466.80401755846174
+      },
+      "paired": {
+        "reference": "test/scratch/A.sol",
+        "reference_sha256": "301844e4e51ecd53db5e0cff90a669a5ad3ed65d1156499615ffb43befdfd32e",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -12.616444602817241,
+        "se": 0.4013969138495288,
+        "worst": [
+          {
+            "seed": 542,
+            "diff": -165.8844172228341
+          },
+          {
+            "seed": 1259,
+            "diff": -88.46857815335903
+          },
+          {
+            "seed": 1149,
+            "diff": -84.12082302570167
+          },
+          {
+            "seed": 329,
+            "diff": -80.62439602616735
+          },
+          {
+            "seed": 1656,
+            "diff": -79.05381627388442
+          }
+        ]
+      },
+      "role": "eligible configuration",
+      "seconds_per_simulation": 0.6817035113014863
+    },
+    {
+      "label": "K",
+      "parameters": {
+        "BASE": 3500,
+        "ALPHA": 100,
+        "SIZE_GAIN": 30,
+        "STREAK_GAIN": 10,
+        "DECAY": 1000,
+        "SKEW": 1000
+      },
+      "code_sha256": "fb5d18d8567e5887c9105ee39db0c97ce32913d21617d758973f44e8d0fc4d45",
+      "score": {
+        "n": 1000,
+        "mean_edge": 461.4085241332891
+      },
+      "training_score": {
+        "seed_start": 0,
+        "n": 2000,
+        "mean_edge": 460.58919556629417
+      },
+      "paired": {
+        "reference": "test/scratch/A.sol",
+        "reference_sha256": "301844e4e51ecd53db5e0cff90a669a5ad3ed65d1156499615ffb43befdfd32e",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -18.83126659498481,
+        "se": 0.4065949725250449,
+        "worst": [
+          {
+            "seed": 542,
+            "diff": -158.43309454433006
+          },
+          {
+            "seed": 24,
+            "diff": -116.18064588409584
+          },
+          {
+            "seed": 1633,
+            "diff": -96.26551913477476
+          },
+          {
+            "seed": 1259,
+            "diff": -89.85018541171695
+          },
+          {
+            "seed": 1611,
+            "diff": -88.65636976656049
+          }
+        ]
+      },
+      "role": "eligible configuration",
+      "seconds_per_simulation": 0.34850991301599427
+    },
+    {
+      "label": "L",
+      "parameters": {
+        "BASE": 2500,
+        "ALPHA": 260,
+        "SIZE_GAIN": 30,
+        "STREAK_GAIN": 10,
+        "DECAY": 1000,
+        "SKEW": 500
+      },
+      "code_sha256": "8f4f86fa6911e58125fd4c95683015cb84a615813ff2aaf9d1d64bd05e6a889e",
+      "score": {
+        "n": 1000,
+        "mean_edge": 484.989044455472
+      },
+      "training_score": {
+        "seed_start": 0,
+        "n": 2000,
+        "mean_edge": 483.77171799357325
+      },
+      "paired": {
+        "reference": "test/scratch/A.sol",
+        "reference_sha256": "301844e4e51ecd53db5e0cff90a669a5ad3ed65d1156499615ffb43befdfd32e",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 4.351255832294189,
+        "se": 0.406591993900836,
+        "worst": [
+          {
+            "seed": 1231,
+            "diff": -52.773656608237104
+          },
+          {
+            "seed": 708,
+            "diff": -51.26221527022676
+          },
+          {
+            "seed": 791,
+            "diff": -44.07992416736079
+          },
+          {
+            "seed": 408,
+            "diff": -41.84588169211361
+          },
+          {
+            "seed": 1122,
+            "diff": -38.88550613249265
+          }
+        ]
+      },
+      "role": "eligible configuration",
+      "seconds_per_simulation": 0.9079029445830383
+    },
+    {
+      "label": "M",
+      "parameters": {
+        "BASE": 2500,
+        "ALPHA": 260,
+        "SIZE_GAIN": 30,
+        "STREAK_GAIN": 10,
+        "DECAY": 1000,
+        "SKEW": 1500
+      },
+      "code_sha256": "8970f9a5b1f342b3a36426d096dab9b2b6aa913939a81b1fbd674569e6251f79",
+      "score": {
+        "n": 1000,
+        "mean_edge": 244.07967293381182
+      },
+      "training_score": {
+        "seed_start": 0,
+        "n": 2000,
+        "mean_edge": 242.94747523690464
+      },
+      "paired": {
+        "reference": "test/scratch/A.sol",
+        "reference_sha256": "301844e4e51ecd53db5e0cff90a669a5ad3ed65d1156499615ffb43befdfd32e",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -236.47298692437437,
+        "se": 1.261546358622159,
+        "worst": [
+          {
+            "seed": 901,
+            "diff": -421.97536467248614
+          },
+          {
+            "seed": 1596,
+            "diff": -419.5617721926914
+          },
+          {
+            "seed": 1118,
+            "diff": -407.9057885800602
+          },
+          {
+            "seed": 588,
+            "diff": -400.0015744977934
+          },
+          {
+            "seed": 1854,
+            "diff": -396.01651854753254
+          }
+        ]
+      },
+      "role": "eligible configuration",
+      "seconds_per_simulation": 0.48172412692551736
+    }
+  ],
+  "next": [
+    "Fit a size- and timestamp-dependent confidence for first-in-step fair-price observations; distinguish a small arbitrage correction from a retail-induced price jump before increasing the update rate.",
+    "Measure separate buy/sell size distributions and ablate the size and streak surcharges individually on a new training block, then use a new untouched 2000-seed holdout.",
+    "Test quadratic versus cubic pressure with exact exponential step decay and a fair-value-aligned surcharge; compare against the same frozen source with paired uncertainty."
+  ],
+  "code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\nimport {AMMStrategyBase} from \"./AMMStrategyBase.sol\";\nimport {TradeInfo} from \"./IAMMStrategy.sol\";\n\n/// @notice Fair-value quotes with bounded, per-side quadratic flow toxicity.\ncontract Strategy is AMMStrategyBase {\n    uint256 constant BASE = 2500 * 1e12;\n    uint256 constant ALPHA = 260;\n    uint256 constant SIZE_GAIN = 30;\n    uint256 constant STREAK_GAIN = 10 * 1e12;\n    uint256 constant DECAY = 1000;\n    uint256 constant SKEW = 500;\n    // 0 fair price; 1/2 previous bid/ask; 3 last timestamp;\n    // 4/5 buy/sell size pressure; 6 direction (1 buy, 2 sell); 7 streak.\n    function afterInitialize(uint256 x, uint256 y) external override returns (uint256, uint256) {\n        slots[0] = wdiv(y, x);\n        slots[1] = BASE;\n        slots[2] = BASE;\n        slots[3] = 0;\n        slots[4] = 0;\n        slots[5] = 0;\n        slots[6] = 0;\n        slots[7] = 0;\n        return (BASE, BASE);\n    }\n    function afterSwap(TradeInfo calldata t) external override returns (uint256 bid, uint256 ask) {\n        uint256 spot = wdiv(t.reserveY, t.reserveX);\n        uint256 dt = t.timestamp > slots[3] ? t.timestamp - slots[3] : 0;\n        uint256 fair = slots[0];\n        uint256 oldFee = t.isBuy ? slots[1] : slots[2];\n        uint256 implied = t.isBuy ? wmul(spot, WAD - oldFee) : wdiv(spot, WAD - oldFee);\n        // Only the first trade in a step can be the price-revealing arb.\n        if (dt > 0) {\n            fair = (fair * (1000 - ALPHA) + implied * ALPHA) / 1000;\n            slots[0] = fair;\n        }\n        uint256 buyPressure = slots[4];\n        uint256 sellPressure = slots[5];\n        uint256 streak = slots[7];\n        if (dt > 0) {\n            uint256 divisor = 1000 + DECAY * (dt > 64 ? 64 : dt);\n            buyPressure = buyPressure * 1000 / divisor;\n            sellPressure = sellPressure * 1000 / divisor;\n            streak = streak * 1000 / divisor;\n        }\n        uint256 ratio = wdiv(t.amountY, t.reserveY);\n        if (ratio > WAD / 20) ratio = WAD / 20;\n        uint256 impulse = wmul(ratio, ratio) * SIZE_GAIN;\n        uint256 direction = t.isBuy ? 1 : 2;\n        streak = slots[6] == direction ? streak + WAD : WAD;\n        if (streak > 6 * WAD) streak = 6 * WAD;\n        uint256 repeatFee = wmul(wmul(streak - WAD, streak - WAD), STREAK_GAIN);\n        if (t.isBuy) buyPressure += impulse + repeatFee;\n        else sellPressure += impulse + repeatFee;\n        buyPressure = clamp(buyPressure, 0, 200 * BPS);\n        sellPressure = clamp(sellPressure, 0, 200 * BPS);\n        slots[4] = buyPressure;\n        slots[5] = sellPressure;\n        slots[6] = direction;\n        slots[7] = streak;\n        slots[3] = t.timestamp;\n        uint256 divergence = wdiv(absDiff(spot, fair), fair) * SKEW / 1000;\n        if (spot > fair) {\n            bid = BASE + divergence + buyPressure;\n            ask = BASE + sellPressure;\n            ask = ask > divergence ? ask - divergence : 0;\n        } else {\n            ask = BASE + divergence + sellPressure;\n            bid = BASE + buyPressure;\n            bid = bid > divergence ? bid - divergence : 0;\n        }\n        bid = clampFee(bid);\n        ask = clampFee(ask);\n        slots[1] = bid;\n        slots[2] = ask;\n    }\n    function getName() external pure override returns (string memory) {\n        return \"Size Toxicity\";\n    }\n}\n",
+  "code_sha256": "8f4f86fa6911e58125fd4c95683015cb84a615813ff2aaf9d1d64bd05e6a889e",
+  "score": {
+    "n": 1000,
+    "mean_edge": 484.989044455472
+  },
+  "paired": {
+    "reference": "contracts/src/StarterStrategy.sol @ 6b6921f8d463314aa7c96234e1be25a25245f704",
+    "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+    "seed_start": 100000,
+    "n": 2000,
+    "mean_diff": 115.19630308108363,
+    "se": 0.7337739067341067,
+    "worst": [
+      {
+        "seed": 101573,
+        "diff": 59.69740816036551
+      },
+      {
+        "seed": 100645,
+        "diff": 60.287732310799186
+      },
+      {
+        "seed": 100818,
+        "diff": 60.39195821087145
+      },
+      {
+        "seed": 100274,
+        "diff": 62.54208611012922
+      },
+      {
+        "seed": 100068,
+        "diff": 62.70602642904174
+      }
+    ]
+  },
+  "paired_previous_best": {
+    "reference": "Initial size-toxicity A",
+    "reference_sha256": "301844e4e51ecd53db5e0cff90a669a5ad3ed65d1156499615ffb43befdfd32e",
+    "seed_start": 100000,
+    "n": 2000,
+    "mean_diff": 4.936936231888352,
+    "se": 0.4403172299913898,
+    "worst": [
+      {
+        "seed": 101790,
+        "diff": -136.8411722688138
+      },
+      {
+        "seed": 100096,
+        "diff": -64.22664481318748
+      },
+      {
+        "seed": 101015,
+        "diff": -47.091964648753105
+      },
+      {
+        "seed": 100145,
+        "diff": -46.754335605498
+      },
+      {
+        "seed": 100930,
+        "diff": -45.505446053988635
+      }
+    ]
+  },
+  "holdout_score": {
+    "seed_start": 100000,
+    "n": 2000,
+    "mean_edge": 484.6976045184476
+  },
+  "seconds_per_simulation": 0.23777423722198,
+  "validate_ok": true,
+  "citations": [
+    {
+      "url": "https://github.com/benedictbrady/amm-challenge/tree/6b6921f8d463314aa7c96234e1be25a25245f704",
+      "use": "Pinned official simulator, strategy interface, baseline, validation, and seeded measurement protocol."
+    },
+    {
+      "url": "https://github.com/jiayaoqijia/amm-challenge-yq",
+      "use": "Public write-up of fair-price filtering and nonlinear toxicity; no implementation copied or public score treated as local evidence."
+    },
+    {
+      "url": "https://github.com/dipankar/amm-challenge/blob/main/ANALYSIS.md",
+      "use": "Public discussion motivating state estimation alongside trade-size signals; independent source written for this item."
+    }
+  ],
+  "initial_toxicity_ablation": {
+    "reference": "test/scratch/E.sol",
+    "reference_sha256": "bed6efa78b24c0941c4a209cdcc1113bd6442680233a19c588f642c28a7db983",
+    "seed_start": 0,
+    "n": 2000,
+    "mean_diff": -1.1526361994934078,
+    "se": 0.18515662953363632,
+    "worst": [
+      {
+        "seed": 491,
+        "diff": -72.51882604884531
+      },
+      {
+        "seed": 1892,
+        "diff": -68.66344213955927
+      },
+      {
+        "seed": 1321,
+        "diff": -50.157619405571154
+      },
+      {
+        "seed": 1356,
+        "diff": -49.044836666524816
+      },
+      {
+        "seed": 254,
+        "diff": -47.23636409537312
+      }
+    ]
+  },
+  "timing": {
+    "final_candidate_seconds": 475.54847444396,
+    "starter_seconds": 245.4719830059912,
+    "final_2000_pair_seconds": 721.0204574499512,
+    "pilot_n": 20,
+    "pilot_candidate_seconds_per_simulation": 0.2701678659475874,
+    "pilot_reference_seconds_per_simulation": 0.259942794899689,
+    "predicted_2000_pair_seconds": 1060.221321694553,
+    "pair_budget_seconds": 1500
+  },
+  "selection_rule": "Highest mean on training seeds 0..1999 among nonzero size/streak implementations; promotion requires fresh paired mean_diff > 2*se.",
+  "selected_configuration": "L",
+  "promotion_test": {
+    "challenger": "L",
+    "vs_initial": {
+      "reference": "test/scratch/A.sol",
+      "reference_sha256": "301844e4e51ecd53db5e0cff90a669a5ad3ed65d1156499615ffb43befdfd32e",
+      "seed_start": 100000,
+      "n": 2000,
+      "mean_diff": 4.936936231888352,
+      "se": 0.4403172299913898,
+      "worst": [
+        {
+          "seed": 101790,
+          "diff": -136.8411722688138
+        },
+        {
+          "seed": 100096,
+          "diff": -64.22664481318748
+        },
+        {
+          "seed": 101015,
+          "diff": -47.091964648753105
+        },
+        {
+          "seed": 100145,
+          "diff": -46.754335605498
+        },
+        {
+          "seed": 100930,
+          "diff": -45.505446053988635
+        }
+      ]
+    },
+    "vs_starter": {
+      "reference": "test/scratch/simulator/contracts/src/StarterStrategy.sol",
+      "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+      "seed_start": 100000,
+      "n": 2000,
+      "mean_diff": 115.19630308108363,
+      "se": 0.7337739067341067,
+      "worst": [
+        {
+          "seed": 101573,
+          "diff": 59.69740816036551
+        },
+        {
+          "seed": 100645,
+          "diff": 60.287732310799186
+        },
+        {
+          "seed": 100818,
+          "diff": 60.39195821087145
+        },
+        {
+          "seed": 100274,
+          "diff": 62.54208611012922
+        },
+        {
+          "seed": 100068,
+          "diff": 62.70602642904174
+        }
+      ]
+    },
+    "initial_vs_starter": {
+      "reference": "test/scratch/simulator/contracts/src/StarterStrategy.sol",
+      "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+      "seed_start": 100000,
+      "n": 2000,
+      "mean_diff": 110.25936684919526,
+      "se": 0.8591417488737265,
+      "worst": [
+        {
+          "seed": 100140,
+          "diff": -33.154307483944194
+        },
+        {
+          "seed": 100434,
+          "diff": -22.533488194521055
+        },
+        {
+          "seed": 100451,
+          "diff": -11.522748890858281
+        },
+        {
+          "seed": 100619,
+          "diff": -6.151245700952245
+        },
+        {
+          "seed": 101978,
+          "diff": 20.057468366583237
+        }
+      ]
+    },
+    "promote_challenger": true
+  },
+  "changes": [
+    "candidates/size-toxicity/Strategy.sol: complete submission contract",
+    "candidates/size-toxicity/NOTES.md: mechanism, citations, reproduction, scoreboard, and checks",
+    "candidates/size-toxicity/result.json: full source, hash, scores, and paired measurements",
+    "artifacts/goal/batches/r1/items/size-toxicity/result.json: identical required JSON output"
+  ],
+  "checks": [
+    {
+      "command": "git -C test/scratch/simulator rev-parse HEAD",
+      "result": "6b6921f8d463314aa7c96234e1be25a25245f704"
+    },
+    {
+      "command": "maturin develop --release --manifest-path test/scratch/simulator/amm_sim_rs/Cargo.toml",
+      "result": "Release build succeeded; unmodified pinned Rust source."
+    },
+    {
+      "command": "amm-match validate candidates/size-toxicity/Strategy.sol",
+      "result": "PASS: static validation, optimized solc 0.8.24 compilation, deployment, initialization."
+    },
+    {
+      "command": "python test/scratch/check_callbacks.py",
+      "result": "PASS: 2000 direct callbacks, 250000 gas limit, both directions, repeated trades, zero/tiny/large sizes, time gaps 0..100; fee bounds held."
+    },
+    {
+      "command": "python test/scratch/check_mechanism.py",
+      "result": "PASS: quadratic size scaling, side separation, repeat escalation, pressure decay. Initial scratch check_mechanism.py:18 assertion comparing final fees across a gap failed because fair value also updates; repaired to compare stored pressure."
+    },
+    {
+      "command": "amm-match run candidates/size-toxicity/Strategy.sol --simulations 20 (initial A source)",
+      "result": "PASS: 516.59, matching custom harness 516.5867031359468."
+    },
+    {
+      "command": "python test/scratch/bench.py candidates/size-toxicity/Strategy.sol --reference test/scratch/simulator/contracts/src/StarterStrategy.sol --n 20",
+      "result": "Frozen-source timing pilot completed; forecast was below the 25-minute pair allowance, so the full fresh n=2000 was retained."
+    },
+    {
+      "command": "python test/scratch/bench.py test/scratch/A.sol --reference test/scratch/simulator/contracts/src/StarterStrategy.sol --n 2000",
+      "result": "Completed paired training seeds 0..1999."
+    },
+    {
+      "command": "python test/scratch/variants.py; python test/scratch/variants2.py; python test/scratch/variants3.py; python test/scratch/variants4.py",
+      "result": "Completed 2000 seeds per variant, exclusively 0..1999; paired summaries recorded in tried."
+    },
+    {
+      "command": "python test/scratch/holdout.py L",
+      "result": "Completed 2000 fresh seeds 100000..101999 per measured strategy, paired against initial A and pinned StarterStrategy; no holdout-based coefficient tuning."
+    },
+    {
+      "command": "python test/scratch/audit.py",
+      "result": "PASS: independent paired arithmetic, JSON parsing, source hash consistency, identical result copies, 64000-byte limit, and allowed-path audit"
+    }
+  ],
+  "limitations": [
+    "Only the bounded round-1 size-toxicity item was evaluated. No overall network best source was present; the local previous best is identified in paired_previous_best. Public leaderboard results were not reproduced or submitted.",
+    "The no-toxicity ablation E is reported transparently but does not implement the required size/streak mechanism and is excluded from delivery eligibility.",
+    "Training wall times include CPU contention from parallel independent measurement jobs; seconds_per_simulation is the final holdout candidate wall time per simulation."
+  ]
+}

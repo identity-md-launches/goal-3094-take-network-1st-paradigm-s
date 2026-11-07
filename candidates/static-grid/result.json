@@ -1,0 +1,1195 @@
+{
+  "approach": "Reference-only static fee grid. Every strategy competes against fixed 30 bps; candidate-minus-starter differences pair equal simulation seeds. Winner selected only on seeds 0..499; holdout used for confirmation, not reselection.",
+  "tried": [
+    {
+      "bid": 75,
+      "ask": 75,
+      "n": 500,
+      "mean_edge": 385.04951874095923,
+      "mean_diff": 10.924726586472117,
+      "se": 0.2969360029090584,
+      "worst": [
+        {
+          "seed": 445,
+          "diff": -5.790471188973697
+        },
+        {
+          "seed": 36,
+          "diff": -4.502217361900989
+        },
+        {
+          "seed": 326,
+          "diff": -3.7854940800924624
+        },
+        {
+          "seed": 184,
+          "diff": -3.581440009800133
+        },
+        {
+          "seed": 377,
+          "diff": -2.5456252836219733
+        }
+      ],
+      "sha256": "5837798b91013de606cce87771bc2f4d40d0ae43b7b75aeab9c7a55e2e18670c"
+    },
+    {
+      "bid": 80,
+      "ask": 80,
+      "n": 500,
+      "mean_edge": 384.97453979973113,
+      "mean_diff": 10.849747645244,
+      "se": 0.34108227976378946,
+      "worst": [
+        {
+          "seed": 445,
+          "diff": -7.851857213198173
+        },
+        {
+          "seed": 36,
+          "diff": -6.552596534109398
+        },
+        {
+          "seed": 326,
+          "diff": -6.0539604942717915
+        },
+        {
+          "seed": 184,
+          "diff": -5.805558879874127
+        },
+        {
+          "seed": 44,
+          "diff": -4.766751544719966
+        }
+      ],
+      "sha256": "6520f51b6731384562842a924284b66b18bf3689f908c86d16da046ff7ee6f76"
+    },
+    {
+      "bid": 70,
+      "ask": 70,
+      "n": 500,
+      "mean_edge": 384.4523208910512,
+      "mean_diff": 10.327528736564133,
+      "se": 0.2489911187884079,
+      "worst": [
+        {
+          "seed": 445,
+          "diff": -3.9306316305195708
+        },
+        {
+          "seed": 36,
+          "diff": -2.620128941326243
+        },
+        {
+          "seed": 184,
+          "diff": -1.7256581412962078
+        },
+        {
+          "seed": 326,
+          "diff": -1.6331696125456006
+        },
+        {
+          "seed": 113,
+          "diff": -0.8160883942957753
+        }
+      ],
+      "sha256": "37dca181b6f975dde04845451b7f2a48b80e4ac46a36ed6c4611c6455e8a7b01"
+    },
+    {
+      "bid": 85,
+      "ask": 85,
+      "n": 500,
+      "mean_edge": 384.3227649561722,
+      "mean_diff": 10.19797280168514,
+      "se": 0.3827754949814236,
+      "worst": [
+        {
+          "seed": 445,
+          "diff": -9.94695120434227
+        },
+        {
+          "seed": 36,
+          "diff": -8.926565617949962
+        },
+        {
+          "seed": 326,
+          "diff": -8.150434215982159
+        },
+        {
+          "seed": 184,
+          "diff": -7.935638529030314
+        },
+        {
+          "seed": 44,
+          "diff": -7.227938525489321
+        }
+      ],
+      "sha256": "c17bf016703804004c391537c6b4fad8bd7bb3340dfd5d650db726efeefc2e05"
+    },
+    {
+      "bid": 90,
+      "ask": 90,
+      "n": 500,
+      "mean_edge": 383.14515823617137,
+      "mean_diff": 9.020366081684244,
+      "se": 0.42154346734631964,
+      "worst": [
+        {
+          "seed": 445,
+          "diff": -12.265457399807218
+        },
+        {
+          "seed": 36,
+          "diff": -11.640702564183755
+        },
+        {
+          "seed": 326,
+          "diff": -10.65042184397538
+        },
+        {
+          "seed": 44,
+          "diff": -10.225001793071783
+        },
+        {
+          "seed": 377,
+          "diff": -10.214612940000563
+        }
+      ],
+      "sha256": "895fae67244a9e747ddd8f85d81e19a1dbd5cefe0c6b5584925abf272949bb36"
+    },
+    {
+      "bid": 65,
+      "ask": 65,
+      "n": 500,
+      "mean_edge": 383.1423801092884,
+      "mean_diff": 9.017587954801307,
+      "se": 0.19626725454815297,
+      "worst": [
+        {
+          "seed": 445,
+          "diff": -2.125047503560239
+        },
+        {
+          "seed": 36,
+          "diff": -1.1763316941099333
+        },
+        {
+          "seed": 326,
+          "diff": -0.3395912319072636
+        },
+        {
+          "seed": 184,
+          "diff": -0.24361807059187868
+        },
+        {
+          "seed": 448,
+          "diff": -0.23049256384678074
+        }
+      ],
+      "sha256": "f118e7c4afb3bbf620677f056e1ad35c0a7aa0d43f2b39f5b8931f355d484508"
+    },
+    {
+      "bid": 95,
+      "ask": 95,
+      "n": 500,
+      "mean_edge": 381.49829852801724,
+      "mean_diff": 7.3735063735301445,
+      "se": 0.4583279929284954,
+      "worst": [
+        {
+          "seed": 445,
+          "diff": -14.918647631055364
+        },
+        {
+          "seed": 36,
+          "diff": -14.329782762750142
+        },
+        {
+          "seed": 44,
+          "diff": -13.812767602984025
+        },
+        {
+          "seed": 391,
+          "diff": -13.777580589444085
+        },
+        {
+          "seed": 326,
+          "diff": -13.73667328793772
+        }
+      ],
+      "sha256": "e12af1f02b60c32abe78fed87caed042d1ef8d889b8b66f688c5b956ed253189"
+    },
+    {
+      "bid": 60,
+      "ask": 60,
+      "n": 500,
+      "mean_edge": 381.0338092722212,
+      "mean_diff": 6.909017117734099,
+      "se": 0.13808317008950646,
+      "worst": [
+        {
+          "seed": 445,
+          "diff": -0.6128432553186656
+        },
+        {
+          "seed": 36,
+          "diff": -0.05683303869653855
+        },
+        {
+          "seed": 448,
+          "diff": 0.14215726514771632
+        },
+        {
+          "seed": 184,
+          "diff": 0.22100855455704504
+        },
+        {
+          "seed": 326,
+          "diff": 0.4326853780301576
+        }
+      ],
+      "sha256": "3ef9ec4d8d83a2c3c10d874ad11031572c853b19ca41c9382ff12211442d78c7"
+    },
+    {
+      "bid": 100,
+      "ask": 100,
+      "n": 500,
+      "mean_edge": 379.46532903819275,
+      "mean_diff": 5.340536883705615,
+      "se": 0.49321804126618496,
+      "worst": [
+        {
+          "seed": 391,
+          "diff": -18.191833692352475
+        },
+        {
+          "seed": 445,
+          "diff": -17.539976069510857
+        },
+        {
+          "seed": 44,
+          "diff": -17.478226432760152
+        },
+        {
+          "seed": 36,
+          "diff": -17.27073599200935
+        },
+        {
+          "seed": 28,
+          "diff": -17.14389335058962
+        }
+      ],
+      "sha256": "25ebd020891133ac12593b0ad8a21b6d5ebdd70095be61b4bad23ebd018a4d0e"
+    },
+    {
+      "bid": 55,
+      "ask": 55,
+      "n": 500,
+      "mean_edge": 378.05615234844873,
+      "mean_diff": 3.931360193961669,
+      "se": 0.0726386800622205,
+      "worst": [
+        {
+          "seed": 445,
+          "diff": 0.1739732054449803
+        },
+        {
+          "seed": 448,
+          "diff": 0.25127498718441643
+        },
+        {
+          "seed": 36,
+          "diff": 0.46869858550394383
+        },
+        {
+          "seed": 184,
+          "diff": 0.49530352216555684
+        },
+        {
+          "seed": 326,
+          "diff": 0.49549943923426554
+        }
+      ],
+      "sha256": "27ef763ca8a0129086e9760469cb9db5fcb0fdc08ec39f6a608918fe2b0d13c1"
+    },
+    {
+      "bid": 45,
+      "ask": 60,
+      "n": 500,
+      "mean_edge": 376.21617650587376,
+      "mean_diff": 2.091384351386644,
+      "se": 0.03747140269292439,
+      "worst": [
+        {
+          "seed": 445,
+          "diff": 0.16735922138582282
+        },
+        {
+          "seed": 448,
+          "diff": 0.18360288151396276
+        },
+        {
+          "seed": 326,
+          "diff": 0.28724974018450666
+        },
+        {
+          "seed": 36,
+          "diff": 0.2951651588717823
+        },
+        {
+          "seed": 184,
+          "diff": 0.36678836558854755
+        }
+      ],
+      "sha256": "98fc3bb43cf2f813c3be6b325b54b9e9e80f899687f12ba3c06e5a89a997a40e"
+    },
+    {
+      "bid": 60,
+      "ask": 45,
+      "n": 500,
+      "mean_edge": 376.21524463703844,
+      "mean_diff": 2.09045248255138,
+      "se": 0.03752285501919984,
+      "worst": [
+        {
+          "seed": 445,
+          "diff": 0.1850250716650237
+        },
+        {
+          "seed": 448,
+          "diff": 0.19415512175501703
+        },
+        {
+          "seed": 326,
+          "diff": 0.2933169334055492
+        },
+        {
+          "seed": 184,
+          "diff": 0.3073554947596904
+        },
+        {
+          "seed": 36,
+          "diff": 0.30806329411433353
+        }
+      ],
+      "sha256": "613dcc9df7dd1adbaf173f3aad400a7c2e0447610a7aeacb0d461051cffaf74b"
+    },
+    {
+      "bid": 50,
+      "ask": 50,
+      "n": 500,
+      "mean_edge": 374.1247921544871,
+      "mean_diff": 0.0,
+      "se": 0.0,
+      "worst": [
+        {
+          "seed": 0,
+          "diff": 0.0
+        },
+        {
+          "seed": 1,
+          "diff": 0.0
+        },
+        {
+          "seed": 2,
+          "diff": 0.0
+        },
+        {
+          "seed": 3,
+          "diff": 0.0
+        },
+        {
+          "seed": 4,
+          "diff": 0.0
+        }
+      ],
+      "sha256": "ef2774dca15afb4073083b16953bf3f0c031fa7b066cd43670b2181a73688f55"
+    },
+    {
+      "bid": 30,
+      "ask": 60,
+      "n": 500,
+      "mean_edge": 369.17196845956545,
+      "mean_diff": -4.952823694921726,
+      "se": 0.08163139677303137,
+      "worst": [
+        {
+          "seed": 118,
+          "diff": -11.806454213444226
+        },
+        {
+          "seed": 179,
+          "diff": -11.25550299234925
+        },
+        {
+          "seed": 76,
+          "diff": -10.940553548122807
+        },
+        {
+          "seed": 5,
+          "diff": -10.103067399991346
+        },
+        {
+          "seed": 491,
+          "diff": -9.574818101182586
+        }
+      ],
+      "sha256": "428e2a54fb6884bd9fa0e5d8dcc6d8a1e4c60c268bd89c524aa7316df754007c"
+    },
+    {
+      "bid": 60,
+      "ask": 30,
+      "n": 500,
+      "mean_edge": 369.16936256873515,
+      "mean_diff": -4.955429585752,
+      "se": 0.081486877387624,
+      "worst": [
+        {
+          "seed": 118,
+          "diff": -11.559289447803508
+        },
+        {
+          "seed": 179,
+          "diff": -11.410963582397585
+        },
+        {
+          "seed": 5,
+          "diff": -10.367415673418066
+        },
+        {
+          "seed": 76,
+          "diff": -10.30132857181701
+        },
+        {
+          "seed": 491,
+          "diff": -9.781553469211758
+        }
+      ],
+      "sha256": "773c657dd1c2b107f612f4c89549ee9984c4ffc899ccd9e2dece11a1222444df"
+    },
+    {
+      "bid": 45,
+      "ask": 45,
+      "n": 500,
+      "mean_edge": 369.1603672801665,
+      "mean_diff": -4.964424874320591,
+      "se": 0.08161877141783544,
+      "worst": [
+        {
+          "seed": 118,
+          "diff": -11.708313385834288
+        },
+        {
+          "seed": 179,
+          "diff": -11.352571791069522
+        },
+        {
+          "seed": 76,
+          "diff": -10.636633688290829
+        },
+        {
+          "seed": 5,
+          "diff": -10.262707301565968
+        },
+        {
+          "seed": 491,
+          "diff": -9.69726148557163
+        }
+      ],
+      "sha256": "de874b5bcb082ebfa4e2f33c4cba67ef47b9303b09256f1a3066141ebc939fa3"
+    },
+    {
+      "bid": 20,
+      "ask": 60,
+      "n": 500,
+      "mean_edge": 363.08168022643736,
+      "mean_diff": -11.043111928049786,
+      "se": 0.17263407048788423,
+      "worst": [
+        {
+          "seed": 118,
+          "diff": -25.150233277908967
+        },
+        {
+          "seed": 179,
+          "diff": -24.054933870567766
+        },
+        {
+          "seed": 76,
+          "diff": -22.983512350117564
+        },
+        {
+          "seed": 5,
+          "diff": -21.90879069773382
+        },
+        {
+          "seed": 491,
+          "diff": -20.928809861574734
+        }
+      ],
+      "sha256": "d5fd4df2acb02f6d6edb5684a1a8331f7e94852f6843dd390101c955d9c44f24"
+    },
+    {
+      "bid": 60,
+      "ask": 20,
+      "n": 500,
+      "mean_edge": 363.07716919286946,
+      "mean_diff": -11.047622961617686,
+      "se": 0.1724227934503137,
+      "worst": [
+        {
+          "seed": 118,
+          "diff": -24.826898611066156
+        },
+        {
+          "seed": 179,
+          "diff": -24.288451322741196
+        },
+        {
+          "seed": 5,
+          "diff": -22.270370420866584
+        },
+        {
+          "seed": 76,
+          "diff": -22.133631520857875
+        },
+        {
+          "seed": 491,
+          "diff": -21.204161122011044
+        }
+      ],
+      "sha256": "75a7436d9548fcced8b5a06aab61306fd2ae89ac80e1a2d27ae65c942de989eb"
+    },
+    {
+      "bid": 40,
+      "ask": 40,
+      "n": 500,
+      "mean_edge": 363.0568410641819,
+      "mean_diff": -11.067951090305177,
+      "se": 0.17279939415965767,
+      "worst": [
+        {
+          "seed": 118,
+          "diff": -25.03866220708653
+        },
+        {
+          "seed": 179,
+          "diff": -24.22474946692438
+        },
+        {
+          "seed": 76,
+          "diff": -22.59047967418917
+        },
+        {
+          "seed": 5,
+          "diff": -22.14651011548068
+        },
+        {
+          "seed": 491,
+          "diff": -21.105695100519597
+        }
+      ],
+      "sha256": "84797b3515de0129dedd9f60dc25d0419604e0ac64b0588d929eadf6459f53c3"
+    },
+    {
+      "bid": 30,
+      "ask": 45,
+      "n": 500,
+      "mean_edge": 359.5920100696986,
+      "mean_diff": -14.5327820847885,
+      "se": 0.22271798452352565,
+      "worst": [
+        {
+          "seed": 118,
+          "diff": -32.44031131426988
+        },
+        {
+          "seed": 179,
+          "diff": -31.321821467215273
+        },
+        {
+          "seed": 76,
+          "diff": -29.149943523831325
+        },
+        {
+          "seed": 5,
+          "diff": -28.679965399754508
+        },
+        {
+          "seed": 491,
+          "diff": -27.612133634192446
+        }
+      ],
+      "sha256": "c560370dc3abca4fd2d0b4b5691d990bbdeb3e2aa5e12098b25a5cd363937487"
+    },
+    {
+      "bid": 45,
+      "ask": 30,
+      "n": 500,
+      "mean_edge": 359.59015141390284,
+      "mean_diff": -14.534640740584198,
+      "se": 0.2226261858496806,
+      "worst": [
+        {
+          "seed": 118,
+          "diff": -32.31956943836798
+        },
+        {
+          "seed": 179,
+          "diff": -31.40950331261473
+        },
+        {
+          "seed": 76,
+          "diff": -28.832077808229712
+        },
+        {
+          "seed": 5,
+          "diff": -28.81925893108388
+        },
+        {
+          "seed": 491,
+          "diff": -27.716137867398515
+        }
+      ],
+      "sha256": "257588fe87201aab1766716ab78bfa78bb2bff01e6f4f84a175896c066d02d61"
+    },
+    {
+      "bid": 35,
+      "ask": 35,
+      "n": 500,
+      "mean_edge": 355.8926915102831,
+      "mean_diff": -18.23210064420401,
+      "se": 0.2759004395636048,
+      "worst": [
+        {
+          "seed": 118,
+          "diff": -40.29075064587818
+        },
+        {
+          "seed": 179,
+          "diff": -38.96279464060865
+        },
+        {
+          "seed": 5,
+          "diff": -35.92410612071211
+        },
+        {
+          "seed": 76,
+          "diff": -35.847785627282406
+        },
+        {
+          "seed": 491,
+          "diff": -34.749859092358406
+        }
+      ],
+      "sha256": "5db2cc829e07a305ff81dc581c8febbcdff9082b5b525bf986ec51b05dc10ceb"
+    },
+    {
+      "bid": 20,
+      "ask": 45,
+      "n": 500,
+      "mean_edge": 352.02921475742266,
+      "mean_diff": -22.09557739706442,
+      "se": 0.33277038720644614,
+      "worst": [
+        {
+          "seed": 118,
+          "diff": -48.59143747151279
+        },
+        {
+          "seed": 179,
+          "diff": -46.90928936146213
+        },
+        {
+          "seed": 5,
+          "diff": -43.28293881279575
+        },
+        {
+          "seed": 76,
+          "diff": -43.230547782502185
+        },
+        {
+          "seed": 491,
+          "diff": -42.100414970697045
+        }
+      ],
+      "sha256": "b95d58737aacfd401cc42d9bc1c4e2d0c9b03b910fd85a02870841992a3ec4af"
+    },
+    {
+      "bid": 45,
+      "ask": 20,
+      "n": 500,
+      "mean_edge": 352.02582412555245,
+      "mean_diff": -22.098968028934703,
+      "se": 0.33262732521771976,
+      "worst": [
+        {
+          "seed": 118,
+          "diff": -48.39419512960768
+        },
+        {
+          "seed": 179,
+          "diff": -47.05729339494172
+        },
+        {
+          "seed": 5,
+          "diff": -43.51956679245217
+        },
+        {
+          "seed": 76,
+          "diff": -42.69790364917003
+        },
+        {
+          "seed": 491,
+          "diff": -42.27638594860093
+        }
+      ],
+      "sha256": "7677ad17ccc21c725a876338e77dcfd8adebb2b961df115f68f298dc9f076feb"
+    },
+    {
+      "bid": 30,
+      "ask": 30,
+      "n": 500,
+      "mean_edge": 347.6646430265958,
+      "mean_diff": -26.46014912789128,
+      "se": 0.3958527465552997,
+      "worst": [
+        {
+          "seed": 118,
+          "diff": -57.60228581864965
+        },
+        {
+          "seed": 179,
+          "diff": -56.15902084995349
+        },
+        {
+          "seed": 5,
+          "diff": -51.71347925317184
+        },
+        {
+          "seed": 76,
+          "diff": -50.98864729634255
+        },
+        {
+          "seed": 491,
+          "diff": -50.581650745937736
+        }
+      ],
+      "sha256": "ad4696358b9608a44cec19c9c1d7f832dfb3945b90823fe5f6dccdd03609a7ec"
+    },
+    {
+      "bid": 20,
+      "ask": 30,
+      "n": 500,
+      "mean_edge": 326.51923404826186,
+      "mean_diff": -47.60555810622525,
+      "se": 0.5627114431796323,
+      "worst": [
+        {
+          "seed": 118,
+          "diff": -90.43657931494698
+        },
+        {
+          "seed": 179,
+          "diff": -88.39487429537132
+        },
+        {
+          "seed": 5,
+          "diff": -82.31080307686489
+        },
+        {
+          "seed": 76,
+          "diff": -82.13313167269928
+        },
+        {
+          "seed": 491,
+          "diff": -81.62859450346468
+        }
+      ],
+      "sha256": "bbc205024a8c157709cecba43fdc2b702832ebb769ecb1d68dfe6d657ee5fcdf"
+    },
+    {
+      "bid": 30,
+      "ask": 20,
+      "n": 500,
+      "mean_edge": 326.51777187687713,
+      "mean_diff": -47.60702027760997,
+      "se": 0.5626249013111123,
+      "worst": [
+        {
+          "seed": 118,
+          "diff": -90.3573208561657
+        },
+        {
+          "seed": 179,
+          "diff": -88.45540612294661
+        },
+        {
+          "seed": 5,
+          "diff": -82.40978364016013
+        },
+        {
+          "seed": 76,
+          "diff": -81.92285591510478
+        },
+        {
+          "seed": 491,
+          "diff": -81.70061457723017
+        }
+      ],
+      "sha256": "8fb2b47cc0f12389fdd7e8d260151f9c34a06c8c93540515796fce43dfc22f0d"
+    },
+    {
+      "bid": 25,
+      "ask": 25,
+      "n": 500,
+      "mean_edge": 326.5112577675966,
+      "mean_diff": -47.613534386890564,
+      "se": 0.5627165209187753,
+      "worst": [
+        {
+          "seed": 118,
+          "diff": -90.40593635731273
+        },
+        {
+          "seed": 179,
+          "diff": -88.43382756115659
+        },
+        {
+          "seed": 5,
+          "diff": -82.36906419839124
+        },
+        {
+          "seed": 76,
+          "diff": -82.03876249621544
+        },
+        {
+          "seed": 491,
+          "diff": -81.67470680910384
+        }
+      ],
+      "sha256": "dad63b0f71a8e276158b8f4f7c2057b9e40f6b0756b2402dbb897cb8150f3d5b"
+    },
+    {
+      "bid": 20,
+      "ask": 20,
+      "n": 500,
+      "mean_edge": 285.73809000962586,
+      "mean_diff": -88.38670214486116,
+      "se": 0.8085706970903129,
+      "worst": [
+        {
+          "seed": 118,
+          "diff": -146.3613169634446
+        },
+        {
+          "seed": 179,
+          "diff": -142.38817426630283
+        },
+        {
+          "seed": 76,
+          "diff": -136.66542717464125
+        },
+        {
+          "seed": 491,
+          "diff": -135.4595026331255
+        },
+        {
+          "seed": 5,
+          "diff": -134.85178036083613
+        }
+      ],
+      "sha256": "be2f04e131a97ab23091cba0cd353f4decf36ee690fad923278e466650695128"
+    },
+    {
+      "bid": 15,
+      "ask": 15,
+      "n": 500,
+      "mean_edge": 229.94609460043574,
+      "mean_diff": -144.17869755405135,
+      "se": 1.1349700595825805,
+      "worst": [
+        {
+          "seed": 118,
+          "diff": -220.3356359264738
+        },
+        {
+          "seed": 179,
+          "diff": -213.62939081793814
+        },
+        {
+          "seed": 76,
+          "diff": -209.89827917634102
+        },
+        {
+          "seed": 491,
+          "diff": -206.51721332964496
+        },
+        {
+          "seed": 5,
+          "diff": -204.65422061088896
+        }
+      ],
+      "sha256": "0b226bb0336eb54011e5c2f53e3c524b23776d221eee7e1992aad1b7c45372ac"
+    },
+    {
+      "bid": 10,
+      "ask": 10,
+      "n": 500,
+      "mean_edge": 161.0573209032394,
+      "mean_diff": -213.06747125124772,
+      "se": 1.5343364863369873,
+      "worst": [
+        {
+          "seed": 118,
+          "diff": -310.10153014925305
+        },
+        {
+          "seed": 179,
+          "diff": -300.3088475279828
+        },
+        {
+          "seed": 76,
+          "diff": -299.102756293513
+        },
+        {
+          "seed": 491,
+          "diff": -293.1759719467717
+        },
+        {
+          "seed": 256,
+          "diff": -291.261557293617
+        }
+      ],
+      "sha256": "0b35c178cbce3fc8e845969e01fbbee831eb104456a4b74b3ebd2011f32f6bf8"
+    }
+  ],
+  "next": [
+    "Reconcile pinned-commit vanilla score with the public ~522 baseline before comparing to leaderboard.",
+    "Measure a finer fixed-fee grid near the training winner on unused tuning seeds, with a new untouched holdout.",
+    "Use these fixed-fee results as controls for fair-price and volatility estimation strategies in other items."
+  ],
+  "code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\nimport {AMMStrategyBase} from \"./AMMStrategyBase.sol\";\nimport {TradeInfo} from \"./IAMMStrategy.sol\";\n\n/// @notice Fixed fees selected by paired static-grid measurements.\ncontract Strategy is AMMStrategyBase {\n    uint256 public constant BID_FEE = 75 * BPS;\n    uint256 public constant ASK_FEE = 75 * BPS;\n\n    function afterInitialize(uint256, uint256) external pure override returns (uint256, uint256) {\n        return (BID_FEE, ASK_FEE);\n    }\n\n    function afterSwap(TradeInfo calldata) external pure override returns (uint256, uint256) {\n        return (BID_FEE, ASK_FEE);\n    }\n\n    function getName() external pure override returns (string memory) {\n        return \"Static Grid 75/75\";\n    }\n}\n",
+  "code_sha256": "5837798b91013de606cce87771bc2f4d40d0ae43b7b75aeab9c7a55e2e18670c",
+  "score": {
+    "seed_start": 0,
+    "n": 1000,
+    "mean_edge": 380.14166842626247
+  },
+  "paired": {
+    "reference": "contracts/src/StarterStrategy.sol (fixed 50 bps), pinned commit 6b6921f8d463314aa7c96234e1be25a25245f704",
+    "seed_start": 100000,
+    "n": 2000,
+    "mean_diff": 10.609942906164084,
+    "se": 0.16035915638608614,
+    "worst": [
+      {
+        "seed": 101071,
+        "diff": -8.316604182827973
+      },
+      {
+        "seed": 101882,
+        "diff": -6.313948816298279
+      },
+      {
+        "seed": 100631,
+        "diff": -5.873593780895021
+      },
+      {
+        "seed": 100621,
+        "diff": -5.851080135988013
+      },
+      {
+        "seed": 100645,
+        "diff": -5.656776966611545
+      }
+    ]
+  },
+  "seconds_per_simulation": 0.06393043716878469,
+  "validate_ok": true,
+  "citations": [
+    {
+      "url": "https://github.com/benedictbrady/amm-challenge/tree/6b6921f8d463314aa7c96234e1be25a25245f704",
+      "use": "Pinned simulator, source, official compiler/validator and configuration. Its README quotes a typical normalizer edge of 250-350."
+    },
+    {
+      "url": "https://www.paradigm.xyz/puzzles/amm",
+      "use": "Challenge landing page; browser tool failed, curl succeeded."
+    },
+    {
+      "url": "https://github.com/dipankar/amm-challenge/blob/main/ANALYSIS.md",
+      "use": "Public first-person write-up discusses hidden-state estimation versus trade classification; contextual only, no mechanism adopted."
+    },
+    {
+      "url": "https://github.com/jiayaoqijia/amm-challenge-yq",
+      "use": "Public author reports cross-seed fixed-30 baseline 522.13; this is external context, not reproduced at pinned commit."
+    }
+  ],
+  "best_fixed_pair": {
+    "bid": 75,
+    "ask": 75
+  },
+  "finalists": [
+    {
+      "bid": 75,
+      "ask": 75,
+      "n": 2000,
+      "mean_edge": 380.1112443435281,
+      "mean_diff": 10.609942906164084,
+      "se": 0.16035915638608614,
+      "worst": [
+        {
+          "seed": 101071,
+          "diff": -8.316604182827973
+        },
+        {
+          "seed": 101882,
+          "diff": -6.313948816298279
+        },
+        {
+          "seed": 100631,
+          "diff": -5.873593780895021
+        },
+        {
+          "seed": 100621,
+          "diff": -5.851080135988013
+        },
+        {
+          "seed": 100645,
+          "diff": -5.656776966611545
+        }
+      ],
+      "sha256": "5837798b91013de606cce87771bc2f4d40d0ae43b7b75aeab9c7a55e2e18670c"
+    },
+    {
+      "bid": 80,
+      "ask": 80,
+      "n": 2000,
+      "mean_edge": 380.00571138301086,
+      "mean_diff": 10.504409945646923,
+      "se": 0.18499916860250887,
+      "worst": [
+        {
+          "seed": 101071,
+          "diff": -11.688595834135867
+        },
+        {
+          "seed": 100621,
+          "diff": -9.355026444293571
+        },
+        {
+          "seed": 100004,
+          "diff": -8.844580465560341
+        },
+        {
+          "seed": 101882,
+          "diff": -8.764649280756345
+        },
+        {
+          "seed": 100645,
+          "diff": -8.391617066668033
+        }
+      ],
+      "sha256": "6520f51b6731384562842a924284b66b18bf3689f908c86d16da046ff7ee6f76"
+    }
+  ],
+  "vanilla_score": {
+    "seed_start": 0,
+    "n": 1000,
+    "mean_edge": 343.601010706896
+  },
+  "promotion": {
+    "promoted": true,
+    "rule": "fresh paired mean_diff > 2*se",
+    "previous_best": "starter; no other network-best contract supplied",
+    "ranked": [
+      {
+        "rank": 1,
+        "bid": 75,
+        "ask": 75,
+        "code_sha256": "5837798b91013de606cce87771bc2f4d40d0ae43b7b75aeab9c7a55e2e18670c",
+        "mean_diff": 10.609942906164084,
+        "se": 0.16035915638608614
+      }
+    ]
+  },
+  "measurement": {
+    "commit": "6b6921f8d463314aa7c96234e1be25a25245f704",
+    "workers": 8,
+    "batch_size": 20,
+    "unique_simulations": 23000,
+    "batch_seconds": 1470.4000548820477,
+    "timing_definition": "sum of timed run_batch calls / completed simulations; includes result and step allocation, excludes compilation and JSON writes",
+    "se_definition": "sample standard deviation of paired per-seed differences divided by sqrt(n)",
+    "selection": "31 distinct pairs: 19 symmetric from 10 through 100 in steps of 5, union 16 ordered pairs over {20,30,45,60}; four symmetric duplicates evaluated once",
+    "pilot_seconds_per_simulation": 0.06472102614934556
+  },
+  "changed": [
+    "candidates/static-grid/Strategy.sol",
+    "candidates/static-grid/result.json",
+    "candidates/static-grid/NOTES.md",
+    "artifacts/goal/batches/r1/items/static-grid/result.json"
+  ],
+  "checks": [
+    "Pinned commit checked out in test/scratch/static-grid/simulator; built release Rust wheel with maturin and installed Python dependencies in scratch venv.",
+    "Custom seed configs equal official MatchRunner._build_configs on all 12 fields for seeds 0..19; actual VanillaStrategy bytecode edges exactly equal fixed 30/30 edges on all 20 seeds.",
+    "All grid candidates compiled using official SolidityCompiler (Solidity 0.8.24, optimizer 200, viaIR, Paris), enforcing opcode and storage restrictions.",
+    "Grid: 500 equal seeds per candidate and starter; finalists: 2000 fresh equal seeds each and starter.",
+    "amm-match validate candidates/static-grid/Strategy.sol: Validating strategy... | Compiling strategy... | Strategy 'Static Grid 75/75' validated successfully!",
+    "Source SHA-256 recomputed; JSON parsed and embedded source checked against Strategy.sol; bundle paths and size checked.",
+    "Fixed 50/50 per-seed edges exactly equal the starter for all 500 grid seeds; all 31 requested pairs are present. CLI vanilla score agrees with the custom 1000-seed run within its printed precision.",
+    "Independent CLI vanilla run: Validating strategy... | Compiling strategy... | Strategy: Vanilla_30bps |  | Running 1000 simulations... |  | Vanilla_30bps Edge: 343.60",
+    "Independent Python statistics.mean/stdev recomputation passed for all 31 grid rows and both 2000-seed finalists, including all five worst per-seed differences. Identical JSON output copies, source content/SHA-256, required file existence, 64000-byte JSON cap, and 8 MiB bundle cap verified."
+  ],
+  "limitations": [
+    "Local vanilla score differs materially from the externally reported ~522. The pinned README itself says 250-350 for the normalizer; the cause of the public-score difference is unverified. No claim of leaderboard parity or first place.",
+    "No previous network-best source was provided, so the previous-best comparison is the supplied starter.",
+    "No numbers or missing measurements fabricated."
+  ],
+  "failures": [
+    "Initial `python -m venv` failed: python command not found; used python3.",
+    "Initial maturin build failed: cargo not found; installed workspace-local Rust.",
+    "Initial rustup installer failed because /tmp was absent; retried successfully with workspace TMPDIR."
+  ],
+  "starter": {
+    "code_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+    "training_score": {
+      "seed_start": 0,
+      "n": 500,
+      "mean_edge": 374.1247921544871
+    },
+    "holdout_score": {
+      "seed_start": 100000,
+      "n": 2000,
+      "mean_edge": 369.50130143736396
+    }
+  },
+  "finalist_head_to_head": {
+    "reference": "80/80",
+    "seed_start": 100000,
+    "n": 2000,
+    "mean_diff": 0.10553296051716252,
+    "se": 0.026400103743076248,
+    "worst": [
+      {
+        "seed": 101790,
+        "diff": -4.735999849573261
+      },
+      {
+        "seed": 100574,
+        "diff": -4.732503655986534
+      },
+      {
+        "seed": 101725,
+        "diff": -4.360191540166568
+      },
+      {
+        "seed": 100752,
+        "diff": -4.3476699364308615
+      },
+      {
+        "seed": 100358,
+        "diff": -4.300975717160554
+      }
+    ]
+  }
+}

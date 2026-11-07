@@ -1,0 +1,198 @@
+{
+  "approach": "Track a feasible fair-price interval in addition to a filtered implied-price estimate. On each new timestamp, widen the interval by estimated sigma times sqrt(elapsed); collapse it to the fee-adjusted implied price on a directional boundary-arbitrage observation; otherwise intersect it with the last quoted no-arbitrage band. Use the interval as a constraint on the adaptive fair-price estimate, then quote asymmetric fees from estimated toxicity, flow, volatility, and trade direction.",
+  "tried": [
+    {
+      "name": "Low-base interval draft (18 bps)",
+      "reference": "30 bps normalizer",
+      "seed_start": 0,
+      "n": 2000,
+      "mean_edge": 320.3704210265456,
+      "mean_diff": -65.90058937553822,
+      "se": 0.20723675115670623
+    },
+    {
+      "name": "Interval draft (30 bps base)",
+      "reference": "30 bps normalizer",
+      "seed_start": 0,
+      "n": 2000,
+      "mean_edge": 347.6125897502466,
+      "mean_diff": -141.55471384749538,
+      "se": 0.42000189031535123
+    },
+    {
+      "name": "Interval draft (40 bps base)",
+      "reference": "30 bps normalizer",
+      "seed_start": 0,
+      "n": 2000,
+      "mean_edge": 352.4258102393389,
+      "mean_diff": -185.86872610318207,
+      "se": 0.567850658413376
+    },
+    {
+      "name": "Published adaptive implied-price estimator control",
+      "reference": "30 bps normalizer",
+      "seed_start": 0,
+      "n": 2000,
+      "mean_edge": 523.7107711127311,
+      "mean_diff": 159.95732892369733,
+      "se": 0.8918596428840393
+    },
+    {
+      "name": "Interval width centered on filtered price",
+      "reference": "30 bps normalizer",
+      "seed_start": 0,
+      "n": 2000,
+      "mean_edge": 521.8248280911546,
+      "mean_diff": 160.7135646928934,
+      "se": 0.8698567800311511
+    },
+    {
+      "name": "25% bounded-price blend",
+      "reference": "30 bps normalizer",
+      "seed_start": 0,
+      "n": 2000,
+      "mean_edge": 523.621285978116,
+      "mean_diff": 161.2293124913436,
+      "se": 0.8917969863305765
+    },
+    {
+      "name": "Selected independent interval midpoint and width",
+      "reference": "30 bps normalizer",
+      "seed_start": 0,
+      "n": 2000,
+      "mean_edge": 523.6770041299609,
+      "mean_diff": 160.7779619289202,
+      "se": 0.8911666499182627
+    },
+    {
+      "name": "50% interval-midpoint blend plus width fee",
+      "reference": "30 bps normalizer",
+      "seed_start": 0,
+      "n": 2000,
+      "mean_edge": 488.7374531336061,
+      "mean_diff": 122.32669559998423,
+      "se": 0.7753730523643289
+    },
+    {
+      "name": "10% interval-midpoint blend plus width fee",
+      "reference": "30 bps normalizer",
+      "seed_start": 0,
+      "n": 2000,
+      "mean_edge": 519.907816382086,
+      "mean_diff": 162.96217474851608,
+      "se": 0.8823722698026133
+    }
+  ],
+  "next": [
+    "Tune the interval blend and volatility widening against the strongest current strategy on paired seeds, then confirm any gain on fresh seeds.",
+    "Improve boundary-hit inference by combining the direction test with the amount and reserve-price displacement, especially after a retail-shifted prior step.",
+    "Test a small inventory and flow-skew layer independently from the interval estimator, with paired ablations."
+  ],
+  "code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\nimport {AMMStrategyBase} from \"./AMMStrategyBase.sol\";\nimport {IAMMStrategy, TradeInfo} from \"./IAMMStrategy.sol\";\n\ncontract Strategy is AMMStrategyBase {\n    // slots 11-13 hold interval midpoint, width, and last observed spot.\n    // A boundary arbitrage collapses the interval; an unobserved price path\n    // expands it by sigma*sqrt(elapsed), then constrains it to the old fee band.\n    // --- decay / update constants ---\n    uint256 constant ELAPSED_CAP = 8;\n    uint256 constant SIGNAL_THRESHOLD = WAD / 500; // ~20 bps of reserve\n    uint256 constant DIR_DECAY = 800000000000000000; // 0.80\n    uint256 constant ACT_DECAY = 700000000000000000; // 0.70\n    uint256 constant SIZE_DECAY = 700000000000000000; // 0.70\n    uint256 constant TOX_DECAY = 910000000000000000; // 0.91\n    uint256 constant SIGMA_DECAY = 824000000000000000; // 0.824\n    uint256 constant LAMBDA_DECAY = 990000000000000000; // 0.99\n    uint256 constant SIZE_BLEND_DECAY = 818000000000000000; // 0.818\n    uint256 constant TOX_BLEND_DECAY = 51000000000000000; // 0.051\n    uint256 constant ACT_BLEND_DECAY = 985000000000000000; // 0.985\n    uint256 constant PHAT_ALPHA = 260000000000000000; // 0.26\n    uint256 constant PHAT_ALPHA_RETAIL = 50000000000000000; // 0.05\n    uint256 constant DIR_IMPACT_MULT = 2;\n\n    // --- Adaptive Shock Gate ---\n    uint256 constant GATE_SIGMA_MULT = 10 * WAD;\n    uint256 constant MIN_GATE = 30000000000000000; // 0.03 WAD\n\n    // --- Cubic Toxicity ---\n    uint256 constant TOX_CUBIC_COEF = 15000 * BPS;\n\n    // --- Trade-Tox Boost ---\n    uint256 constant TRADE_TOX_BOOST = 2500 * BPS;\n\n    // --- Asymmetric Stale Dir ---\n    uint256 constant STALE_ATTRACT_FRAC = 1124000000000000000; // 1.124\n\n    // --- state caps ---\n    uint256 constant RET_CAP = WAD / 10; // 10%\n    uint256 constant TOX_CAP = WAD / 5; // 20%\n    uint256 constant TRADE_RATIO_CAP = WAD / 5; // 20%\n    uint256 constant LAMBDA_CAP = 5 * WAD; // max 5 trades/step estimate\n    uint256 constant STEP_COUNT_CAP = 64; // guardrail\n\n    // --- fee model constants ---\n    uint256 constant BASE_FEE = 3 * BPS;\n    uint256 constant SIGMA_COEF = 200000000000000000; // 0.20\n    uint256 constant LAMBDA_COEF = 12 * BPS;\n    uint256 constant FLOW_SIZE_COEF = 4842 * BPS;\n    uint256 constant TOX_COEF = 250 * BPS;\n    uint256 constant TOX_QUAD_COEF = 11700 * BPS;\n    uint256 constant ACT_COEF = 91843 * BPS;\n    uint256 constant DIR_COEF = 20 * BPS;\n    uint256 constant DIR_TOX_COEF = 100 * BPS;\n    uint256 constant STALE_DIR_COEF = 6850 * BPS;\n    uint256 constant SIGMA_TOX_COEF = 500 * BPS;\n    uint256 constant TAIL_KNEE = 500 * BPS;\n    uint256 constant TAIL_SLOPE_PROTECT = 930000000000000000; // 0.93\n    uint256 constant TAIL_SLOPE_ATTRACT = 955000000000000000; // 0.955\n\n    // slots[0] = bid fee\n    // slots[1] = ask fee\n    // slots[2] = last timestamp\n    // slots[3] = dirState (centered at WAD, [0, 2*WAD])\n    // slots[4] = actEma\n    // slots[5] = pHat\n    // slots[6] = sigmaHat\n    // slots[7] = lambdaHat\n    // slots[8] = sizeHat\n    // slots[9] = toxEma\n    // slots[10] = stepTradeCount (raw integer)\n\n    function afterInitialize(uint256 initialX, uint256 initialY) external override returns (uint256, uint256) {\n        slots[0] = BASE_FEE;\n        slots[1] = BASE_FEE;\n        slots[2] = 0;\n        slots[3] = WAD; // neutral direction\n        slots[4] = 0;\n        slots[5] = initialX > 0 ? wdiv(initialY, initialX) : 100 * WAD;\n        slots[6] = 950000000000000; // 0.095% initial sigma guess\n        slots[7] = 800000000000000000; // 0.8 initial arrival-rate guess\n        slots[8] = 2000000000000000; // 0.2% reserve-size ratio guess\n        slots[9] = 0;\n        slots[10] = 0;\n        slots[11] = initialY > 0 && initialX > 0 ? wdiv(initialY, initialX) : 100 * WAD; // interval midpoint\n        slots[12] = 0; // interval width\n        slots[13] = slots[11]; // previous spot\n        return (BASE_FEE, BASE_FEE);\n    }\n\n    function afterSwap(TradeInfo calldata trade) external override returns (uint256, uint256) {\n        uint256 prevBidFee = slots[0];\n        uint256 prevAskFee = slots[1];\n        uint256 lastTs = slots[2];\n        uint256 dirState = slots[3];\n        uint256 actEma = slots[4];\n        uint256 pHat = slots[5];\n        uint256 sigmaHat = slots[6];\n        uint256 lambdaHat = slots[7];\n        uint256 sizeHat = slots[8];\n        uint256 toxEma = slots[9];\n        uint256 stepTradeCount = slots[10];\n        uint256 intervalCenter = slots[11];\n        uint256 intervalWidth = slots[12];\n        uint256 prevSpot = slots[13];\n\n        bool isNewStep = trade.timestamp > lastTs;\n        if (isNewStep) {\n            uint256 elapsedRaw = trade.timestamp - lastTs;\n            uint256 elapsed = elapsedRaw > ELAPSED_CAP ? ELAPSED_CAP : elapsedRaw;\n\n            dirState = _decayCentered(dirState, DIR_DECAY, elapsed);\n            actEma = wmul(actEma, _powWad(ACT_DECAY, elapsed));\n            sizeHat = wmul(sizeHat, _powWad(SIZE_DECAY, elapsed));\n            toxEma = wmul(toxEma, _powWad(TOX_DECAY, elapsed));\n\n            if (stepTradeCount > 0 && elapsedRaw > 0) {\n                uint256 lambdaInst = (stepTradeCount * WAD) / elapsedRaw;\n                if (lambdaInst > LAMBDA_CAP) lambdaInst = LAMBDA_CAP;\n                lambdaHat = wmul(lambdaHat, LAMBDA_DECAY) + wmul(lambdaInst, WAD - LAMBDA_DECAY);\n            }\n\n            stepTradeCount = 0;\n        }\n\n        bool firstInStep = stepTradeCount == 0;\n\n        uint256 spot = trade.reserveX > 0 ? wdiv(trade.reserveY, trade.reserveX) : pHat;\n        if (pHat == 0) pHat = spot;\n\n        uint256 feeUsed = trade.isBuy ? prevBidFee : prevAskFee;\n        uint256 gamma = feeUsed < WAD ? WAD - feeUsed : 0;\n        uint256 pImplied;\n        if (gamma == 0) {\n            pImplied = spot;\n        } else {\n            pImplied = trade.isBuy ? wmul(spot, gamma) : wdiv(spot, gamma);\n        }\n\n        bool edgeHit = false;\n        uint256 intervalLo = intervalCenter > intervalWidth / 2 ? intervalCenter - intervalWidth / 2 : 1;\n        uint256 intervalHi = intervalCenter + intervalWidth / 2;\n        if (isNewStep) {\n            uint256 intervalSigma = (sigmaHat * sqrt((trade.timestamp - lastTs) * WAD)) / 1e9;\n            uint256 loPad = wmul(intervalLo, intervalSigma);\n            uint256 hiPad = wmul(intervalHi, intervalSigma);\n            intervalLo = intervalLo > loPad ? intervalLo - loPad : 1;\n            intervalHi += hiPad;\n            edgeHit = trade.isBuy ? spot > prevSpot : spot < prevSpot;\n            if (edgeHit) {\n                intervalLo = pImplied;\n                intervalHi = pImplied;\n            } else {\n                uint256 bandLo = wmul(prevSpot, WAD - prevBidFee);\n                uint256 bandHi = wdiv(prevSpot, WAD - prevAskFee);\n                if (bandLo > intervalLo) intervalLo = bandLo;\n                if (bandHi < intervalHi) intervalHi = bandHi;\n                if (intervalLo > intervalHi) {\n                    uint256 intervalMid = intervalLo / 2 + intervalHi / 2;\n                    intervalLo = intervalMid;\n                    intervalHi = intervalMid;\n                }\n            }\n            intervalCenter = intervalLo / 2 + intervalHi / 2;\n            intervalWidth = intervalHi > intervalLo ? intervalHi - intervalLo : 0;\n        }\n\n        {\n            uint256 ret = pHat > 0 ? wdiv(absDiff(pImplied, pHat), pHat) : 0;\n            uint256 alpha = firstInStep ? PHAT_ALPHA : PHAT_ALPHA_RETAIL;\n            uint256 adaptiveGate = wmul(sigmaHat, GATE_SIGMA_MULT);\n            if (adaptiveGate < MIN_GATE) adaptiveGate = MIN_GATE;\n            if (edgeHit) {\n                pHat = pImplied;\n            } else if (ret <= adaptiveGate) {\n                pHat = wmul(pHat, WAD - alpha) + wmul(pImplied, alpha);\n            }\n            uint256 boundedPHat = pHat;\n            if (boundedPHat < intervalLo) boundedPHat = intervalLo;\n            if (boundedPHat > intervalHi) boundedPHat = intervalHi;\n            pHat = wmul(pHat, 900000000000000000) + wmul(boundedPHat, 100000000000000000);\n            if (firstInStep) {\n                if (ret > RET_CAP) ret = RET_CAP;\n                sigmaHat = wmul(sigmaHat, SIGMA_DECAY) + wmul(ret, WAD - SIGMA_DECAY);\n            }\n        }\n\n        uint256 tradeRatio = trade.reserveY > 0 ? wdiv(trade.amountY, trade.reserveY) : 0;\n        if (tradeRatio > TRADE_RATIO_CAP) tradeRatio = TRADE_RATIO_CAP;\n\n        if (tradeRatio > SIGNAL_THRESHOLD) {\n            uint256 push = tradeRatio * DIR_IMPACT_MULT;\n            if (push > WAD / 4) push = WAD / 4;\n\n            if (trade.isBuy) {\n                dirState = dirState + push;\n                if (dirState > 2 * WAD) dirState = 2 * WAD;\n            } else {\n                dirState = dirState > push ? dirState - push : 0;\n            }\n\n            actEma = wmul(actEma, ACT_BLEND_DECAY) + wmul(tradeRatio, WAD - ACT_BLEND_DECAY);\n\n            sizeHat = wmul(sizeHat, SIZE_BLEND_DECAY) + wmul(tradeRatio, WAD - SIZE_BLEND_DECAY);\n            if (sizeHat > WAD) sizeHat = WAD;\n        }\n\n        uint256 tox = pHat > 0 ? wdiv(absDiff(spot, pHat), pHat) : 0;\n        if (tox > TOX_CAP) tox = TOX_CAP;\n        toxEma = wmul(toxEma, TOX_BLEND_DECAY) + wmul(tox, WAD - TOX_BLEND_DECAY);\n        uint256 toxSignal = toxEma;\n\n        stepTradeCount = stepTradeCount + 1;\n        if (stepTradeCount > STEP_COUNT_CAP) stepTradeCount = STEP_COUNT_CAP;\n\n        uint256 flowSize = wmul(lambdaHat, sizeHat);\n        uint256 fBase = BASE_FEE + wmul(SIGMA_COEF, sigmaHat) + wmul(LAMBDA_COEF, lambdaHat) + wmul(FLOW_SIZE_COEF, flowSize);\n        uint256 fMid = fBase + wmul(TOX_COEF, toxSignal) + wmul(TOX_QUAD_COEF, wmul(toxSignal, toxSignal)) + wmul(ACT_COEF, actEma);\n\n        fMid = fMid + wmul(SIGMA_TOX_COEF, wmul(sigmaHat, toxSignal));\n\n        // Cubic toxicity\n        {\n            uint256 toxCubed = wmul(toxSignal, wmul(toxSignal, toxSignal));\n            fMid = fMid + wmul(TOX_CUBIC_COEF, toxCubed);\n        }\n\n        uint256 dirDev;\n        bool sellPressure;\n        if (dirState >= WAD) {\n            dirDev = dirState - WAD;\n            sellPressure = true;\n        } else {\n            dirDev = WAD - dirState;\n            sellPressure = false;\n        }\n\n        uint256 skew = wmul(DIR_COEF, dirDev) + wmul(DIR_TOX_COEF, wmul(dirDev, toxSignal));\n\n        uint256 bidFee;\n        uint256 askFee;\n        if (sellPressure) {\n            bidFee = fMid + skew;\n            askFee = fMid > skew ? fMid - skew : 0;\n        } else {\n            askFee = fMid + skew;\n            bidFee = fMid > skew ? fMid - skew : 0;\n        }\n\n        // Directional protection using stale-price sign\n        {\n            uint256 staleShift = wmul(STALE_DIR_COEF, toxSignal);\n            uint256 attractShift = wmul(staleShift, STALE_ATTRACT_FRAC);\n            if (spot >= pHat) {\n                bidFee = bidFee + staleShift;\n                askFee = askFee > attractShift ? askFee - attractShift : 0;\n            } else {\n                askFee = askFee + staleShift;\n                bidFee = bidFee > attractShift ? bidFee - attractShift : 0;\n            }\n        }\n\n        // Trade-aligned toxicity boost\n        {\n            bool tradeAligned = (trade.isBuy && spot >= pHat) || (!trade.isBuy && spot < pHat);\n            if (tradeAligned) {\n                uint256 tradeBoost = wmul(TRADE_TOX_BOOST, tradeRatio);\n                if (trade.isBuy) {\n                    bidFee = bidFee + tradeBoost;\n                } else {\n                    askFee = askFee + tradeBoost;\n                }\n            }\n        }\n\n        // Asymmetric tail compression\n        if (sellPressure) {\n            bidFee = clampFee(_compressTailWithSlope(bidFee, TAIL_SLOPE_PROTECT));\n            askFee = clampFee(_compressTailWithSlope(askFee, TAIL_SLOPE_ATTRACT));\n        } else {\n            askFee = clampFee(_compressTailWithSlope(askFee, TAIL_SLOPE_PROTECT));\n            bidFee = clampFee(_compressTailWithSlope(bidFee, TAIL_SLOPE_ATTRACT));\n        }\n\n        slots[0] = bidFee;\n        slots[1] = askFee;\n        slots[2] = trade.timestamp;\n        slots[3] = dirState;\n        slots[4] = actEma;\n        slots[5] = pHat;\n        slots[6] = sigmaHat;\n        slots[7] = lambdaHat;\n        slots[8] = sizeHat;\n        slots[9] = toxEma;\n        slots[10] = stepTradeCount;\n        slots[11] = intervalCenter;\n        slots[12] = intervalWidth;\n        slots[13] = spot;\n\n        return (bidFee, askFee);\n    }\n\n    function _compressTailWithSlope(uint256 fee, uint256 slope) internal pure returns (uint256) {\n        if (fee <= TAIL_KNEE) return fee;\n        return TAIL_KNEE + wmul(fee - TAIL_KNEE, slope);\n    }\n\n    function _powWad(uint256 factor, uint256 exp) internal pure returns (uint256 result) {\n        result = WAD;\n        while (exp > 0) {\n            if (exp & 1 == 1) result = wmul(result, factor);\n            factor = wmul(factor, factor);\n            exp >>= 1;\n        }\n    }\n\n    function _decayCentered(uint256 centered, uint256 decayFactor, uint256 elapsed) internal pure returns (uint256) {\n        uint256 mul = _powWad(decayFactor, elapsed);\n        if (centered >= WAD) {\n            return WAD + wmul(centered - WAD, mul);\n        }\n        uint256 below = wmul(WAD - centered, mul);\n        return below < WAD ? WAD - below : 0;\n    }\n\n    function getName() external pure override returns (string memory) {\n        return \"Fair Price Interval Tracker\";\n    }\n}\n",
+  "code_sha256": "d03323243163a8a0e4f83ef444438b65cf1867b068520986bf90daae3d749801",
+  "score": {
+    "n": 1000,
+    "mean_edge": 524.1289284422076
+  },
+  "paired": {
+    "reference": "contracts/src/StarterStrategy.sol (fixed 50 bps)",
+    "seed_start": 100000,
+    "n": 2000,
+    "mean_diff": 246.69075663651412,
+    "se": 0.9097863625475908,
+    "worst": [
+      {
+        "seed": 100068,
+        "diff": 163.08769072223856
+      },
+      {
+        "seed": 100631,
+        "diff": 164.51914441219884
+      },
+      {
+        "seed": 100818,
+        "diff": 168.3328164447213
+      },
+      {
+        "seed": 101120,
+        "diff": 170.9475946590503
+      },
+      {
+        "seed": 100645,
+        "diff": 171.38873940766172
+      }
+    ]
+  },
+  "paired_previous_best": {
+    "reference": "Public YQ adaptive state-estimation strategy (head-to-head)",
+    "seed_start": 100000,
+    "n": 2000,
+    "mean_diff": 6.402768703244976,
+    "se": 0.11507594922971866,
+    "worst": [
+      {
+        "seed": 100432,
+        "diff": -106.15260842097678
+      },
+      {
+        "seed": 101389,
+        "diff": -10.053263614295417
+      },
+      {
+        "seed": 101635,
+        "diff": -8.23308581284175
+      },
+      {
+        "seed": 101159,
+        "diff": -7.820894570781888
+      },
+      {
+        "seed": 101004,
+        "diff": -5.632387411827835
+      }
+    ]
+  },
+  "seconds_per_simulation": 0.1387763810409233,
+  "validate_ok": true,
+  "citations": [
+    {
+      "title": "AMM challenge simulator at required commit",
+      "url": "https://github.com/benedictbrady/amm-challenge/tree/6b6921f8d463314aa7c96234e1be25a25245f704"
+    },
+    {
+      "title": "YQ solution and its reported score and estimator design",
+      "url": "https://github.com/jiayaoqijia/amm-challenge-yq"
+    },
+    {
+      "title": "Research post-mortem describing adaptive fair-price estimation",
+      "url": "https://github.com/dipankar/amm-challenge/blob/main/ANALYSIS.md"
+    },
+    {
+      "title": "Algebra AMM fee challenge write-up on asymmetry and trade ordering",
+      "url": "https://www.linkedin.com/pulse/amm-fee-challenge-notes-from-our-run-optimization-arena-qe3ff"
+    }
+  ],
+  "changed": "Added candidates/interval-tracker/Strategy.sol and its NOTES.md. Wrote this result to both the item directory and the required batch artifact path.",
+  "checked": [
+    {
+      "command": "amm-match validate candidates/interval-tracker/Strategy.sol",
+      "result": "Passed compilation, static checks, EVM deployment, and afterInitialize execution."
+    },
+    {
+      "command": "Paired Rust runner using configs copied from MatchRunner._build_configs; 1000 simulations, seeds 0..999, candidate vs 30 bps normalizer",
+      "result": "mean candidate edge 524.128928; 0.138776 seconds/simulation."
+    },
+    {
+      "command": "Paired Rust runner; 2000 fresh simulations, seeds 100000..101999, candidate vs StarterStrategy",
+      "result": "mean difference 246.690757; SE 0.909786; 5 lowest seed differences recorded in paired.worst."
+    },
+    {
+      "command": "Paired Rust runner; 2000 fresh simulations, seeds 100000..101999, candidate vs public YQ reference",
+      "result": "mean difference 6.402769; SE 0.115076; 5 lowest seed differences recorded in paired_previous_best.worst."
+    },
+    {
+      "command": "SHA-256 of candidates/interval-tracker/Strategy.sol",
+      "result": "d03323243163a8a0e4f83ef444438b65cf1867b068520986bf90daae3d749801"
+    }
+  ]
+}

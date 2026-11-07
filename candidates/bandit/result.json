@@ -1,0 +1,166 @@
+{
+  "approach": "A five-arm symmetric fee bandit. Each afterSwap call reconstructs an implied fair price from post-trade spot and the active fee, updates a gated fair-price estimate, scores the trade by signed edge in Y units, and updates that arm's short-memory mean. Every arm is sampled once; later choices are greedy except for deterministic epsilon exploration at 1/16.",
+  "tried": [
+    {
+      "candidate": "70/75/80/85/90 bps, raw signed-edge reward",
+      "seed_start": 0,
+      "n": 2000,
+      "mean_edge": 378.86133147284505,
+      "paired_to_starter": {
+        "mean_diff": 10.05691085515937,
+        "se": 0.17085421012677615
+      }
+    },
+    {
+      "candidate": "60/70/80/90/100 bps, raw signed-edge reward",
+      "seed_start": 0,
+      "n": 2000,
+      "mean_edge": 376.79270206718,
+      "paired_to_starter": {
+        "mean_diff": 7.988281449494307,
+        "se": 0.16558593319663661
+      },
+      "paired_vs_selected": {
+        "mean_diff": 2.0686294056650603,
+        "se": 0.06569042450138969
+      }
+    },
+    {
+      "candidate": "50/60/70/80/90 bps, raw signed-edge reward",
+      "seed_start": 0,
+      "n": 2000,
+      "mean_edge": 375.03435200607504,
+      "paired_to_starter": {
+        "mean_diff": 6.229931388389358,
+        "se": 0.11859857426641177
+      },
+      "paired_vs_selected": {
+        "mean_diff": 3.8269794667700108,
+        "se": 0.08944242589713627
+      }
+    },
+    {
+      "candidate": "10/20/30/40/50 bps, edge-per-notional reward",
+      "seed_start": 0,
+      "n": 2000,
+      "mean_edge": 186.3454795587359,
+      "paired_to_starter": {
+        "mean_diff": -182.4589410589498,
+        "se": 0.695789360765884
+      },
+      "paired_vs_selected": {
+        "mean_diff": 192.51585191410916,
+        "se": 0.8138961558632848
+      }
+    }
+  ],
+  "next": [
+    "Use separate bid and ask arm estimates so the bandit can exploit the different adverse-selection and retail-flow conditions on each side.",
+    "Test a contextual or UCB policy with time-gap and trade-size features, including an explicit cost for high-fee intervals with no retail fills.",
+    "Compare the fixed 1/32 reward memory and 1/16 exploration rate against slower decay and lower exploration on paired tuning seeds."
+  ],
+  "code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\nimport {AMMStrategyBase} from \"./AMMStrategyBase.sol\";\nimport {TradeInfo} from \"./IAMMStrategy.sol\";\n\n/// @notice Epsilon-greedy fee selection driven by trade edge against an\n///         online estimate of the fair price.\ncontract Strategy is AMMStrategyBase {\n    uint256 private constant ARM_COUNT = 5;\n    uint256 private constant MEAN_OFFSET = 100 * WAD;\n    int256 private constant EDGE_LIMIT = int256(100 * WAD);\n    uint256 private constant PRICE_GATE = 3e16; // reject implied-price jumps over 3%\n\n    function afterInitialize(uint256 initialX, uint256 initialY)\n        external\n        override\n        returns (uint256 bidFee, uint256 askFee)\n    {\n        // Start in the center of the tested high-fee range; subsequent\n        // trades sample each arm before the policy exploits its estimates.\n        slots[0] = 2;\n        for (uint256 i = 0; i < ARM_COUNT; ++i) {\n            slots[1 + i] = 0; // observations for arm i\n            slots[6 + i] = MEAN_OFFSET; // zero signed-edge estimate\n        }\n        slots[11] = wdiv(initialY, initialX); // fair-price estimate, WAD\n        slots[12] = 0; // last timestamp observed\n        slots[13] = 0; // whether a trade has been observed yet\n        slots[14] = 0; // total observations, used to decorrelate exploration\n\n        uint256 fee = _feeFor(2);\n        return (fee, fee);\n    }\n\n    function afterSwap(TradeInfo calldata trade)\n        external\n        override\n        returns (uint256 bidFee, uint256 askFee)\n    {\n        uint256 arm = slots[0];\n        if (arm >= ARM_COUNT) arm = 2;\n\n        uint256 currentFee = _feeFor(arm);\n        uint256 fairPrice = _updateFairPrice(trade, currentFee);\n\n        uint256 valueX = wmul(trade.amountX, fairPrice);\n        uint256 notional = valueX + trade.amountY;\n        if (notional != 0) {\n            int256 signedEdge;\n            if (trade.isBuy) {\n                signedEdge = int256(trade.amountY) - int256(valueX);\n            } else {\n                signedEdge = int256(valueX) - int256(trade.amountY);\n            }\n            int256 reward = signedEdge;\n            if (reward > EDGE_LIMIT) reward = EDGE_LIMIT;\n            if (reward < -EDGE_LIMIT) reward = -EDGE_LIMIT;\n            _recordReward(arm, reward);\n        }\n\n        uint256 total = slots[14] + 1;\n        slots[14] = total;\n        uint256 nextArm = _chooseArm(trade, total);\n        slots[0] = nextArm;\n\n        uint256 nextFee = _feeFor(nextArm);\n        return (nextFee, nextFee);\n    }\n\n    function _updateFairPrice(TradeInfo calldata trade, uint256 fee)\n        private\n        returns (uint256 fairPrice)\n    {\n        uint256 gamma = WAD - fee;\n        uint256 spot = wdiv(trade.reserveY, trade.reserveX);\n        uint256 implied = trade.isBuy ? wmul(spot, gamma) : wdiv(spot, gamma);\n\n        uint256 oldFair = slots[11];\n        if (oldFair == 0) oldFair = implied;\n        uint256 difference = absDiff(implied, oldFair);\n        bool plausible = difference <= wmul(oldFair, PRICE_GATE);\n        bool firstTrade = slots[13] == 0 || trade.timestamp != slots[12];\n\n        slots[13] = 1;\n        slots[12] = trade.timestamp;\n\n        if (plausible) {\n            // First trade of a step is more likely to include the arbitrage\n            // reset; later trades are retail and receive a smaller weight.\n            uint256 alpha = firstTrade ? 26e16 : 5e16;\n            if (implied >= oldFair) {\n                oldFair += wmul(implied - oldFair, alpha);\n            } else {\n                oldFair -= wmul(oldFair - implied, alpha);\n            }\n            slots[11] = oldFair;\n        }\n        return slots[11];\n    }\n\n    function _recordReward(uint256 arm, int256 reward) private {\n        uint256 count = slots[1 + arm] + 1;\n        slots[1 + arm] = count;\n\n        int256 previous = int256(slots[6 + arm]) - int256(MEAN_OFFSET);\n        int256 nextMean;\n        if (count == 1) {\n            nextMean = reward;\n        } else {\n            // A short-memory mean follows changing market conditions while\n            // retaining all-time counters for diagnostics.\n            nextMean = previous + (reward - previous) / 32;\n        }\n        slots[6 + arm] = uint256(int256(MEAN_OFFSET) + nextMean);\n    }\n\n    function _chooseArm(TradeInfo calldata trade, uint256 total)\n        private\n        view\n        returns (uint256)\n    {\n        // Give every fee level an initial observation before exploiting.\n        for (uint256 i = 0; i < ARM_COUNT; ++i) {\n            if (slots[1 + i] == 0) return i;\n        }\n\n        uint256 bestArm = 0;\n        int256 bestMean = int256(slots[6]) - int256(MEAN_OFFSET);\n        for (uint256 i = 1; i < ARM_COUNT; ++i) {\n            int256 mean = int256(slots[6 + i]) - int256(MEAN_OFFSET);\n            if (mean > bestMean) {\n                bestMean = mean;\n                bestArm = i;\n            }\n        }\n\n        // Epsilon-greedy with epsilon=1/16. The trade tuple and observation\n        // index provide a deterministic, seed-dependent exploration draw.\n        uint256 draw = uint256(\n            keccak256(\n                abi.encodePacked(\n                    trade.timestamp,\n                    trade.amountX,\n                    trade.amountY,\n                    trade.reserveX,\n                    trade.reserveY,\n                    total\n                )\n            )\n        );\n        if ((draw & 15) == 0) return (draw >> 8) % ARM_COUNT;\n        return bestArm;\n    }\n\n    function _feeFor(uint256 arm) private pure returns (uint256) {\n        if (arm == 0) return bpsToWad(70);\n        if (arm == 1) return bpsToWad(75);\n        if (arm == 2) return bpsToWad(80);\n        if (arm == 3) return bpsToWad(85);\n        return bpsToWad(90);\n    }\n\n    function getName() external pure override returns (string memory) {\n        return \"Edge Bandit\";\n    }\n}\n",
+  "code_sha256": "29dd2e064d7f618be7bf6c54b18e293568a98fe44561ad1d7515807c6e42b5a7",
+  "score": {
+    "n": 1000,
+    "mean_edge": 379.45542771595586
+  },
+  "paired": {
+    "reference": "contracts/src/StarterStrategy.sol (fixed 50 bps)",
+    "reference_sha256": "8f2cea337f6736105f58c6758da6c3ebf002951d34492bcd5b7101bef2d1e7f3",
+    "seed_start": 100000,
+    "n": 2000,
+    "mean_diff": 9.912758121055905,
+    "se": 0.18234149142056605,
+    "worst": [
+      {
+        "seed": 101882,
+        "diff": -11.205425119285735
+      },
+      {
+        "seed": 101071,
+        "diff": -10.988979702624363
+      },
+      {
+        "seed": 101221,
+        "diff": -10.184775878145444
+      },
+      {
+        "seed": 100004,
+        "diff": -9.794979637788003
+      },
+      {
+        "seed": 101489,
+        "diff": -9.191701963357616
+      }
+    ]
+  },
+  "seconds_per_simulation": 0.10994536043150584,
+  "validate_ok": true,
+  "convergence": {
+    "score_run_n": 1000,
+    "window_steps": 1000,
+    "definition": "converged when one step-end fee accounts for at least 80% of the last 1000 step-end quotes",
+    "converged_seeds": 528,
+    "converged_fraction": 0.528,
+    "mean_edge_converged": 377.4969536398055,
+    "mean_edge_not_converged": 381.64626312317495,
+    "mean_modal_fee_share": 0.772919,
+    "modal_fee_matches_final_count": 620,
+    "modal_levels": [
+      {
+        "fee_bps": 70,
+        "seeds": 223,
+        "mean_edge": 385.0809013219992
+      },
+      {
+        "fee_bps": 75,
+        "seeds": 248,
+        "mean_edge": 376.54133913339695
+      },
+      {
+        "fee_bps": 80,
+        "seeds": 194,
+        "mean_edge": 382.3436163691283
+      },
+      {
+        "fee_bps": 85,
+        "seeds": 174,
+        "mean_edge": 372.5372535703767
+      },
+      {
+        "fee_bps": 90,
+        "seeds": 161,
+        "mean_edge": 380.14901192056635
+      }
+    ]
+  },
+  "checks": [
+    {
+      "command": "amm-match validate candidates/bandit/Strategy.sol",
+      "result": "passed static validation, Solidity 0.8.24 compilation, bytecode checks, and EVM initialization"
+    },
+    {
+      "command": "python test/scratch/evaluate.py --start 0 --n 1000 --chunk 8 --workers 8 --output test/scratch/score1000-unique.json",
+      "result": "ran pinned Rust run_batch with MatchRunner-equivalent configurations for seeds 0-999; mean edge recorded in score"
+    },
+    {
+      "command": "python test/scratch/evaluate.py --start 100000 --n 2000 --chunk 8 --workers 8 --paired --output test/scratch/finalpaired.json",
+      "result": "paired candidate and StarterStrategy against the 30 bps normalizer on identical fresh configurations"
+    }
+  ],
+  "citations": [
+    {
+      "title": "Pinned AMM challenge repository",
+      "url": "https://github.com/benedictbrady/amm-challenge/tree/6b6921f8d463314aa7c96234e1be25a25245f704"
+    },
+    {
+      "title": "Public AMM strategy analysis",
+      "url": "https://github.com/dipankar/amm-challenge/blob/main/ANALYSIS.md"
+    },
+    {
+      "title": "Algebra Finance AMM challenge write-up",
+      "url": "https://www.linkedin.com/pulse/amm-fee-challenge-notes-from-our-run-optimization-arena-qe3ff"
+    }
+  ]
+}

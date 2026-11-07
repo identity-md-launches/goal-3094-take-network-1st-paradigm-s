@@ -1,0 +1,1258 @@
+{
+  "approach": "Censored retail counts and Y sizes per elapsed step, affine calibration and a 512-step prior; rate/size lookup tables condition both spread and first-trade fair-price observation gain. The adaptive table did not clear the fresh paired gate; the delivered Strategy retains the promoted constant control. The complete tested adaptive source is preserved below.",
+  "tried": [
+    {
+      "candidate": "flat18",
+      "mechanism": "18-bps fixed spread, first-trade fair observation gain 0.75.",
+      "code_sha256": "ddf4e615fd6a72d662d745c31de45014068a5313cc00bce15604c0d872bae1ed",
+      "score": {
+        "n": 2000,
+        "mean_edge": 387.06014673069234
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol @ 6b6921f8d463314aa7c96234e1be25a25245f704",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 18.255726113006684,
+        "se": 0.5005077969006446,
+        "worst": [
+          {
+            "seed": 1831,
+            "diff": -68.69223875711867
+          },
+          {
+            "seed": 1565,
+            "diff": -60.91202256181032
+          },
+          {
+            "seed": 1046,
+            "diff": -44.02396543479546
+          },
+          {
+            "seed": 1576,
+            "diff": -42.35643262593783
+          },
+          {
+            "seed": 1431,
+            "diff": -36.17536825326158
+          }
+        ]
+      }
+    },
+    {
+      "candidate": "flat22",
+      "mechanism": "22-bps fixed spread, first-trade fair observation gain 0.75.",
+      "code_sha256": "39085c6ffabf641940d9295e78c277b9804f756c4568cfd37d250b2baf6c48e1",
+      "score": {
+        "n": 2000,
+        "mean_edge": 389.6730555308765
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol @ 6b6921f8d463314aa7c96234e1be25a25245f704",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 20.868634913190814,
+        "se": 0.5007999041226388,
+        "worst": [
+          {
+            "seed": 1267,
+            "diff": -52.525995519629475
+          },
+          {
+            "seed": 1565,
+            "diff": -49.914612972088776
+          },
+          {
+            "seed": 896,
+            "diff": -48.33046704990528
+          },
+          {
+            "seed": 739,
+            "diff": -48.08759255699937
+          },
+          {
+            "seed": 1164,
+            "diff": -37.480131637852196
+          }
+        ]
+      }
+    },
+    {
+      "candidate": "flat26",
+      "mechanism": "26-bps fixed spread, first-trade fair observation gain 0.75.",
+      "code_sha256": "359756485ed92e0132c4821ccf034ffff87c75412d3490ca81286f417c1f73c0",
+      "score": {
+        "n": 2000,
+        "mean_edge": 391.38912108351593
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol @ 6b6921f8d463314aa7c96234e1be25a25245f704",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 22.58470046583025,
+        "se": 0.5118197823363324,
+        "worst": [
+          {
+            "seed": 945,
+            "diff": -48.537834589530064
+          },
+          {
+            "seed": 1565,
+            "diff": -46.26192217802566
+          },
+          {
+            "seed": 1267,
+            "diff": -43.04723581632646
+          },
+          {
+            "seed": 1046,
+            "diff": -39.72890345388987
+          },
+          {
+            "seed": 516,
+            "diff": -38.33746566787778
+          }
+        ]
+      }
+    },
+    {
+      "candidate": "flow22",
+      "mechanism": "Naive count inclusion=0.75, size share=0.5 calibration with 21-23 bps table; estimates mostly saturate the wrong bins; gain=0.75.",
+      "code_sha256": "f5c06d250904870c31f1776ca436baf297d49453dc5ffd0d949e4909ca5d1e52",
+      "score": {
+        "n": 2000,
+        "mean_edge": 389.66881851915844
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol @ 6b6921f8d463314aa7c96234e1be25a25245f704",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 20.864397901472778,
+        "se": 0.5010431763192937,
+        "worst": [
+          {
+            "seed": 1267,
+            "diff": -52.52528650722439
+          },
+          {
+            "seed": 1565,
+            "diff": -49.26343773853432
+          },
+          {
+            "seed": 896,
+            "diff": -48.325955431553496
+          },
+          {
+            "seed": 739,
+            "diff": -48.17606384106227
+          },
+          {
+            "seed": 1164,
+            "diff": -37.479373033015804
+          }
+        ]
+      }
+    },
+    {
+      "candidate": "robust20",
+      "mechanism": "Gain=0.8 inside (20+2*min(dt,8)) bps innovation; outside, move by one tenth of the threshold toward implied fair. Naive flow table.",
+      "code_sha256": "0c8f41b19d52ee32c860f13bc14ec5b0110bdc91c5c13d255405983066b64865",
+      "score": {
+        "n": 2000,
+        "mean_edge": 223.16457452446926
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol @ 6b6921f8d463314aa7c96234e1be25a25245f704",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -145.6398460932164,
+        "se": 1.3990937105524366,
+        "worst": [
+          {
+            "seed": 1996,
+            "diff": -334.5709508269772
+          },
+          {
+            "seed": 330,
+            "diff": -327.1639008084139
+          },
+          {
+            "seed": 1069,
+            "diff": -326.1896076411631
+          },
+          {
+            "seed": 1067,
+            "diff": -324.31788589980624
+          },
+          {
+            "seed": 89,
+            "diff": -311.70179502218417
+          }
+        ]
+      }
+    },
+    {
+      "candidate": "alpha100",
+      "mechanism": "First-trade gain=1.0 with the naive nominal-22-bps table.",
+      "code_sha256": "4b1fd5b26fd57c2b890fc8d795088a7d0e748bb759e8478c0fc1437a35722806",
+      "score": {
+        "n": 2000,
+        "mean_edge": 273.55466297378814
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol @ 6b6921f8d463314aa7c96234e1be25a25245f704",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": -95.24975764389752,
+        "se": 0.5171058762475668,
+        "worst": [
+          {
+            "seed": 1017,
+            "diff": -178.62683168230984
+          },
+          {
+            "seed": 73,
+            "diff": -176.25638879496648
+          },
+          {
+            "seed": 229,
+            "diff": -162.8361062289049
+          },
+          {
+            "seed": 318,
+            "diff": -162.41413533004402
+          },
+          {
+            "seed": 1501,
+            "diff": -156.85220128034064
+          }
+        ]
+      }
+    },
+    {
+      "candidate": "alpha50",
+      "mechanism": "First-trade gain=0.5 with the naive nominal-22-bps table.",
+      "code_sha256": "7ebb90ffbfa59a04aa3559ad9665568cd1842a8eaa9c9238afc1c2a9b10e83de",
+      "score": {
+        "n": 2000,
+        "mean_edge": 456.90843386952395
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol @ 6b6921f8d463314aa7c96234e1be25a25245f704",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 88.10401325183821,
+        "se": 0.6686344883708559,
+        "worst": [
+          {
+            "seed": 1558,
+            "diff": 26.51444660579017
+          },
+          {
+            "seed": 521,
+            "diff": 26.998206016088716
+          },
+          {
+            "seed": 1104,
+            "diff": 28.35756720418948
+          },
+          {
+            "seed": 1732,
+            "diff": 28.635848145845216
+          },
+          {
+            "seed": 1662,
+            "diff": 30.59141786021553
+          }
+        ]
+      }
+    },
+    {
+      "candidate": "alpha25",
+      "mechanism": "First-trade gain=0.25 with the naive nominal-22-bps table.",
+      "code_sha256": "6d3d0b792631a031089df3575c0b40ae57b348b58f8a406a07aeba3fc9efd729",
+      "score": {
+        "n": 2000,
+        "mean_edge": 490.50837925971337
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol @ 6b6921f8d463314aa7c96234e1be25a25245f704",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 121.70395864202766,
+        "se": 0.7739199455569717,
+        "worst": [
+          {
+            "seed": 1994,
+            "diff": 50.32325739198569
+          },
+          {
+            "seed": 238,
+            "diff": 50.373168758942654
+          },
+          {
+            "seed": 1519,
+            "diff": 53.87050036013301
+          },
+          {
+            "seed": 1698,
+            "diff": 53.966250733566596
+          },
+          {
+            "seed": 113,
+            "diff": 54.47775354652333
+          }
+        ]
+      }
+    },
+    {
+      "candidate": "alpha10",
+      "mechanism": "First-trade gain=0.10 with the naive nominal-22-bps table.",
+      "code_sha256": "9fcc1905e34605ec2d8fccd69d47c1193aa0f4eb0273f707f1e31c6dfff4f268",
+      "score": {
+        "n": 2000,
+        "mean_edge": 483.521210203942
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol @ 6b6921f8d463314aa7c96234e1be25a25245f704",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 114.71678958625637,
+        "se": 0.8400014632353503,
+        "worst": [
+          {
+            "seed": 927,
+            "diff": 7.55067388448191
+          },
+          {
+            "seed": 1698,
+            "diff": 31.768767631020864
+          },
+          {
+            "seed": 1827,
+            "diff": 33.333208555864104
+          },
+          {
+            "seed": 594,
+            "diff": 34.08134317110773
+          },
+          {
+            "seed": 445,
+            "diff": 36.41172266031617
+          }
+        ]
+      }
+    },
+    {
+      "candidate": "soft",
+      "mechanism": "Gain=0.1+0.8*400/(400+floor(innovation_bps)^2), with the naive flow table.",
+      "code_sha256": "66cc37a2e237f0c4d36c52df85b965b1c4394dba93ac0052dee803b6b85ef130",
+      "score": {
+        "n": 2000,
+        "mean_edge": 444.9415399286612
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol @ 6b6921f8d463314aa7c96234e1be25a25245f704",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 76.13711931097548,
+        "se": 0.8322661149281045,
+        "worst": [
+          {
+            "seed": 238,
+            "diff": -37.465793351559796
+          },
+          {
+            "seed": 927,
+            "diff": -28.30932291792118
+          },
+          {
+            "seed": 1414,
+            "diff": -20.0359830243828
+          },
+          {
+            "seed": 570,
+            "diff": -18.08643219726025
+          },
+          {
+            "seed": 1391,
+            "diff": -13.337799032358589
+          }
+        ]
+      }
+    },
+    {
+      "candidate": "a25flat14",
+      "mechanism": "14-bps fixed spread, gain=0.25; opening fee remains 22 bps.",
+      "code_sha256": "7e7bd8ecb3a218ee2a9908d7f817d84122e46ae4eeb771138d6be798948cf53f",
+      "score": {
+        "n": 2000,
+        "mean_edge": 490.77706071906744
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol @ 6b6921f8d463314aa7c96234e1be25a25245f704",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 121.97264010138176,
+        "se": 0.7660115479514237,
+        "worst": [
+          {
+            "seed": 1994,
+            "diff": 50.02185311154125
+          },
+          {
+            "seed": 445,
+            "diff": 51.42385009501771
+          },
+          {
+            "seed": 113,
+            "diff": 56.517504142335724
+          },
+          {
+            "seed": 1519,
+            "diff": 57.82971375582218
+          },
+          {
+            "seed": 907,
+            "diff": 58.005190049957264
+          }
+        ]
+      }
+    },
+    {
+      "candidate": "a25flat18",
+      "mechanism": "18-bps fixed spread, gain=0.25; opening fee remains 22 bps.",
+      "code_sha256": "fea471b374bfcb76008714b843003cc58802f38622191e507c69fa79c29c32c5",
+      "score": {
+        "n": 2000,
+        "mean_edge": 491.50940808095504
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol @ 6b6921f8d463314aa7c96234e1be25a25245f704",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 122.70498746326935,
+        "se": 0.7686030355942635,
+        "worst": [
+          {
+            "seed": 1994,
+            "diff": 49.600217526768915
+          },
+          {
+            "seed": 1558,
+            "diff": 53.079977663980856
+          },
+          {
+            "seed": 113,
+            "diff": 55.375730862309695
+          },
+          {
+            "seed": 238,
+            "diff": 57.61597047127839
+          },
+          {
+            "seed": 922,
+            "diff": 58.12153569331406
+          }
+        ]
+      }
+    },
+    {
+      "candidate": "a25flat26",
+      "mechanism": "26-bps fixed spread, gain=0.25; opening fee remains 22 bps.",
+      "code_sha256": "4551de65b9a719d9db62bee468ccc7e63fdeec50cb6109e22ea604f4205cf2f1",
+      "score": {
+        "n": 2000,
+        "mean_edge": 488.0223057532297
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol @ 6b6921f8d463314aa7c96234e1be25a25245f704",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 119.21788513554402,
+        "se": 0.7791897443119606,
+        "worst": [
+          {
+            "seed": 238,
+            "diff": 44.88537460092766
+          },
+          {
+            "seed": 1558,
+            "diff": 46.392778544909675
+          },
+          {
+            "seed": 1698,
+            "diff": 49.32385600397271
+          },
+          {
+            "seed": 1994,
+            "diff": 49.37804094014149
+          },
+          {
+            "seed": 1519,
+            "diff": 50.19353298578977
+          }
+        ]
+      }
+    },
+    {
+      "candidate": "fitted_flat",
+      "mechanism": "Fitted constant control: spread=17.6 bps, observation gain=0.227, calibrated counters and matched initialization.",
+      "code_sha256": "7024d164e7dd1b347b7ec9d5339587e21938c71426bd2454d146806911809f48",
+      "score": {
+        "n": 2000,
+        "mean_edge": 492.8498557946326
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol @ 6b6921f8d463314aa7c96234e1be25a25245f704",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 124.04543517694695,
+        "se": 0.7802942300138765,
+        "worst": [
+          {
+            "seed": 1994,
+            "diff": 49.41205445167395
+          },
+          {
+            "seed": 445,
+            "diff": 52.139168021751516
+          },
+          {
+            "seed": 1698,
+            "diff": 54.04648583568019
+          },
+          {
+            "seed": 1558,
+            "diff": 54.588767565335445
+          },
+          {
+            "seed": 1519,
+            "diff": 57.11158690870809
+          }
+        ]
+      },
+      "paired_constant_control": {
+        "reference": "fitted_flat",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 0.0,
+        "se": 0.0,
+        "worst": [
+          {
+            "seed": 0,
+            "diff": 0.0
+          },
+          {
+            "seed": 1,
+            "diff": 0.0
+          },
+          {
+            "seed": 2,
+            "diff": 0.0
+          },
+          {
+            "seed": 3,
+            "diff": 0.0
+          },
+          {
+            "seed": 4,
+            "diff": 0.0
+          }
+        ]
+      }
+    },
+    {
+      "candidate": "fitted_joint",
+      "mechanism": "Calibrated 3x3 rate/size tables for spread and observation gain.",
+      "code_sha256": "e522b7653f37b078bc80a46bbaa42548604683576cd391a4e418b4f879c07fc0",
+      "score": {
+        "n": 2000,
+        "mean_edge": 493.0130438073236
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol @ 6b6921f8d463314aa7c96234e1be25a25245f704",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 124.20862318963785,
+        "se": 0.7853400842657849,
+        "worst": [
+          {
+            "seed": 1994,
+            "diff": 49.12733980747322
+          },
+          {
+            "seed": 445,
+            "diff": 51.66136681542099
+          },
+          {
+            "seed": 1698,
+            "diff": 54.79086648509201
+          },
+          {
+            "seed": 1558,
+            "diff": 55.13467137893775
+          },
+          {
+            "seed": 113,
+            "diff": 57.87160070868316
+          }
+        ]
+      },
+      "paired_constant_control": {
+        "reference": "fitted_flat",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 0.1631880126908924,
+        "se": 0.059309561611769444,
+        "worst": [
+          {
+            "seed": 1486,
+            "diff": -16.204730994300462
+          },
+          {
+            "seed": 1533,
+            "diff": -15.860329905818787
+          },
+          {
+            "seed": 1167,
+            "diff": -15.234563557756758
+          },
+          {
+            "seed": 55,
+            "diff": -15.108037364259644
+          },
+          {
+            "seed": 1520,
+            "diff": -10.158677745130376
+          }
+        ]
+      }
+    },
+    {
+      "candidate": "fitted_rate",
+      "mechanism": "Rate-only ablation: use each table row at the middle size column.",
+      "code_sha256": "bd07cda9e5ff1bc0ca48ba5c63b1825f2f1ef1b023bf9c7d798ebf0889b75ebd",
+      "score": {
+        "n": 2000,
+        "mean_edge": 492.9460861754442
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol @ 6b6921f8d463314aa7c96234e1be25a25245f704",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 124.1416655577585,
+        "se": 0.7837010655840083,
+        "worst": [
+          {
+            "seed": 1994,
+            "diff": 49.540053289874606
+          },
+          {
+            "seed": 445,
+            "diff": 51.96992233806094
+          },
+          {
+            "seed": 1558,
+            "diff": 54.21606118517553
+          },
+          {
+            "seed": 1698,
+            "diff": 55.04537196354039
+          },
+          {
+            "seed": 113,
+            "diff": 57.81938324870225
+          }
+        ]
+      },
+      "paired_constant_control": {
+        "reference": "fitted_flat",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 0.09623038081154632,
+        "se": 0.05313822967135843,
+        "worst": [
+          {
+            "seed": 55,
+            "diff": -16.028933895912132
+          },
+          {
+            "seed": 1486,
+            "diff": -15.974287114205481
+          },
+          {
+            "seed": 1533,
+            "diff": -15.218639131873715
+          },
+          {
+            "seed": 5,
+            "diff": -11.335065351646449
+          },
+          {
+            "seed": 1520,
+            "diff": -11.294053798353787
+          }
+        ]
+      }
+    },
+    {
+      "candidate": "fitted_size",
+      "mechanism": "Size-only ablation: use each table column at the middle rate row.",
+      "code_sha256": "88077777131cf62131995aea38d9246270e81f425eee963c76a0edf1149a7d2d",
+      "score": {
+        "n": 2000,
+        "mean_edge": 492.94401410830955
+      },
+      "paired": {
+        "reference": "contracts/src/StarterStrategy.sol @ 6b6921f8d463314aa7c96234e1be25a25245f704",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 124.13959349062384,
+        "se": 0.7816362922108344,
+        "worst": [
+          {
+            "seed": 1994,
+            "diff": 49.08653072263019
+          },
+          {
+            "seed": 445,
+            "diff": 52.28551740854675
+          },
+          {
+            "seed": 1698,
+            "diff": 53.619934701046645
+          },
+          {
+            "seed": 1558,
+            "diff": 55.940424205467934
+          },
+          {
+            "seed": 1519,
+            "diff": 57.297162163243684
+          }
+        ]
+      },
+      "paired_constant_control": {
+        "reference": "fitted_flat",
+        "seed_start": 0,
+        "n": 2000,
+        "mean_diff": 0.09415831367689186,
+        "se": 0.043771325272686096,
+        "worst": [
+          {
+            "seed": 1485,
+            "diff": -16.9733355829988
+          },
+          {
+            "seed": 950,
+            "diff": -12.489539339495252
+          },
+          {
+            "seed": 914,
+            "diff": -11.570989048230217
+          },
+          {
+            "seed": 1837,
+            "diff": -10.159903432897636
+          },
+          {
+            "seed": 1214,
+            "diff": -8.704963911135792
+          }
+        ]
+      }
+    }
+  ],
+  "next": [
+    "Calibrate censoring jointly in arrival rate, size, spread and price-filter gain, using additional training seeds and a new untouched holdout.",
+    "Fit spread and observation gain jointly instead of combining two one-dimensional response surfaces; retain paired constant-table controls.",
+    "Condition the table on the number of trades already seen in the current timestamp, and test whether size adaptation survives independent replication."
+  ],
+  "code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\nimport {AMMStrategyBase} from \"./AMMStrategyBase.sol\";\nimport {TradeInfo} from \"./IAMMStrategy.sol\";\n\n/// @notice Flow-conditioned spread around a filtered band-edge price.\ncontract Strategy is AMMStrategyBase {\n    // 0: fair price; 1: timestamp+1; 2,3: last bid/ask;\n    // 4: classified retail count with prior; 5: classified Y size sum;\n    // 6: elapsed exposure with prior.\n    function afterInitialize(uint256 x, uint256 y) external override returns (uint256, uint256) {\n        slots[0] = wdiv(y, x);\n        slots[1] = 0;\n        slots[2] = 176 * (BPS / 10);\n        slots[3] = 176 * (BPS / 10);\n        // Shrink estimates toward the population centre for the first 512 steps.\n        slots[4] = 133;\n        slots[5] = 1581539992873537896448;\n        slots[6] = 512;\n    \n        return (slots[2], slots[3]);\n    }\n\n    function afterSwap(TradeInfo calldata t) external override returns (uint256 bid, uint256 ask) {\n        uint256 spot = wdiv(t.reserveY, t.reserveX);\n        bool newStep = t.timestamp + 1 != slots[1];\n        uint256 fair = slots[0];\n        if (newStep) {\n            uint256 dt = slots[1] == 0 ? t.timestamp + 1 : t.timestamp + 1 - slots[1];\n            slots[6] += dt;\n            slots[1] = t.timestamp + 1;\n            // A first trade may be arbitrage. Its terminal band edge is an\n            // observation of fair; partial filtering limits retail contamination.\n            uint256 implied = t.isBuy\n                ? wmul(spot, WAD - slots[2])\n                : wdiv(spot, WAD - slots[3]);\n            uint256 weight = _weight(clamp(190170 + slots[4] * 2341162 / slots[6], 600000, 1000000), clamp(11787378084440381440 + (slots[5] / slots[4]) * 690642 / 1000000, 19 * WAD, 21 * WAD));\n            fair = (fair * (1000 - weight) + implied * weight) / 1000;\n        } else {\n            // Arbitrage happens at most once and before all retail in a step.\n            // Only these unambiguous retail observations train the flow model.\n            slots[4] += 1;\n            slots[5] += t.amountY;\n        }\n        slots[0] = fair;\n        // Observed flow is censored by routing and by dropping the first trade.\n        // Affine calibration on training seeds corrects both routing censoring\n        // and the exclusion of ambiguous first trades. Estimates are shrunk\n        // toward the population centre with a 512-step prior.\n        uint256 rate = clamp(190170 + slots[4] * 2341162 / slots[6], 600000, 1000000);\n        uint256 size = clamp(11787378084440381440 + (slots[5] / slots[4]) * 690642 / 1000000, 19 * WAD, 21 * WAD);\n        uint256 spread = _spread(rate, size);\n        // Equal fair-relative quotes require a larger fee toward fair when\n        // retail has displaced the AMM's spot, and a smaller fee away from it.\n        if (spot >= fair) {\n            uint256 d = wdiv(spot - fair, spot);\n            bid = clampFee(spread + d);\n            ask = spread > d ? spread - d : 0;\n        } else {\n            uint256 d = wdiv(fair - spot, fair);\n            ask = clampFee(spread + d);\n            bid = spread > d ? spread - d : 0;\n        }\n        slots[2] = bid;\n        slots[3] = ask;\n    }\n\n    // Flow-conditioned trust in the ambiguous first-trade price observation.\n    // Table values are thousandths; later same-step trades never update fair.\n    function _weight(uint256 rate, uint256 size) internal pure returns (uint256) {\n        uint256 row = rate < 733333 ? 0 : (rate < 866667 ? 1 : 2);\n        uint256 col = size < 19666666666666666666 ? 0 : (size < 20333333333333333333 ? 1 : 2);\n        if (row == 0) return col == 0 ? 227 : (col == 1 ? 227 : 227);\n        else if (row == 1) return col == 0 ? 227 : (col == 1 ? 227 : 227);\n        else return col == 0 ? 227 : (col == 1 ? 227 : 227);\n    }\n\n    function _spread(uint256 rate, uint256 size) internal pure returns (uint256) {\n        // Three rate rows and three size columns. Units are tenths of a bp.\n        uint256 row = rate < 733333 ? 0 : (rate < 866667 ? 1 : 2);\n        uint256 col = size < 19666666666666666666 ? 0 : (size < 20333333333333333333 ? 1 : 2);\n        uint256 fee10;\n        if (row == 0) fee10 = col == 0 ? 176 : (col == 1 ? 176 : 176);\n        else if (row == 1) fee10 = col == 0 ? 176 : (col == 1 ? 176 : 176);\n        else fee10 = col == 0 ? 176 : (col == 1 ? 176 : 176);\n        return fee10 * (BPS / 10);\n    }\n\n    function getName() external pure override returns (string memory) {\n        return \"Flow Estimate flat\";\n    }\n}\n",
+  "code_sha256": "7024d164e7dd1b347b7ec9d5339587e21938c71426bd2454d146806911809f48",
+  "score": {
+    "n": 1000,
+    "mean_edge": 493.97867059440296
+  },
+  "paired": {
+    "reference": "contracts/src/StarterStrategy.sol @ 6b6921f8d463314aa7c96234e1be25a25245f704",
+    "seed_start": 100000,
+    "n": 2000,
+    "mean_diff": 124.42222187451812,
+    "se": 0.8593337889677296,
+    "worst": [
+      {
+        "seed": 100645,
+        "diff": 56.77566159090725
+      },
+      {
+        "seed": 101573,
+        "diff": 57.751261577168634
+      },
+      {
+        "seed": 100274,
+        "diff": 58.548110979951446
+      },
+      {
+        "seed": 101142,
+        "diff": 59.45947265304204
+      },
+      {
+        "seed": 101661,
+        "diff": 61.12451013237143
+      }
+    ]
+  },
+  "seconds_per_simulation": 0.1607046622832616,
+  "timing_probe": {
+    "n": 20,
+    "workers": 8,
+    "seconds_per_simulation": 0.11812644004821778
+  },
+  "validate_ok": true,
+  "paired_pooled": {
+    "reference": "contracts/src/StarterStrategy.sol @ 6b6921f8d463314aa7c96234e1be25a25245f704",
+    "seed_start": 100000,
+    "n": 6000,
+    "mean_diff": 124.10624225497303,
+    "se": 0.4909928816234909,
+    "worst": [
+      {
+        "seed": 102705,
+        "diff": 43.9605346792282
+      },
+      {
+        "seed": 105583,
+        "diff": 51.15916627599083
+      },
+      {
+        "seed": 105435,
+        "diff": 51.19537641634622
+      },
+      {
+        "seed": 104210,
+        "diff": 52.43059878221493
+      },
+      {
+        "seed": 102070,
+        "diff": 53.92385793626585
+      }
+    ]
+  },
+  "paired_previous_best": {
+    "reference": "contracts/src/StarterStrategy.sol @ 6b6921f8d463314aa7c96234e1be25a25245f704",
+    "seed_start": 100000,
+    "n": 6000,
+    "mean_diff": 124.10624225497303,
+    "se": 0.4909928816234909,
+    "worst": [
+      {
+        "seed": 102705,
+        "diff": 43.9605346792282
+      },
+      {
+        "seed": 105583,
+        "diff": 51.15916627599083
+      },
+      {
+        "seed": 105435,
+        "diff": 51.19537641634622
+      },
+      {
+        "seed": 104210,
+        "diff": 52.43059878221493
+      },
+      {
+        "seed": 102070,
+        "diff": 53.92385793626585
+      }
+    ]
+  },
+  "flow_paired_primary": {
+    "reference": "fitted constant control: 17.6 bps, gain=0.227",
+    "seed_start": 100000,
+    "n": 2000,
+    "mean_diff": 0.0005441993962351148,
+    "se": 0.06151620906977641,
+    "worst": [
+      {
+        "seed": 100708,
+        "diff": -35.16458249441092
+      },
+      {
+        "seed": 100507,
+        "diff": -25.600184493065967
+      },
+      {
+        "seed": 100813,
+        "diff": -22.812406372417
+      },
+      {
+        "seed": 101381,
+        "diff": -18.729643932903286
+      },
+      {
+        "seed": 101720,
+        "diff": -17.21603614268554
+      }
+    ]
+  },
+  "flow_paired_pooled": {
+    "reference": "fitted constant control: 17.6 bps, gain=0.227",
+    "seed_start": 100000,
+    "n": 6000,
+    "mean_diff": -0.0012390358041943538,
+    "se": 0.035150527175255894,
+    "worst": [
+      {
+        "seed": 100708,
+        "diff": -35.16458249441092
+      },
+      {
+        "seed": 100507,
+        "diff": -25.600184493065967
+      },
+      {
+        "seed": 102111,
+        "diff": -25.19027703509863
+      },
+      {
+        "seed": 105527,
+        "diff": -23.07156958775397
+      },
+      {
+        "seed": 100813,
+        "diff": -22.812406372417
+      }
+    ]
+  },
+  "replication": {
+    "seed_start": 102000,
+    "n": 4000,
+    "predeclared": true
+  },
+  "estimator_diagnostics": {
+    "n": 200,
+    "seed_start": 6000,
+    "calibration_seed_start": 5000,
+    "calibration_n": 200,
+    "metrics": {
+      "rate": {
+        "correlation": 0.9561260298891808,
+        "rmse": 0.03311113803456617,
+        "population_sd": 0.11253008765466405,
+        "bias": 0.0011416231560402402,
+        "low_quartile_estimate": 0.6676512454296082,
+        "high_quartile_estimate": 0.9420115473579054
+      },
+      "size": {
+        "correlation": 0.7082842841093736,
+        "rmse": 0.3977868531506534,
+        "population_sd": 0.556701644372544,
+        "bias": 0.03484200835631244,
+        "low_quartile_estimate": 19.762925332923118,
+        "high_quartile_estimate": 20.372392470104778
+      }
+    }
+  },
+  "table_fit": {
+    "weight_table": [
+      [
+        240,
+        236,
+        233
+      ],
+      [
+        230,
+        227,
+        224
+      ],
+      [
+        221,
+        218,
+        215
+      ]
+    ],
+    "weight_centre": 227,
+    "weight_linear": [
+      -21.226345155112742,
+      -74.56841776481775,
+      -6.328820754049273
+    ],
+    "weight_quadratic": [
+      -452.2270815267817,
+      -254.2755548739326,
+      -13.416810435330087
+    ],
+    "paths": [
+      "test/scratch/variants/a25flat14.sol",
+      "test/scratch/variants/a25flat18.sol",
+      "test/scratch/variants/alpha25.sol",
+      "test/scratch/variants/a25flat26.sol"
+    ],
+    "q": [
+      -0.04921620555964326,
+      0.005587158709261066,
+      0.008037751312489247
+    ],
+    "l": [
+      -0.2328883016115363,
+      -0.2060684342577037,
+      0.09667723810555154
+    ],
+    "centre": 17.6,
+    "rate_calibration": [
+      2.3411618413499116,
+      0.19016963136068324
+    ],
+    "size_calibration": [
+      0.6906424875066497,
+      11.787378084440382
+    ],
+    "rate_prior": 0.2604819358783369,
+    "size_prior": 11.8912781419063,
+    "table": [
+      [
+        17.7,
+        17.9,
+        18.3
+      ],
+      [
+        17.4,
+        17.7,
+        18.0
+      ],
+      [
+        17.1,
+        17.3,
+        17.7
+      ]
+    ],
+    "count_prior": 133,
+    "sum_prior_wad": 1581539992873537896448
+  },
+  "ablations_training": {
+    "rate_only": {
+      "reference": "fitted_flat",
+      "seed_start": 0,
+      "n": 2000,
+      "mean_diff": 0.09623038081154632,
+      "se": 0.05313822967135843,
+      "worst": [
+        {
+          "seed": 55,
+          "diff": -16.028933895912132
+        },
+        {
+          "seed": 1486,
+          "diff": -15.974287114205481
+        },
+        {
+          "seed": 1533,
+          "diff": -15.218639131873715
+        },
+        {
+          "seed": 5,
+          "diff": -11.335065351646449
+        },
+        {
+          "seed": 1520,
+          "diff": -11.294053798353787
+        }
+      ]
+    },
+    "size_only": {
+      "reference": "fitted_flat",
+      "seed_start": 0,
+      "n": 2000,
+      "mean_diff": 0.09415831367689186,
+      "se": 0.043771325272686096,
+      "worst": [
+        {
+          "seed": 1485,
+          "diff": -16.9733355829988
+        },
+        {
+          "seed": 950,
+          "diff": -12.489539339495252
+        },
+        {
+          "seed": 914,
+          "diff": -11.570989048230217
+        },
+        {
+          "seed": 1837,
+          "diff": -10.159903432897636
+        },
+        {
+          "seed": 1214,
+          "diff": -8.704963911135792
+        }
+      ]
+    },
+    "incremental_size": {
+      "reference": "fitted_rate",
+      "seed_start": 0,
+      "n": 2000,
+      "mean_diff": 0.06695763187934606,
+      "se": 0.03607892058273182,
+      "worst": [
+        {
+          "seed": 1167,
+          "diff": -14.818471746245223
+        },
+        {
+          "seed": 211,
+          "diff": -7.132488432081857
+        },
+        {
+          "seed": 1853,
+          "diff": -6.815028717184703
+        },
+        {
+          "seed": 1793,
+          "diff": -6.778493922576331
+        },
+        {
+          "seed": 1535,
+          "diff": -6.6607969583950535
+        }
+      ]
+    },
+    "incremental_rate": {
+      "reference": "fitted_size",
+      "seed_start": 0,
+      "n": 2000,
+      "mean_diff": 0.06902969901400052,
+      "se": 0.052867339820777536,
+      "worst": [
+        {
+          "seed": 1533,
+          "diff": -16.351940825064673
+        },
+        {
+          "seed": 1486,
+          "diff": -16.28839650122626
+        },
+        {
+          "seed": 1167,
+          "diff": -15.512751828561363
+        },
+        {
+          "seed": 55,
+          "diff": -13.003581469075357
+        },
+        {
+          "seed": 1520,
+          "diff": -10.579103899568906
+        }
+      ]
+    }
+  },
+  "promotion": {
+    "adaptive_promoted": false,
+    "gate": "mean_diff > 2*SE on the predeclared pooled 6000 fresh seeds; no holdout tuning",
+    "selected_mode": "joint",
+    "delivered_mode": "flat",
+    "ranked": [
+      {
+        "candidate": "fitted_flat",
+        "code_sha256": "7024d164e7dd1b347b7ec9d5339587e21938c71426bd2454d146806911809f48",
+        "mean_edge": 491.857419560949,
+        "paired": {
+          "reference": "contracts/src/StarterStrategy.sol @ 6b6921f8d463314aa7c96234e1be25a25245f704",
+          "seed_start": 100000,
+          "n": 6000,
+          "mean_diff": 124.10624225497303,
+          "se": 0.4909928816234909,
+          "worst": [
+            {
+              "seed": 102705,
+              "diff": 43.9605346792282
+            },
+            {
+              "seed": 105583,
+              "diff": 51.15916627599083
+            },
+            {
+              "seed": 105435,
+              "diff": 51.19537641634622
+            },
+            {
+              "seed": 104210,
+              "diff": 52.43059878221493
+            },
+            {
+              "seed": 102070,
+              "diff": 53.92385793626585
+            }
+          ]
+        },
+        "rank": 1
+      }
+    ]
+  },
+  "constant_control_code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\nimport {AMMStrategyBase} from \"./AMMStrategyBase.sol\";\nimport {TradeInfo} from \"./IAMMStrategy.sol\";\n\n/// @notice Flow-conditioned spread around a filtered band-edge price.\ncontract Strategy is AMMStrategyBase {\n    // 0: fair price; 1: timestamp+1; 2,3: last bid/ask;\n    // 4: classified retail count with prior; 5: classified Y size sum;\n    // 6: elapsed exposure with prior.\n    function afterInitialize(uint256 x, uint256 y) external override returns (uint256, uint256) {\n        slots[0] = wdiv(y, x);\n        slots[1] = 0;\n        slots[2] = 176 * (BPS / 10);\n        slots[3] = 176 * (BPS / 10);\n        // Shrink estimates toward the population centre for the first 512 steps.\n        slots[4] = 133;\n        slots[5] = 1581539992873537896448;\n        slots[6] = 512;\n    \n        return (slots[2], slots[3]);\n    }\n\n    function afterSwap(TradeInfo calldata t) external override returns (uint256 bid, uint256 ask) {\n        uint256 spot = wdiv(t.reserveY, t.reserveX);\n        bool newStep = t.timestamp + 1 != slots[1];\n        uint256 fair = slots[0];\n        if (newStep) {\n            uint256 dt = slots[1] == 0 ? t.timestamp + 1 : t.timestamp + 1 - slots[1];\n            slots[6] += dt;\n            slots[1] = t.timestamp + 1;\n            // A first trade may be arbitrage. Its terminal band edge is an\n            // observation of fair; partial filtering limits retail contamination.\n            uint256 implied = t.isBuy\n                ? wmul(spot, WAD - slots[2])\n                : wdiv(spot, WAD - slots[3]);\n            uint256 weight = _weight(clamp(190170 + slots[4] * 2341162 / slots[6], 600000, 1000000), clamp(11787378084440381440 + (slots[5] / slots[4]) * 690642 / 1000000, 19 * WAD, 21 * WAD));\n            fair = (fair * (1000 - weight) + implied * weight) / 1000;\n        } else {\n            // Arbitrage happens at most once and before all retail in a step.\n            // Only these unambiguous retail observations train the flow model.\n            slots[4] += 1;\n            slots[5] += t.amountY;\n        }\n        slots[0] = fair;\n        // Observed flow is censored by routing and by dropping the first trade.\n        // Affine calibration on training seeds corrects both routing censoring\n        // and the exclusion of ambiguous first trades. Estimates are shrunk\n        // toward the population centre with a 512-step prior.\n        uint256 rate = clamp(190170 + slots[4] * 2341162 / slots[6], 600000, 1000000);\n        uint256 size = clamp(11787378084440381440 + (slots[5] / slots[4]) * 690642 / 1000000, 19 * WAD, 21 * WAD);\n        uint256 spread = _spread(rate, size);\n        // Equal fair-relative quotes require a larger fee toward fair when\n        // retail has displaced the AMM's spot, and a smaller fee away from it.\n        if (spot >= fair) {\n            uint256 d = wdiv(spot - fair, spot);\n            bid = clampFee(spread + d);\n            ask = spread > d ? spread - d : 0;\n        } else {\n            uint256 d = wdiv(fair - spot, fair);\n            ask = clampFee(spread + d);\n            bid = spread > d ? spread - d : 0;\n        }\n        slots[2] = bid;\n        slots[3] = ask;\n    }\n\n    // Flow-conditioned trust in the ambiguous first-trade price observation.\n    // Table values are thousandths; later same-step trades never update fair.\n    function _weight(uint256 rate, uint256 size) internal pure returns (uint256) {\n        uint256 row = rate < 733333 ? 0 : (rate < 866667 ? 1 : 2);\n        uint256 col = size < 19666666666666666666 ? 0 : (size < 20333333333333333333 ? 1 : 2);\n        if (row == 0) return col == 0 ? 227 : (col == 1 ? 227 : 227);\n        else if (row == 1) return col == 0 ? 227 : (col == 1 ? 227 : 227);\n        else return col == 0 ? 227 : (col == 1 ? 227 : 227);\n    }\n\n    function _spread(uint256 rate, uint256 size) internal pure returns (uint256) {\n        // Three rate rows and three size columns. Units are tenths of a bp.\n        uint256 row = rate < 733333 ? 0 : (rate < 866667 ? 1 : 2);\n        uint256 col = size < 19666666666666666666 ? 0 : (size < 20333333333333333333 ? 1 : 2);\n        uint256 fee10;\n        if (row == 0) fee10 = col == 0 ? 176 : (col == 1 ? 176 : 176);\n        else if (row == 1) fee10 = col == 0 ? 176 : (col == 1 ? 176 : 176);\n        else fee10 = col == 0 ? 176 : (col == 1 ? 176 : 176);\n        return fee10 * (BPS / 10);\n    }\n\n    function getName() external pure override returns (string memory) {\n        return \"Flow Estimate flat\";\n    }\n}\n",
+  "constant_control_sha256": "7024d164e7dd1b347b7ec9d5339587e21938c71426bd2454d146806911809f48",
+  "tested_adaptive_code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\nimport {AMMStrategyBase} from \"./AMMStrategyBase.sol\";\nimport {TradeInfo} from \"./IAMMStrategy.sol\";\n\n/// @notice Flow-conditioned spread around a filtered band-edge price.\ncontract Strategy is AMMStrategyBase {\n    // 0: fair price; 1: timestamp+1; 2,3: last bid/ask;\n    // 4: classified retail count with prior; 5: classified Y size sum;\n    // 6: elapsed exposure with prior.\n    function afterInitialize(uint256 x, uint256 y) external override returns (uint256, uint256) {\n        slots[0] = wdiv(y, x);\n        slots[1] = 0;\n        slots[2] = 176 * (BPS / 10);\n        slots[3] = 176 * (BPS / 10);\n        // Shrink estimates toward the population centre for the first 512 steps.\n        slots[4] = 133;\n        slots[5] = 1581539992873537896448;\n        slots[6] = 512;\n    \n        return (slots[2], slots[3]);\n    }\n\n    function afterSwap(TradeInfo calldata t) external override returns (uint256 bid, uint256 ask) {\n        uint256 spot = wdiv(t.reserveY, t.reserveX);\n        bool newStep = t.timestamp + 1 != slots[1];\n        uint256 fair = slots[0];\n        if (newStep) {\n            uint256 dt = slots[1] == 0 ? t.timestamp + 1 : t.timestamp + 1 - slots[1];\n            slots[6] += dt;\n            slots[1] = t.timestamp + 1;\n            // A first trade may be arbitrage. Its terminal band edge is an\n            // observation of fair; partial filtering limits retail contamination.\n            uint256 implied = t.isBuy\n                ? wmul(spot, WAD - slots[2])\n                : wdiv(spot, WAD - slots[3]);\n            uint256 weight = _weight(clamp(190170 + slots[4] * 2341162 / slots[6], 600000, 1000000), clamp(11787378084440381440 + (slots[5] / slots[4]) * 690642 / 1000000, 19 * WAD, 21 * WAD));\n            fair = (fair * (1000 - weight) + implied * weight) / 1000;\n        } else {\n            // Arbitrage happens at most once and before all retail in a step.\n            // Only these unambiguous retail observations train the flow model.\n            slots[4] += 1;\n            slots[5] += t.amountY;\n        }\n        slots[0] = fair;\n        // Observed flow is censored by routing and by dropping the first trade.\n        // Affine calibration on training seeds corrects both routing censoring\n        // and the exclusion of ambiguous first trades. Estimates are shrunk\n        // toward the population centre with a 512-step prior.\n        uint256 rate = clamp(190170 + slots[4] * 2341162 / slots[6], 600000, 1000000);\n        uint256 size = clamp(11787378084440381440 + (slots[5] / slots[4]) * 690642 / 1000000, 19 * WAD, 21 * WAD);\n        uint256 spread = _spread(rate, size);\n        // Equal fair-relative quotes require a larger fee toward fair when\n        // retail has displaced the AMM's spot, and a smaller fee away from it.\n        if (spot >= fair) {\n            uint256 d = wdiv(spot - fair, spot);\n            bid = clampFee(spread + d);\n            ask = spread > d ? spread - d : 0;\n        } else {\n            uint256 d = wdiv(fair - spot, fair);\n            ask = clampFee(spread + d);\n            bid = spread > d ? spread - d : 0;\n        }\n        slots[2] = bid;\n        slots[3] = ask;\n    }\n\n    // Flow-conditioned trust in the ambiguous first-trade price observation.\n    // Table values are thousandths; later same-step trades never update fair.\n    function _weight(uint256 rate, uint256 size) internal pure returns (uint256) {\n        uint256 row = rate < 733333 ? 0 : (rate < 866667 ? 1 : 2);\n        uint256 col = size < 19666666666666666666 ? 0 : (size < 20333333333333333333 ? 1 : 2);\n        if (row == 0) return col == 0 ? 240 : (col == 1 ? 236 : 233);\n        else if (row == 1) return col == 0 ? 230 : (col == 1 ? 227 : 224);\n        else return col == 0 ? 221 : (col == 1 ? 218 : 215);\n    }\n\n    function _spread(uint256 rate, uint256 size) internal pure returns (uint256) {\n        // Three rate rows and three size columns. Units are tenths of a bp.\n        uint256 row = rate < 733333 ? 0 : (rate < 866667 ? 1 : 2);\n        uint256 col = size < 19666666666666666666 ? 0 : (size < 20333333333333333333 ? 1 : 2);\n        uint256 fee10;\n        if (row == 0) fee10 = col == 0 ? 177 : (col == 1 ? 179 : 183);\n        else if (row == 1) fee10 = col == 0 ? 174 : (col == 1 ? 177 : 180);\n        else fee10 = col == 0 ? 171 : (col == 1 ? 173 : 177);\n        return fee10 * (BPS / 10);\n    }\n\n    function getName() external pure override returns (string memory) {\n        return \"Flow Estimate joint\";\n    }\n}\n",
+  "tested_adaptive_sha256": "e522b7653f37b078bc80a46bbaa42548604683576cd391a4e418b4f879c07fc0",
+  "changes": [
+    "candidates/flow-estimate/Strategy.sol",
+    "candidates/flow-estimate/result.json",
+    "candidates/flow-estimate/NOTES.md",
+    "artifacts/goal/batches/r1/items/flow-estimate/result.json",
+    "candidates/flow-estimate/FlowStrategy.sol"
+  ],
+  "checks": {
+    "engine_commit": "6b6921f8d463314aa7c96234e1be25a25245f704",
+    "final_engine_unmodified": true,
+    "instrumentation_equivalence": "20 edges bit-for-bit before instrumentation and 20 after restoring the original engine",
+    "workers": 8,
+    "score_seed_start": 0,
+    "timing_n": 6000,
+    "probe_n": 20,
+    "timing_note": "Mean observed wall seconds/simulation over 6000 fresh simulations, eight workers; compilation excluded. The separate 20-simulation probe is also reported.",
+    "commands": [
+      "test/scratch/venv/bin/amm-match validate candidates/flow-estimate/Strategy.sol",
+      "test/scratch/venv/bin/python test/scratch/test_contract.py",
+      "test/scratch/venv/bin/python test/scratch/test_accounting.py",
+      "git -C test/scratch/amm diff --exit-code",
+      "test/scratch/venv/bin/amm-match validate candidates/flow-estimate/FlowStrategy.sol",
+      "test/scratch/venv/bin/python test/scratch/test_contract.py candidates/flow-estimate/FlowStrategy.sol",
+      "test/scratch/venv/bin/python test/scratch/test_accounting.py candidates/flow-estimate/FlowStrategy.sol",
+      "test/scratch/venv/bin/python test/scratch/sweep.py",
+      "test/scratch/venv/bin/python test/scratch/fair_sweep.py",
+      "test/scratch/venv/bin/python test/scratch/slow_fair_sweep.py",
+      "test/scratch/venv/bin/python test/scratch/measure.py test/scratch/variants/a25flat14.sol 0 2000",
+      "test/scratch/venv/bin/python test/scratch/measure.py test/scratch/variants/a25flat18.sol 0 2000",
+      "test/scratch/venv/bin/python test/scratch/measure.py test/scratch/variants/a25flat26.sol 0 2000",
+      "test/scratch/venv/bin/python test/scratch/flow_sweep.py",
+      "test/scratch/venv/bin/python test/scratch/final_diagnostics.py test/scratch/variants/fitted_joint.sol",
+      "test/scratch/venv/bin/python test/scratch/final_diagnostics.py test/scratch/variants/fitted_rate.sol",
+      "test/scratch/venv/bin/python test/scratch/final_diagnostics.py test/scratch/variants/fitted_size.sol",
+      "test/scratch/venv/bin/python test/scratch/check_restored.py",
+      "test/scratch/venv/bin/python test/scratch/freeze.py",
+      "test/scratch/venv/bin/python test/scratch/fresh.py"
+    ],
+    "result": "Solidity validation, compiler storage/opcode restrictions, targeted EVM tests, 3000 randomized accounting swaps and seeded Rust simulations passed.",
+    "resolved_setup_failures": [
+      "ensurepip missing: bootstrapped the scratch venv with get-pip.py",
+      "Rust absent on first pyrevm build: installed a scratch Rust toolchain, then rebuilt",
+      "rustup /tmp unavailable: used a scratch TMPDIR",
+      "maturin absent from PATH on first diagnostic rebuild: added the scratch venv bin directory",
+      "early imports before editable package/engine installation failed; succeeded after installation"
+    ]
+  },
+  "citations": [
+    {
+      "title": "AMM challenge source and rules at the requested commit",
+      "url": "https://github.com/benedictbrady/amm-challenge/tree/6b6921f8d463314aa7c96234e1be25a25245f704"
+    },
+    {
+      "title": "Algebra: AMM fee challenge notes, March 27 2026",
+      "url": "https://www.linkedin.com/pulse/amm-fee-challenge-notes-from-our-run-optimization-arena-qe3ff"
+    }
+  ],
+  "tested_adaptive_file": "candidates/flow-estimate/FlowStrategy.sol"
+}
